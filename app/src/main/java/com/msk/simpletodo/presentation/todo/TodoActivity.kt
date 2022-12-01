@@ -1,11 +1,12 @@
-package com.msk.simpletodo
+package com.msk.simpletodo.presentation.todo
 
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
+import com.msk.simpletodo.R
 
-class MainActivity : AppCompatActivity() {
+class TodoActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main)
+        setContentView(R.layout.activity_todo)
     }
 }

@@ -16,22 +16,31 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <EditText
-        android:id="@+id/signUpEmail"
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/signUpLEmailLayout"
         android:layout_width="match_parent"
-        android:layout_height="70dp"
-        android:hint="Email"
-        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_height="100dp"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/authEmailTitle" />
+        app:layout_constraintTop_toBottomOf="@+id/authEmailTitle">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/signUpEmail"
+            android:layout_width="match_parent"
+            android:layout_height="70dp"
+            android:hint="Email"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/authEmailTitle" />
+
+    </com.google.android.material.textfield.TextInputLayout>
 
     <Button
-        android:id="@+id/signUpNext"
+        android:id="@+id/signUpEmailComplete"
         android:layout_width="match_parent"
         android:layout_height="70dp"
         android:text="next"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/signUpEmail" />
+        app:layout_constraintTop_toBottomOf="@+id/signUpLEmailLayout" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

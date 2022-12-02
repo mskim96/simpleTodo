@@ -16,23 +16,32 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <EditText
-        android:id="@+id/signUpUsername"
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/signUpUsernameLayout"
         android:layout_width="match_parent"
-        android:layout_height="70dp"
-        android:hint="Username"
-        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_height="100dp"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/authUsernameTitle" />
+        app:layout_constraintTop_toBottomOf="@+id/authUsernameTitle">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/signUpUsername"
+            android:layout_width="match_parent"
+            android:layout_height="70dp"
+            android:hint="Username"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/authUsernameTitle" />
+
+    </com.google.android.material.textfield.TextInputLayout>
 
     <Button
-        android:id="@+id/signUpNext"
+        android:id="@+id/signUpUsernameComplete"
         android:layout_width="match_parent"
         android:layout_height="70dp"
         android:text="next"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/signUpUsername" />
+        app:layout_constraintTop_toBottomOf="@+id/signUpUsernameLayout" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

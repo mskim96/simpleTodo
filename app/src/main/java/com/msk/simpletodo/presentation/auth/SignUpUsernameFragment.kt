@@ -18,21 +18,53 @@ class SignUpUsernameFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?,
     ): View? {
         _binding = FragmentSignUpUsernameBinding.inflate(inflater, container, false)
-        var listArray = mutableListOf<String?>()
 
-        // Get Email data from email Fragment
-        setFragmentResultListener("userEmail") { _, bundle ->
-            listArray.add(bundle.getString("email"))
+        // set var data for sign up data
+        var email: String? = null
+        var password: String? = null
 
-            setFragmentResultListener("userPassword") { _, bundle ->
-                listArray.add(bundle.getString("password"))
-                Log.d("TAG", "in: $listArray")
-            }
+        val signUpUsernameComplete = binding.signUpUsernameComplete
+        val signUpUsernameLayout = binding.signUpUsernameLayout
+        val signUpUsername = binding.signUpUsername
+
+        // set button disabled
+        binding.signUpUsernameComplete.isEnabled = false
+
+        // set when text change
+        signUpUsernameLayout.error = null
+        val valid = checkUsernameData(signUpUsername.text.toString())
+
+        if (valid != null) {
+            signUpUsernameLayout.error = valid
+            signUpUsernameComplete.isEnabled = false
+        } else {
+            signUpUsernameComplete.isEnabled = true
         }
 
-        // TODO: Set Username and impl signup logic
+
+        // Get data from email, password Fragment
+        setFragmentResultListener("userEmail") { _, bundle ->
+            email = bundle.getString("email")
+        }
+
+        setFragmentResultListener("userPassword") { _, bundle ->
+            password = bundle.getString("password")
+        }
+
+        binding.signUpUsernameComplete.setOnClickListener {
+            val username = signUpUsername.text?.trim().toString()
+            Log.d("TAG", "onCreateView: $email, $password, $username")
+        }
 
         return binding.root
+    }
+
+    private fun checkUsernameData(data: String): String? {
+        return if (data.isNullOrBlank()) {
+            "Please write your name"
+        } else {
+            null
+        }
     }
 
     override fun onDestroy() {

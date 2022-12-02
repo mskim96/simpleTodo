@@ -5,6 +5,7 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.widget.doAfterTextChanged
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.setFragmentResultListener
 import com.msk.simpletodo.databinding.FragmentSignUpUsernameBinding
@@ -32,13 +33,15 @@ class SignUpUsernameFragment : Fragment() {
 
         // set when text change
         signUpUsernameLayout.error = null
-        val valid = checkUsernameData(signUpUsername.text.toString())
 
-        if (valid != null) {
-            signUpUsernameLayout.error = valid
-            signUpUsernameComplete.isEnabled = false
-        } else {
-            signUpUsernameComplete.isEnabled = true
+        signUpUsername.doAfterTextChanged {
+            val valid = checkUsernameData(signUpUsername.text.toString())
+            if (valid != null) {
+                signUpUsernameLayout.error = valid
+                signUpUsernameComplete.isEnabled = false
+            } else {
+                signUpUsernameComplete.isEnabled = true
+            }
         }
 
 
@@ -60,6 +63,7 @@ class SignUpUsernameFragment : Fragment() {
     }
 
     private fun checkUsernameData(data: String): String? {
+        // TODO: Add logic
         return if (data.isNullOrBlank()) {
             "Please write your name"
         } else {

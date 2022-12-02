@@ -13,6 +13,7 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.setFragmentResult
 import androidx.lifecycle.lifecycleScope
 import com.msk.simpletodo.databinding.FragmentSignUpEmailBinding
+import kotlinx.coroutines.async
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 
@@ -33,27 +34,20 @@ class SignUpEmailFragment : Fragment() {
         // set button disabled
         signUpEmailComplete.isEnabled = false
 
-        signUpEmail.doBeforeTextChanged { _, _, _, _ ->
-            signUpEmailComplete.isEnabled = false
-        }
-
         // set when text change
         signUpEmail.doAfterTextChanged {
-            signUpEmailLayout.error = null
-            val valid = checkEmailData(signUpEmail.text.toString())
-            val job = lifecycleScope.launch {
+            lifecycleScope.launch {
+                val valid = checkEmailData(signUpEmail.text.toString())
                 if (valid != null) {
-                    delay(1000)
                     signUpEmailLayout.error = valid
                     signUpEmailComplete.isEnabled = false
                 } else {
-                    signUpEmailComplete.isEnabled = true
+                    signUpEmailComplete.isEnabled = valid == null
+                    signUpEmailLayout.error = null
                 }
+                Log.d("TAG", "onCreateView: ${valid}")
             }
-            Log.d("TAG", "onCreateView: $job")
         }
-
-
 
         signUpEmailComplete.setOnClickListener {
             val email = signUpEmail.text?.trim().toString()
@@ -65,8 +59,9 @@ class SignUpEmailFragment : Fragment() {
         return binding.root
     }
 
-    private fun checkEmailData(data: String): String? {
-        return if (data.isNullOrBlank() || !data.contains("@")) {
+    private suspend fun checkEmailData(data: String): String? {
+        // TODO: Add logic
+        return if (data.isNullOrBlank() || data.length < 6) {
             "Please write your email"
         } else {
             null

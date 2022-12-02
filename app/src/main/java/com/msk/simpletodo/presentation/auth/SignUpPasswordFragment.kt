@@ -32,25 +32,13 @@ class SignUpPasswordFragment : Fragment() {
         // set button disabled
         binding.signUpPasswordComplete.isEnabled = false
 
-        signUpPassword.doOnTextChanged { _, _, _, _ ->
-            signUpPasswordComplete.isEnabled = false
-        }
-
         // set when text change
         signUpPassword.doAfterTextChanged {
             signUpPasswordLayout.error = null
             val valid = checkPasswordData(signUpPassword.text.toString())
-            lifecycleScope.launch {
-                if (valid != null) {
-                    delay(1000)
-                    signUpPasswordLayout.error = valid
-                    signUpPasswordComplete.isEnabled = false
-                } else {
-                    signUpPasswordComplete.isEnabled = true
-                }
-            }
+            signUpPasswordLayout.error = valid
+            signUpPasswordComplete.isEnabled = valid == null
         }
-
 
         binding.signUpPasswordComplete.setOnClickListener {
             val password = signUpPassword.text?.trim().toString()
@@ -64,8 +52,9 @@ class SignUpPasswordFragment : Fragment() {
     }
 
     private fun checkPasswordData(data: String): String? {
-        return if (data.isNullOrBlank() || data.length < 5) {
-            "Please write password length more than 5"
+        // TODO: Add logic
+        return if (data.isNullOrBlank()) {
+            "Please write your password"
         } else {
             null
         }

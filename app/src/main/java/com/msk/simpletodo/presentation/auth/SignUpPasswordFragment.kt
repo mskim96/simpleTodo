@@ -4,21 +4,21 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.core.os.bundleOf
 import androidx.core.widget.doAfterTextChanged
-import androidx.core.widget.doBeforeTextChanged
-import androidx.core.widget.doOnTextChanged
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.setFragmentResult
-import androidx.lifecycle.lifecycleScope
+import androidx.lifecycle.ViewModelProvider
+import com.msk.simpletodo.SignUpUser
+import com.msk.simpletodo.SignUpUser.Companion.validate
 import com.msk.simpletodo.databinding.FragmentSignUpPasswordBinding
-import kotlinx.coroutines.delay
-import kotlinx.coroutines.launch
 
 class SignUpPasswordFragment : Fragment() {
 
+    // binding
     private var _binding: FragmentSignUpPasswordBinding? = null
     private val binding get() = _binding!!
+
+    // viewModel
+    private val sharedViewModel by lazy { ViewModelProvider(requireActivity())[AuthViewModel::class.java] }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?,
@@ -34,30 +34,27 @@ class SignUpPasswordFragment : Fragment() {
 
         // set when text change
         signUpPassword.doAfterTextChanged {
-            signUpPasswordLayout.error = null
-            val valid = checkPasswordData(signUpPassword.text.toString())
-            signUpPasswordLayout.error = valid
-            signUpPasswordComplete.isEnabled = valid == null
+
+            // validate function is from Companion object in SignUpUser
+            val validate = validate(SignUpUser.Password, it.toString())
+            if (!validate) {
+                signUpPasswordComplete.isEnabled = false
+                signUpPasswordLayout.error =
+                    "Please enter at least 5 characters for the password."
+            } else {
+                signUpPasswordComplete.isEnabled = true
+                signUpPasswordLayout.helperText = "The password format is correct."
+            }
         }
 
         binding.signUpPasswordComplete.setOnClickListener {
             val password = signUpPassword.text?.trim().toString()
-
             // Send email data for username fragment
-            setFragmentResult("userPassword", bundleOf("password" to password))
+            sharedViewModel.putUserInformation(SignUpUser.Password, password)
             (activity as AuthActivity).setFragment(SignUpUsernameFragment())
         }
 
         return binding.root
-    }
-
-    private fun checkPasswordData(data: String): String? {
-        // TODO: Add logic
-        return if (data.isNullOrBlank()) {
-            "Please write your password"
-        } else {
-            null
-        }
     }
 
     override fun onDestroy() {

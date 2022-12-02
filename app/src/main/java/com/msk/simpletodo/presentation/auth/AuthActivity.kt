@@ -18,6 +18,8 @@ class AuthActivity : AppCompatActivity() {
         _binding = ActivityAuthBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
+
+        // set signIn fragment
         supportFragmentManager.commit {
             replace<SignInFragment>(R.id.authMainFrame)
             setReorderingAllowed(true)

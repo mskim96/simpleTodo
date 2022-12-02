@@ -7,7 +7,7 @@
     tools:context=".presentation.auth.SignUpEmailFragment">
 
     <TextView
-        android:id="@+id/authEmailTitle"
+        android:id="@+id/signUpEmailTitle"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="Write your email"
@@ -17,11 +17,11 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/signUpLEmailLayout"
+        android:id="@+id/signUpEmailLayout"
         android:layout_width="match_parent"
         android:layout_height="100dp"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/authEmailTitle">
+        app:layout_constraintTop_toBottomOf="@+id/signUpEmailTitle">
 
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/signUpEmail"
@@ -41,6 +41,6 @@
         android:text="next"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/signUpLEmailLayout" />
+        app:layout_constraintTop_toBottomOf="@+id/signUpEmailLayout" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

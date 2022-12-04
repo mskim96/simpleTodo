@@ -1,4 +1,4 @@
-package com.msk.simpletodo.presentation.base
+package com.msk.simpletodo.presentation.view.base
 
 import android.os.Bundle
 import androidx.annotation.LayoutRes

@@ -1,23 +1,20 @@
-package com.msk.simpletodo.presentation.auth
+package com.msk.simpletodo.presentation.view.auth
 
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.core.widget.doAfterTextChanged
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.setFragmentResultListener
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
 import androidx.room.Room
-import com.msk.simpletodo.SignUpUser
-import com.msk.simpletodo.SignUpUser.Companion.validate
 import com.msk.simpletodo.data.database.AppDatabase
 import com.msk.simpletodo.data.model.UserEntity
 import com.msk.simpletodo.databinding.FragmentSignUpUsernameBinding
-import com.msk.simpletodo.presentation.util.decryptECB
-import com.msk.simpletodo.presentation.util.encryptECB
+import com.msk.simpletodo.domain.model.SignUpUser
+import com.msk.simpletodo.domain.model.validate
+import com.msk.simpletodo.presentation.viewModel.AuthViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
@@ -56,7 +53,7 @@ class SignUpUsernameFragment : Fragment() {
         signUpUsername.doAfterTextChanged {
 
             // validate function is from Companion object in SignUpUser
-            val validate = validate(SignUpUser.Username, it.toString())
+            val validate = SignUpUser.Username.validate(it.toString())
             if (!validate) {
                 signUpUsernameComplete.isEnabled = false
                 signUpUsernameLayout.error = "Please write your name"
@@ -83,7 +80,6 @@ class SignUpUsernameFragment : Fragment() {
                     password = password,
                     username = username))
             }
-
         }
 
         return binding.root

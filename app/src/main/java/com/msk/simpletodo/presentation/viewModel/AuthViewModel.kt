@@ -1,9 +1,9 @@
-package com.msk.simpletodo.presentation.auth
+package com.msk.simpletodo.presentation.viewModel
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.msk.simpletodo.SignUpUser
+import com.msk.simpletodo.domain.model.SignUpUser
 
 class AuthViewModel : ViewModel() {
 
@@ -17,10 +17,11 @@ class AuthViewModel : ViewModel() {
     val userDataPassword: LiveData<String> get() = _userDataPassword
 
     fun putUserInformation(type: SignUpUser, information: String) {
-        when (type) {
-            SignUpUser.Email -> _userDataEmail.value = information
-            SignUpUser.Password -> _userDataPassword.value = information
-            else -> null
+        // put data on liveData
+        if (type == SignUpUser.Email) {
+            _userDataEmail.value = information
+        } else {
+            _userDataPassword.value = information
         }
     }
 }

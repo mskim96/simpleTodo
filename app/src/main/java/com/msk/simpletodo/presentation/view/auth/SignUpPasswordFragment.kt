@@ -1,4 +1,4 @@
-package com.msk.simpletodo.presentation.auth
+package com.msk.simpletodo.presentation.view.auth
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -7,10 +7,11 @@ import android.view.ViewGroup
 import androidx.core.widget.doAfterTextChanged
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
-import com.msk.simpletodo.SignUpUser
-import com.msk.simpletodo.SignUpUser.Companion.validate
 import com.msk.simpletodo.databinding.FragmentSignUpPasswordBinding
+import com.msk.simpletodo.domain.model.SignUpUser
+import com.msk.simpletodo.domain.model.validate
 import com.msk.simpletodo.presentation.util.encryptECB
+import com.msk.simpletodo.presentation.viewModel.AuthViewModel
 
 class SignUpPasswordFragment : Fragment() {
 
@@ -38,7 +39,7 @@ class SignUpPasswordFragment : Fragment() {
         signUpPassword.doAfterTextChanged {
 
             // validate function is from Companion object in SignUpUser
-            val validate = validate(SignUpUser.Password, it.toString())
+            val validate = SignUpUser.Password.validate(it.toString())
             if (!validate) {
                 signUpPasswordComplete.isEnabled = false
                 signUpPasswordLayout.error =

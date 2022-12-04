@@ -1,16 +1,16 @@
-package com.msk.simpletodo.presentation.auth
+package com.msk.simpletodo.presentation.view.auth
 
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.core.widget.doAfterTextChanged
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
-import com.msk.simpletodo.SignUpUser
-import com.msk.simpletodo.SignUpUser.Companion.validate
 import com.msk.simpletodo.databinding.FragmentSignUpEmailBinding
+import com.msk.simpletodo.domain.model.SignUpUser
+import com.msk.simpletodo.domain.model.validate
+import com.msk.simpletodo.presentation.viewModel.AuthViewModel
 
 class SignUpEmailFragment : Fragment() {
 
@@ -42,7 +42,7 @@ class SignUpEmailFragment : Fragment() {
         signUpEmail.doAfterTextChanged {
 
             // validate function is from Companion object in SignUpUser
-            val validate = validate(SignUpUser.Email, it.toString())
+            val validate = SignUpUser.Email.validate(it.toString())
             if (!validate) {
                 signUpEmailComplete.isEnabled = false
                 signUpEmailLayout.error = "Please enter an email that matches the format"

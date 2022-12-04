@@ -1,4 +1,4 @@
-package com.msk.simpletodo.presentation.todo
+package com.msk.simpletodo.presentation.view.todo
 
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity

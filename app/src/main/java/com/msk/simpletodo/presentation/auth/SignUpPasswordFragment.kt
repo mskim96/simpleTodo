@@ -10,6 +10,7 @@ import androidx.lifecycle.ViewModelProvider
 import com.msk.simpletodo.SignUpUser
 import com.msk.simpletodo.SignUpUser.Companion.validate
 import com.msk.simpletodo.databinding.FragmentSignUpPasswordBinding
+import com.msk.simpletodo.presentation.util.encryptECB
 
 class SignUpPasswordFragment : Fragment() {
 
@@ -32,6 +33,7 @@ class SignUpPasswordFragment : Fragment() {
         // set button disabled
         binding.signUpPasswordComplete.isEnabled = false
 
+
         // set when text change
         signUpPassword.doAfterTextChanged {
 
@@ -48,8 +50,8 @@ class SignUpPasswordFragment : Fragment() {
         }
 
         binding.signUpPasswordComplete.setOnClickListener {
-            val password = signUpPassword.text?.trim().toString()
-            // Send email data for username fragment
+            val password = signUpPassword.text?.trim().toString().encryptECB()
+            // Send password data for username fragment
             sharedViewModel.putUserInformation(SignUpUser.Password, password)
             (activity as AuthActivity).setFragment(SignUpUsernameFragment())
         }

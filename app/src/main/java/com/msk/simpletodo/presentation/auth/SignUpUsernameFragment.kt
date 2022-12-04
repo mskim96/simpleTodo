@@ -12,6 +12,8 @@ import androidx.lifecycle.ViewModelProvider
 import com.msk.simpletodo.SignUpUser
 import com.msk.simpletodo.SignUpUser.Companion.validate
 import com.msk.simpletodo.databinding.FragmentSignUpUsernameBinding
+import com.msk.simpletodo.presentation.util.decryptECB
+import com.msk.simpletodo.presentation.util.encryptECB
 
 class SignUpUsernameFragment : Fragment() {
 
@@ -30,9 +32,15 @@ class SignUpUsernameFragment : Fragment() {
         val signUpUsernameComplete = binding.signUpUsernameComplete
         val signUpUsernameLayout = binding.signUpUsernameLayout
         val signUpUsername = binding.signUpUsername
+        val textClear = binding.textClear
 
         // set button disabled
         binding.signUpUsernameComplete.isEnabled = false
+        textClear.visibility = View.GONE
+
+        textClear.setOnClickListener {
+            signUpUsername.text = null
+        }
 
         signUpUsername.doAfterTextChanged {
 
@@ -45,6 +53,13 @@ class SignUpUsernameFragment : Fragment() {
                 signUpUsernameComplete.isEnabled = true
                 signUpUsernameLayout.helperText = "Perfect!"
             }
+
+            // show textClear Button
+            if (signUpUsername.text.isNullOrBlank()) {
+                textClear.visibility = View.GONE
+            } else {
+                textClear.visibility = View.VISIBLE
+            }
         }
 
         binding.signUpUsernameComplete.setOnClickListener {
@@ -52,7 +67,9 @@ class SignUpUsernameFragment : Fragment() {
             val password = sharedViewModel.userDataPassword.value
             val username = signUpUsername.text?.trim().toString()
 
+            val testPassword = "1234".encryptECB()
             Log.d("TAG", "onCreateView: $email, $password, $username")
+            Log.d("TAG", "onCreateView: ${password == testPassword}")
         }
 
         return binding.root

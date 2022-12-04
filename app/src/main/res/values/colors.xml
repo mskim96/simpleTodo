@@ -15,4 +15,7 @@
     <color name="font_case">#333333</color>
     <color name="font_header">#000000</color>
     <color name="font_default">#616161</color>
+
+    <!--Form-->
+    <color name="form_correct">#009000</color>
 </resources>

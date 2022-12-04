@@ -1,6 +1,7 @@
 package com.msk.simpletodo.presentation.auth
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -28,9 +29,14 @@ class SignUpEmailFragment : Fragment() {
         val signUpEmailComplete = binding.signUpEmailComplete
         val signUpEmailLayout = binding.signUpEmailLayout
         val signUpEmail = binding.signUpEmail
-
+        val textClear = binding.textClear
         // set button disabled
         signUpEmailComplete.isEnabled = false
+        textClear.visibility = View.GONE
+
+        textClear.setOnClickListener {
+            signUpEmail.text = null
+        }
 
         // set when text change
         signUpEmail.doAfterTextChanged {
@@ -43,6 +49,13 @@ class SignUpEmailFragment : Fragment() {
             } else {
                 signUpEmailComplete.isEnabled = true
                 signUpEmailLayout.helperText = "Email format is correct"
+            }
+
+            // show textClear Button
+            if (signUpEmail.text.isNullOrBlank()) {
+                textClear.visibility = View.GONE
+            } else {
+                textClear.visibility = View.VISIBLE
             }
         }
 

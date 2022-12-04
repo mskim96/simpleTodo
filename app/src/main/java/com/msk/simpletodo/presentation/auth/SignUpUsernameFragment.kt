@@ -9,11 +9,17 @@ import androidx.core.widget.doAfterTextChanged
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.setFragmentResultListener
 import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.lifecycleScope
+import androidx.room.Room
 import com.msk.simpletodo.SignUpUser
 import com.msk.simpletodo.SignUpUser.Companion.validate
+import com.msk.simpletodo.data.database.AppDatabase
+import com.msk.simpletodo.data.model.UserEntity
 import com.msk.simpletodo.databinding.FragmentSignUpUsernameBinding
 import com.msk.simpletodo.presentation.util.decryptECB
 import com.msk.simpletodo.presentation.util.encryptECB
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 
 class SignUpUsernameFragment : Fragment() {
 
@@ -33,6 +39,11 @@ class SignUpUsernameFragment : Fragment() {
         val signUpUsernameLayout = binding.signUpUsernameLayout
         val signUpUsername = binding.signUpUsername
         val textClear = binding.textClear
+
+        // build database
+        val db = Room.databaseBuilder(
+            requireContext(), AppDatabase::class.java, "todo-database"
+        ).build()
 
         // set button disabled
         binding.signUpUsernameComplete.isEnabled = false
@@ -63,13 +74,16 @@ class SignUpUsernameFragment : Fragment() {
         }
 
         binding.signUpUsernameComplete.setOnClickListener {
-            val email = sharedViewModel.userDataEmail.value
-            val password = sharedViewModel.userDataPassword.value
+            val email = sharedViewModel.userDataEmail.value!!
+            val password = sharedViewModel.userDataPassword.value!!
             val username = signUpUsername.text?.trim().toString()
 
-            val testPassword = "1234".encryptECB()
-            Log.d("TAG", "onCreateView: $email, $password, $username")
-            Log.d("TAG", "onCreateView: ${password == testPassword}")
+            lifecycleScope.launch(Dispatchers.IO) {
+                db.userDao().createAccount(user = UserEntity(email = email,
+                    password = password,
+                    username = username))
+            }
+
         }
 
         return binding.root

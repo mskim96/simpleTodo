@@ -7,7 +7,7 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import com.msk.simpletodo.databinding.FragmentSignInBinding
 
-class SignInFragment : Fragment() {
+class SignMainFragment : Fragment() {
 
     private var _binding: FragmentSignInBinding? = null
     private val binding get() = _binding!!

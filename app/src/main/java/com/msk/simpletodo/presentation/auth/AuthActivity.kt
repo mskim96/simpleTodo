@@ -21,7 +21,7 @@ class AuthActivity : AppCompatActivity() {
 
         // set signIn fragment
         supportFragmentManager.commit {
-            replace<SignInFragment>(R.id.authMainFrame)
+            replace<SignMainFragment>(R.id.authMainFrame)
             setReorderingAllowed(true)
         }
     }

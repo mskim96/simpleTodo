@@ -7,4 +7,12 @@
     <color name="teal_700">#FF018786</color>
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
+
+    <!--BackGround-->
+    <color name="background_white">#F2F2F2F2</color>
+
+    <!--Typo-->
+    <color name="font_case">#333333</color>
+    <color name="font_header">#000000</color>
+    <color name="font_default">#616161</color>
 </resources>

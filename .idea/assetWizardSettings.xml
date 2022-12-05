@@ -14,8 +14,8 @@
                         <option name="values">
                           <map>
                             <entry key="assetSourceType" value="FILE" />
-                            <entry key="outputName" value="auth_chrome_icon" />
-                            <entry key="sourceFile" value="$PROJECT_DIR$/app/src/main/res/drawable/chrome.svg" />
+                            <entry key="outputName" value="auth_instagram_icon" />
+                            <entry key="sourceFile" value="$PROJECT_DIR$/app/src/main/res/drawable/instagram.svg" />
                           </map>
                         </option>
                       </PersistentState>

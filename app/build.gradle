@@ -3,16 +3,17 @@ plugins {
     id 'org.jetbrains.kotlin.android'
     id 'kotlin-kapt'
     id 'com.google.dagger.hilt.android'
+    id 'kotlin-parcelize'
 }
 
 android {
     namespace 'com.msk.simpletodo'
-    compileSdk 32
+    compileSdk 33
 
     defaultConfig {
         applicationId "com.msk.simpletodo"
         minSdk 21
-        targetSdk 32
+        targetSdk 33
         versionCode 1
         versionName "1.0"
 
@@ -45,6 +46,9 @@ dependencies {
 
     def room_version = "2.4.3"
     def hilt_version = "2.44"
+
+    // dataStore
+    implementation "androidx.datastore:datastore-preferences:1.1.0-alpha01"
 
     // Hilt
     implementation "com.google.dagger:hilt-android:$hilt_version"

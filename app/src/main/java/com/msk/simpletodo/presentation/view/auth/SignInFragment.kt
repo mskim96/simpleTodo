@@ -11,6 +11,7 @@ import android.widget.Toast
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import com.msk.simpletodo.R
+import com.msk.simpletodo.data.model.UserEntity
 import com.msk.simpletodo.databinding.FragmentSignInBinding
 import com.msk.simpletodo.domain.model.UserState
 import com.msk.simpletodo.presentation.viewModel.AuthViewModel
@@ -48,8 +49,13 @@ class SignInFragment : Fragment() {
         sharedViewModel.userResult.observe(viewLifecycleOwner, Observer {
             when (it) {
                 is UserState.Success -> {
-                    val intent = Intent(requireActivity(), AuthToMainSplashActivity::class.java)
-                    startActivity(intent)
+                    if (it.data is UserEntity) {
+                        val username = it.data.username
+                        val intent = Intent(requireActivity(), AuthToMainSplashActivity::class.java)
+                        intent.putExtra("username", username)
+                        startActivity(intent)
+                    }
+
                 }
                 is UserState.Error -> Toast.makeText(
                     requireContext(),

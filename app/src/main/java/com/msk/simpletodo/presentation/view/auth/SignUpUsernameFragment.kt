@@ -9,18 +9,11 @@ import androidx.core.widget.doAfterTextChanged
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
-import androidx.lifecycle.lifecycleScope
-import androidx.room.Room
-import com.msk.simpletodo.data.database.AppDatabase
-import com.msk.simpletodo.data.model.UserEntity
 import com.msk.simpletodo.databinding.FragmentSignUpUsernameBinding
 import com.msk.simpletodo.domain.model.SignUpUser
 import com.msk.simpletodo.domain.model.validate
 import com.msk.simpletodo.presentation.viewModel.AuthViewModel
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.launch
-import javax.inject.Inject
 
 @AndroidEntryPoint
 class SignUpUsernameFragment : Fragment() {
@@ -41,11 +34,6 @@ class SignUpUsernameFragment : Fragment() {
         val signUpUsernameLayout = binding.signUpUsernameLayout
         val signUpUsername = binding.signUpUsername
         val textClear = binding.textClear
-
-        // build database
-        val db = Room.databaseBuilder(
-            requireContext(), AppDatabase::class.java, "todo-database"
-        ).build()
 
         // set button disabled
         binding.signUpUsernameComplete.isEnabled = false
@@ -85,6 +73,10 @@ class SignUpUsernameFragment : Fragment() {
 
         sharedViewModel.userResult.observe(viewLifecycleOwner, Observer {
             val intent = Intent(requireActivity(), AuthToMainSplashActivity::class.java)
+            val username = signUpUsername.text.toString()
+            intent.putExtra("username", username)
+            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
+            intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
             startActivity(intent)
         })
 

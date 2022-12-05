@@ -10,8 +10,8 @@
         android:id="@+id/splashGreeting"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:gravity="center_horizontal"
-        android:text="Hello"
+        android:gravity="center"
+        android:text="Hello !"
         android:textColor="@color/font_case"
         android:textSize="36sp"
         android:textStyle="bold"
@@ -20,7 +20,7 @@
         app:layout_constraintHorizontal_bias="0.495"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.399"
+        app:layout_constraintVertical_bias="0.398"
         app:layout_constraintWidth_percent="0.7" />
 
     <TextView
@@ -29,7 +29,6 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="24dp"
         android:gravity="center_horizontal"
-        android:text="Username"
         android:textColor="@color/font_case"
         android:textSize="36sp"
         android:textStyle="bold"
@@ -39,7 +38,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/splashGreeting"
         app:layout_constraintVertical_bias="0.0"
-        app:layout_constraintWidth_percent="0.7" />
+        app:layout_constraintWidth_percent="0.9" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

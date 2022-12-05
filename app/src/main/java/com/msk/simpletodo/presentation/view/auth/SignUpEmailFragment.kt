@@ -38,6 +38,7 @@ class SignUpEmailFragment : Fragment() {
             signUpEmail.text = null
         }
 
+
         // set when text change
         signUpEmail.doAfterTextChanged {
 

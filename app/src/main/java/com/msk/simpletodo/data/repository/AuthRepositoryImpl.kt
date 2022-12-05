@@ -11,4 +11,8 @@ class AuthRepositoryImpl @Inject constructor(private val datasource: AuthDatasou
         val newUser = UserEntity(email = email, password = password, username = username)
         return datasource.createAccount(newUser)
     }
+
+    override suspend fun getUserByEmail(email: String): UserEntity {
+        return datasource.getUserByEmail(email)
+    }
 }

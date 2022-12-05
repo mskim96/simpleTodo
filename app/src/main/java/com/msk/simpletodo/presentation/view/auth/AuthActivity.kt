@@ -68,6 +68,15 @@ class AuthActivity : AppCompatActivity() {
                     addToBackStack(null)
                 }
             }
+
+            is SignInFragment -> {
+                supportFragmentManager.popBackStack()
+                supportFragmentManager.commit {
+                    replace<SignInFragment>(R.id.authMainFrame)
+                    setReorderingAllowed(true)
+                    addToBackStack(null)
+                }
+            }
         }
     }
 

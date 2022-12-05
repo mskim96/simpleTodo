@@ -23,7 +23,7 @@
         android:layout_width="0dp"
         android:layout_height="100dp"
         android:layout_marginTop="24dp"
-        app:endIconDrawable="@drawable/clear_icon"
+        app:endIconDrawable="@drawable/current_clear_icon"
         app:errorIconDrawable="@null"
         app:errorTextAppearance="@style/holderSizeStyle"
         app:helperTextTextAppearance="@style/holderSizeStyle"
@@ -47,12 +47,12 @@
 
     <ImageButton
         android:id="@+id/textClear"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="48dp"
+        android:layout_height="48dp"
         android:layout_marginEnd="8dp"
         android:layout_marginBottom="16dp"
         android:background="@color/white"
-        android:src="@drawable/clear_icon"
+        android:src="@drawable/current_clear_icon"
         app:layout_constraintBottom_toBottomOf="@+id/signUpEmailLayout"
         app:layout_constraintEnd_toEndOf="@+id/signUpEmailLayout"
         app:layout_constraintTop_toTopOf="@+id/signUpEmailLayout" />
@@ -60,7 +60,7 @@
     <Button
         android:id="@+id/signUpEmailComplete"
         android:layout_width="0dp"
-        android:layout_height="70dp"
+        android:layout_height="80dp"
         android:layout_marginBottom="32dp"
         android:text="next"
         app:layout_constraintBottom_toBottomOf="parent"

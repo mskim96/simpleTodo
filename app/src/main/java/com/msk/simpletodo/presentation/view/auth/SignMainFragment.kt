@@ -5,20 +5,26 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
-import com.msk.simpletodo.databinding.FragmentSignInBinding
+import com.msk.simpletodo.databinding.FragmentSignMainBinding
 
 class SignMainFragment : Fragment() {
 
-    private var _binding: FragmentSignInBinding? = null
+    private var _binding: FragmentSignMainBinding? = null
     private val binding get() = _binding!!
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
     ): View? {
-        _binding = FragmentSignInBinding.inflate(inflater, container, false)
+        _binding = FragmentSignMainBinding.inflate(inflater, container, false)
 
-        binding.navSignUp.setOnClickListener {
-            (activity as AuthActivity).setFragment(SignUpEmailFragment())
+        with(binding) {
+            navSignUp.setOnClickListener {
+                (activity as AuthActivity).setFragment(SignUpEmailFragment())
+            }
+
+            navSignIn.setOnClickListener {
+                (activity as AuthActivity).setFragment(SignInFragment())
+            }
         }
         return binding.root
     }

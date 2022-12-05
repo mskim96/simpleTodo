@@ -4,6 +4,7 @@ import androidx.room.Dao
 import androidx.room.Insert
 import androidx.room.Query
 import com.msk.simpletodo.data.model.UserEntity
+import kotlinx.coroutines.flow.Flow
 
 @Dao
 interface UserDao {
@@ -11,5 +12,5 @@ interface UserDao {
     fun getAllUser(): List<UserEntity>
 
     @Insert
-    fun createAccount(user: UserEntity): Long
+    suspend fun createAccount(user: UserEntity): Long
 }

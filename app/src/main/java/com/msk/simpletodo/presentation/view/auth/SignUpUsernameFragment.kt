@@ -15,9 +15,12 @@ import com.msk.simpletodo.databinding.FragmentSignUpUsernameBinding
 import com.msk.simpletodo.domain.model.SignUpUser
 import com.msk.simpletodo.domain.model.validate
 import com.msk.simpletodo.presentation.viewModel.AuthViewModel
+import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import javax.inject.Inject
 
+@AndroidEntryPoint
 class SignUpUsernameFragment : Fragment() {
 
     // binding
@@ -75,14 +78,15 @@ class SignUpUsernameFragment : Fragment() {
             val password = sharedViewModel.userDataPassword.value!!
             val username = signUpUsername.text?.trim().toString()
 
-            lifecycleScope.launch(Dispatchers.IO) {
-                db.userDao().createAccount(user = UserEntity(email = email,
-                    password = password,
-                    username = username))
-            }
+            createAccount(email, password, username)
         }
 
         return binding.root
+    }
+
+    // create Account method from viewModel
+    fun createAccount(email: String, password: String, username: String) {
+        sharedViewModel.createAccount(email, password, username)
     }
 
     override fun onDestroy() {

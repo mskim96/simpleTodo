@@ -25,6 +25,8 @@
         android:layout_marginTop="24dp"
         app:endIconDrawable="@drawable/clear_icon"
         app:errorIconDrawable="@null"
+        app:errorTextAppearance="@style/holderSizeStyle"
+        app:helperTextTextAppearance="@style/holderSizeStyle"
         app:helperTextTextColor="@color/form_correct"
         app:hintEnabled="false"
         app:layout_constraintEnd_toStartOf="@+id/guideline6"

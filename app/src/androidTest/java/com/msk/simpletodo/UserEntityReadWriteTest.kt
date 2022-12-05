@@ -5,9 +5,18 @@ import androidx.room.Room
 import androidx.test.core.app.ApplicationProvider
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import com.msk.simpletodo.data.database.AppDatabase
+import com.msk.simpletodo.data.datasource.AuthDatasource
+import com.msk.simpletodo.data.datasource.AuthDatasourceImpl
 import com.msk.simpletodo.data.model.UserDao
 import com.msk.simpletodo.data.model.UserEntity
+import com.msk.simpletodo.data.repository.AuthRepositoryImpl
+import com.msk.simpletodo.domain.repository.AuthRepository
+import com.msk.simpletodo.domain.usecase.SignUpUseCase
 import com.msk.simpletodo.presentation.util.encryptECB
+import com.msk.simpletodo.presentation.viewModel.AuthViewModel
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 import org.hamcrest.MatcherAssert.assertThat
 import org.hamcrest.Matchers.equalTo
 import org.junit.After
@@ -20,6 +29,10 @@ import java.io.IOException
 class UserEntityReadWriteTest {
     private lateinit var userDao: UserDao
     private lateinit var db: AppDatabase
+    private lateinit var datasource: AuthDatasource
+    private lateinit var repository: AuthRepository
+    private lateinit var signUpUseCase: SignUpUseCase
+    private lateinit var viewModel: AuthViewModel
 
     @Before
     fun createDb() {
@@ -28,6 +41,10 @@ class UserEntityReadWriteTest {
             context, AppDatabase::class.java
         ).build()
         userDao = db.userDao()
+        datasource = AuthDatasourceImpl(userDao)
+        repository = AuthRepositoryImpl(datasource)
+        signUpUseCase = SignUpUseCase(repository)
+        viewModel = AuthViewModel(signUpUseCase)
     }
 
     @After
@@ -39,11 +56,9 @@ class UserEntityReadWriteTest {
     @Test
     @Throws(Exception::class)
     fun writeUserAndReadInList() {
-        val userPassword = "12345".encryptECB()
-        val user = UserEntity(email = "test@email.com", password = userPassword, username = "minseong")
-        val testPassword = "12345".encryptECB()
-        userDao.createAccount(user)
-        val getUser = userDao.getAllUser().get(0)
-        assertThat(getUser.password, equalTo(testPassword))
+        viewModel.createAccount(email = "123@test.com", "12345", "test")
+        CoroutineScope(Dispatchers.IO).launch {
+            assertThat(viewModel.userResult.value, equalTo(1L))
+        }
     }
 }

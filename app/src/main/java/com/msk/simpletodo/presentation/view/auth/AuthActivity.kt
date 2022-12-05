@@ -7,7 +7,9 @@ import androidx.fragment.app.commit
 import androidx.fragment.app.replace
 import com.msk.simpletodo.R
 import com.msk.simpletodo.databinding.ActivityAuthBinding
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class AuthActivity : AppCompatActivity() {
 
     private var _binding: ActivityAuthBinding? = null

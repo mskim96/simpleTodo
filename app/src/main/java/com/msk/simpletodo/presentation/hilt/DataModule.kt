@@ -11,7 +11,7 @@ import com.msk.simpletodo.data.datasource.AuthDatasource
 import com.msk.simpletodo.data.datasource.AuthDatasourceImpl
 import com.msk.simpletodo.data.model.UserDao
 import com.msk.simpletodo.data.repository.AuthRepositoryImpl
-import com.msk.simpletodo.domain.repository.AuthRepository
+import com.msk.simpletodo.domain.auth.repository.AuthRepository
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn

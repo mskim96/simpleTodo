@@ -2,7 +2,6 @@ package com.msk.simpletodo.presentation.view.auth
 
 import android.content.Intent
 import android.os.Bundle
-import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -10,11 +9,11 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
-import com.msk.simpletodo.R
 import com.msk.simpletodo.data.model.UserEntity
 import com.msk.simpletodo.databinding.FragmentSignInBinding
-import com.msk.simpletodo.domain.model.UserState
-import com.msk.simpletodo.presentation.viewModel.AuthViewModel
+import com.msk.simpletodo.domain.auth.model.UserState
+import com.msk.simpletodo.presentation.view.todo.TodoActivity
+import com.msk.simpletodo.presentation.viewModel.auth.AuthViewModel
 
 class SignInFragment : Fragment() {
 
@@ -51,7 +50,7 @@ class SignInFragment : Fragment() {
                 is UserState.Success -> {
                     if (it.data is UserEntity) {
                         val username = it.data.username
-                        val intent = Intent(requireActivity(), AuthToMainSplashActivity::class.java)
+                        val intent = Intent(requireActivity(), TodoActivity::class.java)
                         intent.putExtra("username", username)
                         startActivity(intent)
                     }

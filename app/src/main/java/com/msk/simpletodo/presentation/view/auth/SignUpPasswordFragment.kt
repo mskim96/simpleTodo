@@ -8,10 +8,10 @@ import androidx.core.widget.doAfterTextChanged
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import com.msk.simpletodo.databinding.FragmentSignUpPasswordBinding
-import com.msk.simpletodo.domain.model.SignUpUser
-import com.msk.simpletodo.domain.model.validate
+import com.msk.simpletodo.domain.auth.model.SignUpUser
+import com.msk.simpletodo.domain.auth.model.validate
 import com.msk.simpletodo.presentation.util.encryptECB
-import com.msk.simpletodo.presentation.viewModel.AuthViewModel
+import com.msk.simpletodo.presentation.viewModel.auth.AuthViewModel
 
 class SignUpPasswordFragment : Fragment() {
 

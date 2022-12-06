@@ -3,7 +3,6 @@ package com.msk.simpletodo.presentation.view.auth
 import android.content.Intent
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
-import com.msk.simpletodo.R
 import com.msk.simpletodo.databinding.ActivityAuthToMainSplashBinding
 import com.msk.simpletodo.presentation.view.todo.TodoActivity
 import kotlinx.coroutines.*
@@ -25,7 +24,7 @@ class AuthToMainSplashActivity : AppCompatActivity() {
         binding.splashGreetingUser.text = username
 
         activityScope.launch {
-            delay(2500)
+            delay(1500)
             val intent = Intent(this@AuthToMainSplashActivity, TodoActivity::class.java)
             startActivity(intent)
             finish()

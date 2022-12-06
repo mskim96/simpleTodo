@@ -10,9 +10,10 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import com.msk.simpletodo.databinding.FragmentSignUpUsernameBinding
-import com.msk.simpletodo.domain.model.SignUpUser
-import com.msk.simpletodo.domain.model.validate
-import com.msk.simpletodo.presentation.viewModel.AuthViewModel
+import com.msk.simpletodo.domain.auth.model.SignUpUser
+import com.msk.simpletodo.domain.auth.model.validate
+import com.msk.simpletodo.presentation.view.todo.TodoActivity
+import com.msk.simpletodo.presentation.viewModel.auth.AuthViewModel
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -72,7 +73,7 @@ class SignUpUsernameFragment : Fragment() {
         }
 
         sharedViewModel.userResult.observe(viewLifecycleOwner, Observer {
-            val intent = Intent(requireActivity(), AuthToMainSplashActivity::class.java)
+            val intent = Intent(requireActivity(), TodoActivity::class.java)
             val username = signUpUsername.text.toString()
             intent.putExtra("username", username)
             intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);

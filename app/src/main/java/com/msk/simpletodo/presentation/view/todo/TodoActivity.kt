@@ -3,17 +3,14 @@ package com.msk.simpletodo.presentation.view.todo
 import android.os.Bundle
 import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
-import androidx.datastore.core.DataStore
-import androidx.datastore.preferences.core.Preferences
+import androidx.core.os.bundleOf
+import androidx.fragment.app.commit
+import androidx.fragment.app.replace
 import androidx.lifecycle.ViewModelProvider
-import androidx.lifecycle.lifecycleScope
 import com.msk.simpletodo.R
 import com.msk.simpletodo.databinding.ActivityTodoBinding
-import com.msk.simpletodo.presentation.viewModel.AuthViewModel
+import com.msk.simpletodo.presentation.viewModel.auth.AuthViewModel
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.flow.collect
-import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
 class TodoActivity() : AppCompatActivity() {
@@ -27,12 +24,21 @@ class TodoActivity() : AppCompatActivity() {
         _binding = ActivityTodoBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        lifecycleScope.launch(Dispatchers.IO) {
-            authViewModel.userNameFlow.collect {
-                Log.d("TAG", "onCreate: $it")
-            }
+
+        // Get username from Auth Activity and send username to TodoMainFragment
+        val username = intent.getStringExtra("username")
+        val bundleUsername = bundleOf("username" to username)
+        supportFragmentManager.commit {
+            replace<TodoMainFragment>(R.id.todoMainFrame, args = bundleUsername)
+            setReorderingAllowed(true)
         }
     }
+
+//    fun setFragment(fragmentId: Fragment){
+//        when(fragmentId){
+//
+//        }
+//    }
 
     override fun onDestroy() {
         super.onDestroy()

@@ -7,15 +7,25 @@
     android:background="@color/white"
     tools:context=".presentation.view.auth.SignMainFragment">
 
+    <ImageButton
+        android:layout_width="48dp"
+        android:layout_height="48dp"
+        android:layout_marginStart="12dp"
+        android:backgroundTint="@color/white"
+        android:clickable="false"
+        android:src="@drawable/current_app_icon"
+        app:layout_constraintBottom_toTopOf="@+id/guideline4"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
         android:id="@+id/signMainTitle"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:layout_marginTop="64dp"
         android:text="Todo, Simple. Practice."
         android:textColor="@color/font_case"
         android:textSize="36sp"
-        android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@+id/guideline3"
         app:layout_constraintHorizontal_bias="0.0"
@@ -30,8 +40,8 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="24dp"
-        android:lineSpacingExtra="6dp"
         android:text="Simple todo application.\nThis application is created for study."
+        android:lineSpacingExtra="6dp"
         android:textColor="@color/font_default"
         android:textSize="16sp"
         app:layout_constraintEnd_toStartOf="@+id/guideline3"

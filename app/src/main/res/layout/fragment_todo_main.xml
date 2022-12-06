@@ -97,6 +97,7 @@
             android:layout_height="wrap_content"
             android:text="TODAY : 2022/12/06 TUE"
             android:textColor="@color/font_case"
+            android:textStyle="bold"
             android:textSize="16sp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toStartOf="@+id/guideline12"

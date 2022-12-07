@@ -6,4 +6,5 @@ interface AuthRepository {
     suspend fun createAccount(email: String, password: String, username: String): Long
 
     suspend fun getUserByEmail(email: String): UserEntity
+
 }

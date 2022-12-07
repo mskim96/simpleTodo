@@ -2,6 +2,7 @@ package com.msk.simpletodo.data.datasource
 
 import com.msk.simpletodo.data.model.UserDao
 import com.msk.simpletodo.data.model.UserEntity
+import com.msk.simpletodo.data.model.UserWithTodo
 import javax.inject.Inject
 
 class AuthDatasourceImpl @Inject constructor(private val userDao: UserDao) : AuthDatasource {
@@ -12,4 +13,5 @@ class AuthDatasourceImpl @Inject constructor(private val userDao: UserDao) : Aut
     override suspend fun getUserByEmail(email: String): UserEntity {
         return userDao.getUserByEmail(email = email)
     }
+
 }

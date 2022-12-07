@@ -30,17 +30,17 @@ class AuthActivity : AppCompatActivity() {
         setContentView(binding.root)
 
         // when username exist on datastore, nav toDo activity
-//        lifecycleScope.launch(Dispatchers.IO) {
-//            sharedViewModel.userNameFlow.collect {
-//                if (it != null) {
-//                    val intent = Intent(this@AuthActivity, TodoActivity::class.java)
-//                    intent.putExtra("username", it)
-//                    intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
-//                    intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-//                    startActivity(intent)
-//                }
-//            }
-//        }
+        lifecycleScope.launch(Dispatchers.IO) {
+            sharedViewModel.userNameFlow.collect {
+                if (it != null) {
+                    val intent = Intent(this@AuthActivity, TodoActivity::class.java)
+                    intent.putExtra("username", it)
+                    intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                    intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                    startActivity(intent)
+                }
+            }
+        }
 
 
         // set signIn fragment
@@ -65,7 +65,12 @@ class AuthActivity : AppCompatActivity() {
         when (fragmentId) {
             is SignUpEmailFragment -> {
                 supportFragmentManager.commit {
-                    setCustomAnimations(R.anim.left_enter, R.anim.left_exit,R.anim.left_enter, R.anim.left_exit)
+                    setCustomAnimations(
+                        R.anim.left_enter,
+                        R.anim.left_exit,
+                        R.anim.left_enter,
+                        R.anim.left_exit
+                    )
                     replace<SignUpEmailFragment>(R.id.authMainFrame)
                     setReorderingAllowed(true)
                     addToBackStack(null)

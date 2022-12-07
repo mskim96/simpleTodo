@@ -12,6 +12,7 @@
     </data>
 
     <androidx.cardview.widget.CardView
+        android:id="@+id/todoFrameCard"
         android:layout_width="240dp"
         android:layout_height="300dp"
         android:layout_marginLeft="0dp"
@@ -37,8 +38,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="4dp"
-                android:textColor="@color/font_case"
                 android:text="@{todo.title}"
+                android:textColor="@color/font_case"
                 android:textSize="28dp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toStartOf="parent" />

@@ -2,6 +2,7 @@ package com.msk.simpletodo.data.repository
 
 import com.msk.simpletodo.data.datasource.AuthDatasource
 import com.msk.simpletodo.data.model.UserEntity
+import com.msk.simpletodo.data.model.UserWithTodo
 import com.msk.simpletodo.domain.auth.repository.AuthRepository
 import javax.inject.Inject
 

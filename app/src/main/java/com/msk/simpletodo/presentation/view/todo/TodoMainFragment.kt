@@ -1,18 +1,18 @@
 package com.msk.simpletodo.presentation.view.todo
 
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.msk.simpletodo.databinding.FragmentTodoMainBinding
 import com.msk.simpletodo.presentation.util.convertTimestampToDate
 import com.msk.simpletodo.presentation.util.convertTimestampToHour
 import com.msk.simpletodo.presentation.viewModel.todo.TodoMainAdapter
-import java.text.SimpleDateFormat
-import java.util.*
+import com.msk.simpletodo.presentation.viewModel.todo.TodoViewModel
 
 class TodoMainFragment : Fragment() {
 
@@ -20,6 +20,7 @@ class TodoMainFragment : Fragment() {
     private val binding get() = _binding!!
 
     private val todoMainAdapter: TodoMainAdapter by lazy { TodoMainAdapter() }
+    private val todoViewModel: TodoViewModel by lazy { ViewModelProvider(requireActivity())[TodoViewModel::class.java] }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
@@ -35,9 +36,13 @@ class TodoMainFragment : Fragment() {
             binding.todoGreeting.text = when (convertTimestampToHour()) {
                 in 6..11 -> "Good morning ,"
                 in 12..17 -> "Good Afternoon ,"
-                else -> "Good Night ,"
+                else -> "Good Evening ,"
             }
         }
+
+        todoViewModel.todoData.observe(viewLifecycleOwner, Observer {
+            binding.vm = todoViewModel
+        })
 
 
         // for recycler view

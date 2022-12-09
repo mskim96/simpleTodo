@@ -30,6 +30,22 @@ object DataModule {
 
     @Singleton
     @Provides
+    fun provideRoom(@ApplicationContext context: Context): AppDatabase {
+        return Room.databaseBuilder(
+            context, AppDatabase::class.java,
+            "todo-database"
+        ).build()
+    }
+
+
+    @Singleton
+    @Provides
+    fun providePreferencesDataStore(@ApplicationContext context: Context): DataStore<Preferences> {
+        return PreferenceDataStoreFactory.create(produceFile = { context.preferencesDataStoreFile("settings") })
+    }
+
+    @Singleton
+    @Provides
     fun userDao(appDatabase: AppDatabase): UserDao {
         return appDatabase.userDao()
     }
@@ -38,15 +54,6 @@ object DataModule {
     @Provides
     fun todoDao(appDatabase: AppDatabase): TodoDao {
         return appDatabase.todoDao()
-    }
-
-    @Singleton
-    @Provides
-    fun provideRoom(@ApplicationContext context: Context): AppDatabase {
-        return Room.databaseBuilder(
-            context, AppDatabase::class.java,
-            "todo-database"
-        ).build()
     }
 
     @Singleton
@@ -72,11 +79,4 @@ object DataModule {
     fun provideTodoRepository(todoDatasource: TodoDatasource): TodoRepository {
         return TodoRepositoryImpl(todoDatasource)
     }
-
-    @Singleton
-    @Provides
-    fun providePreferencesDataStore(@ApplicationContext context: Context): DataStore<Preferences> {
-        return PreferenceDataStoreFactory.create(produceFile = { context.preferencesDataStoreFile("settings") })
-    }
-
 }

@@ -7,6 +7,10 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import com.msk.simpletodo.databinding.FragmentSignMainBinding
 
+
+/**
+ * When start Application, replaced this fragment
+ */
 class SignMainFragment : Fragment() {
 
     private var _binding: FragmentSignMainBinding? = null
@@ -17,14 +21,9 @@ class SignMainFragment : Fragment() {
     ): View? {
         _binding = FragmentSignMainBinding.inflate(inflater, container, false)
 
-        with(binding) {
-            navSignUp.setOnClickListener {
-                (activity as AuthActivity).setFragment(SignUpEmailFragment())
-            }
-
-            navSignIn.setOnClickListener {
-                (activity as AuthActivity).setFragment(SignInFragment())
-            }
+        // nav signUp fragment from AuthActivity method
+        binding.navSignUpButton.setOnClickListener {
+            (activity as AuthActivity).navFragment(SignUpEmailFragment())
         }
         return binding.root
     }

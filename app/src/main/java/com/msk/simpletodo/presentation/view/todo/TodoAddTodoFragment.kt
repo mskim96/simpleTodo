@@ -46,32 +46,6 @@ class TodoAddTodoFragment : Fragment() {
             R.drawable.todo_study_icon
         )
 
-//        if (todoType == "Work") {
-//            var temp = ""
-//            var imgTemp: Int = 0
-//            temp = todoTypeItem[0]
-//            imgTemp = todoTypeImage[0]
-//
-//            todoTypeItem[0] = todoTypeItem[1]
-//            todoTypeImage[0] = todoTypeImage[1]
-//
-//            todoTypeItem[1] = temp
-//            todoTypeImage[1] = imgTemp
-//        }
-//
-//        if (todoType == "Study") {
-//            var temp = ""
-//            var imgTemp: Int = 0
-//            temp = todoTypeItem[0]
-//            imgTemp = todoTypeImage[0]
-//
-//            todoTypeItem[0] = todoTypeItem[2]
-//            todoTypeImage[0] = todoTypeImage[2]
-//
-//            todoTypeItem[2] = temp
-//            todoTypeImage[2] = imgTemp
-//        }
-
         binding.todoTypeSpinner.setCustomAdapter(requireContext(), todoTypeItem, todoTypeImage)
         binding.todoTypeSpinner.onItemSelectedListener =
             object : AdapterView.OnItemSelectedListener {

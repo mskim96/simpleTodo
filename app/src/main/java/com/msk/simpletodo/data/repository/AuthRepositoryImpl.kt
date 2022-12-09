@@ -8,12 +8,8 @@ import javax.inject.Inject
 
 class AuthRepositoryImpl @Inject constructor(private val datasource: AuthDatasource) :
     AuthRepository {
-    override suspend fun createAccount(email: String, password: String, username: String): Long {
-        val newUser = UserEntity(email = email, password = password, username = username)
+    override suspend fun createAccount(email: String, username: String) {
+        val newUser = UserEntity(email = email, username = username)
         return datasource.createAccount(newUser)
-    }
-
-    override suspend fun getUserByEmail(email: String): UserEntity {
-        return datasource.getUserByEmail(email)
     }
 }

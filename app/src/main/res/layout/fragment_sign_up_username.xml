@@ -12,37 +12,42 @@
         android:layout_marginStart="12dp"
         android:backgroundTint="@color/white"
         android:clickable="false"
+        android:contentDescription="@null"
         android:src="@drawable/current_app_icon"
-        app:layout_constraintBottom_toTopOf="@+id/guideline7"
+        app:layout_constraintBottom_toTopOf="@+id/guidelineTop"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        tools:ignore="SpeakableTextPresentCheck" />
 
     <TextView
-        android:id="@+id/authUsernameTitle"
+        android:id="@+id/signUpUsernameTitle"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="64dp"
-        android:text="What your name?"
+        android:text="What's your name?"
         android:textColor="@color/font_case"
         android:textSize="36sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="@+id/guideline5"
-        app:layout_constraintTop_toTopOf="@+id/guideline7" />
+        app:layout_constraintStart_toStartOf="@+id/guidelineLeft"
+        app:layout_constraintTop_toTopOf="@+id/guidelineTop" />
 
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/signUpUsernameLayout"
         android:layout_width="0dp"
         android:layout_height="100dp"
         android:layout_marginTop="24dp"
+        app:counterEnabled="true"
+        app:counterMaxLength="12"
+        app:counterTextAppearance="@style/holderSizeStyle"
         app:errorIconDrawable="@null"
         app:errorTextAppearance="@style/holderSizeStyle"
         app:helperTextTextAppearance="@style/holderSizeStyle"
         app:helperTextTextColor="@color/form_correct"
         app:hintEnabled="false"
-        app:layout_constraintEnd_toStartOf="@+id/guideline6"
-        app:layout_constraintStart_toStartOf="@+id/guideline5"
-        app:layout_constraintTop_toBottomOf="@+id/authUsernameTitle">
+        app:layout_constraintEnd_toStartOf="@+id/guidelineRight"
+        app:layout_constraintStart_toStartOf="@+id/guidelineLeft"
+        app:layout_constraintTop_toBottomOf="@+id/signUpUsernameTitle">
 
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/signUpUsername"
@@ -50,6 +55,7 @@
             android:layout_height="70dp"
             android:background="@color/white"
             android:hint="name"
+            android:textColorHint="@color/font_default"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/authUsernameTitle" />
@@ -57,50 +63,53 @@
     </com.google.android.material.textfield.TextInputLayout>
 
     <ImageButton
-        android:id="@+id/textClear"
+        android:id="@+id/textClearButton"
         android:layout_width="48dp"
         android:layout_height="48dp"
         android:layout_marginEnd="8dp"
         android:layout_marginBottom="16dp"
         android:background="@color/white"
+        android:contentDescription="@null"
         android:src="@drawable/current_clear_icon"
         app:layout_constraintBottom_toBottomOf="@+id/signUpUsernameLayout"
         app:layout_constraintEnd_toEndOf="@+id/signUpUsernameLayout"
-        app:layout_constraintTop_toTopOf="@+id/signUpUsernameLayout" />
+        app:layout_constraintTop_toTopOf="@+id/signUpUsernameLayout"
+        tools:ignore="SpeakableTextPresentCheck" />
 
     <Button
-        android:id="@+id/signUpUsernameComplete"
+        android:id="@+id/signUpUsernameCompleteButton"
         android:layout_width="0dp"
         android:layout_height="80dp"
         android:layout_marginBottom="32dp"
         android:text="Complete !"
         android:textAllCaps="false"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@+id/guideline6"
+        app:layout_constraintEnd_toStartOf="@+id/guidelineRight"
         app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="@+id/guideline5"
+        app:layout_constraintStart_toStartOf="@+id/guidelineLeft"
         app:layout_constraintTop_toBottomOf="@+id/signUpUsernameLayout"
         app:layout_constraintVertical_bias="1.0" />
 
 
     <androidx.constraintlayout.widget.Guideline
-        android:id="@+id/guideline5"
+        android:id="@+id/guidelineLeft"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="vertical"
         app:layout_constraintGuide_begin="24dp" />
 
     <androidx.constraintlayout.widget.Guideline
-        android:id="@+id/guideline6"
+        android:id="@+id/guidelineRight"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="vertical"
         app:layout_constraintGuide_end="24dp" />
 
     <androidx.constraintlayout.widget.Guideline
-        android:id="@+id/guideline7"
+        android:id="@+id/guidelineTop"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
         app:layout_constraintGuide_begin="56dp" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>

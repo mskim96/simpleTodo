@@ -4,7 +4,7 @@ import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
 
-@Entity(tableName = "user_information")
+@Entity(tableName = "user_information_table")
 data class UserEntity(
     @PrimaryKey(autoGenerate = true)
     val uid: Long = 0,
@@ -12,10 +12,6 @@ data class UserEntity(
     @ColumnInfo(name = "user_email")
     val email: String,
 
-    @ColumnInfo(name = "user_password")
-    var password: String,
-
     @ColumnInfo(name = "user_username")
-    var username: String,
-
-    )
+    val username: String,
+)

@@ -9,11 +9,8 @@ import kotlinx.coroutines.flow.Flow
 
 @Dao
 interface UserDao {
-    @Query("SELECT * FROM user_information")
+    @Query("SELECT * FROM user_information_table")
     fun getAllUser(): List<UserEntity>
-
-    @Query("SELECT * FROM user_information WHERE user_email =:email")
-    fun getUserByEmail(email: String): UserEntity
 
     @Insert
     suspend fun createAccount(user: UserEntity): Long

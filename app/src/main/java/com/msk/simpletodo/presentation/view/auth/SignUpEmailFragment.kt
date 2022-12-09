@@ -8,17 +8,15 @@ import androidx.core.widget.doAfterTextChanged
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import com.msk.simpletodo.databinding.FragmentSignUpEmailBinding
-import com.msk.simpletodo.domain.auth.model.SignUpUser
-import com.msk.simpletodo.domain.auth.model.validate
+import com.msk.simpletodo.presentation.util.SignUpUser
+import com.msk.simpletodo.presentation.util.validate
 import com.msk.simpletodo.presentation.viewModel.auth.AuthViewModel
 
 class SignUpEmailFragment : Fragment() {
 
-    // binding
     private var _binding: FragmentSignUpEmailBinding? = null
     private val binding get() = _binding!!
 
-    // viewModel
     private val sharedViewModel by lazy { ViewModelProvider(requireActivity())[AuthViewModel::class.java] }
 
     override fun onCreateView(
@@ -26,49 +24,49 @@ class SignUpEmailFragment : Fragment() {
     ): View? {
         _binding = FragmentSignUpEmailBinding.inflate(inflater, container, false)
 
-        val signUpEmailComplete = binding.signUpEmailComplete
+        // screen element
+        val signUpEmailCompleteButton = binding.signUpEmailCompleteButton
         val signUpEmailLayout = binding.signUpEmailLayout
         val signUpEmail = binding.signUpEmail
-        val textClear = binding.textClear
-        // set button disabled
-        signUpEmailComplete.isEnabled = false
-        textClear.visibility = View.GONE
+        val textClearButton = binding.textClearButton
 
-        textClear.setOnClickListener {
+        // set button disabled
+        signUpEmailCompleteButton.isEnabled = false
+        textClearButton.visibility = View.GONE
+
+        textClearButton.setOnClickListener {
             signUpEmail.text = null
         }
 
-
-        // set when text change
+        // When editText changed
         signUpEmail.doAfterTextChanged {
 
             // validate function is from Companion object in SignUpUser
             val validate = SignUpUser.Email.validate(it.toString())
             if (!validate) {
-                signUpEmailComplete.isEnabled = false
+                signUpEmailCompleteButton.isEnabled = false
                 signUpEmailLayout.error = "Please enter an email that matches the format"
             } else {
-                signUpEmailComplete.isEnabled = true
-                signUpEmailLayout.helperText = "Email format is correct"
+                signUpEmailCompleteButton.isEnabled = true
+                signUpEmailLayout.helperText = "Email format is correct!"
             }
 
-            // show textClear Button
+            // show textClearButton
             if (signUpEmail.text.isNullOrBlank()) {
-                textClear.visibility = View.GONE
+                textClearButton.visibility = View.GONE
             } else {
-                textClear.visibility = View.VISIBLE
+                textClearButton.visibility = View.VISIBLE
             }
         }
 
-        signUpEmailComplete.setOnClickListener {
+        signUpEmailCompleteButton.setOnClickListener {
             val email = signUpEmail.text?.trim().toString()
-            sharedViewModel.putUserInformation(SignUpUser.Email, email)
-            (activity as AuthActivity).setFragment(SignUpPasswordFragment())
+            sharedViewModel.putUserEmail(SignUpUser.Email, email)
+            (activity as AuthActivity).navFragment(SignUpUsernameFragment())
         }
 
         return binding.root
     }
-
 
     override fun onDestroy() {
         super.onDestroy()

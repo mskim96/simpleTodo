@@ -12,11 +12,11 @@
         <!-- Status bar color. -->
         <item name="android:statusBarColor">@color/white</item>
         <item name="android:windowLightStatusBar" tools:targetApi="m">true</item>
-        <!-- Customize your theme here. -->
     </style>
 
+    <!-- For Input label -->
     <style name="holderSizeStyle" parent="TextAppearance.AppCompat">
         <item name="android:textSize">14sp</item>
-        <item name="android:layout_marginTop">2sp</item>
+        <item name="android:layout_marginTop">4sp</item>
     </style>
 </resources>

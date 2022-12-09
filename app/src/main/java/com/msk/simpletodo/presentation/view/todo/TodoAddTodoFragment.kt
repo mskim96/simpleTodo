@@ -7,13 +7,10 @@ import android.view.ViewGroup
 import android.widget.AdapterView
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
-import androidx.lifecycle.lifecycleScope
 import com.msk.simpletodo.R
 import com.msk.simpletodo.databinding.FragmentTodoAddTodoBinding
 import com.msk.simpletodo.presentation.viewModel.todo.TodoViewModel
 import com.msk.simpletodo.presentation.viewModel.todo.setCustomAdapter
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.launch
 
 
 class TodoAddTodoFragment : Fragment() {
@@ -30,13 +27,6 @@ class TodoAddTodoFragment : Fragment() {
     ): View? {
 
         _binding = FragmentTodoAddTodoBinding.inflate(inflater, container, false)
-
-        lifecycleScope.launch(Dispatchers.IO) {
-            todoViewModel.userIdFlow.collect {
-                userId = it
-            }
-        }
-
 
         // for spinner
         var todoTypeItem = mutableListOf("Person", "Work", "Study")
@@ -76,14 +66,9 @@ class TodoAddTodoFragment : Fragment() {
             val title = binding.todoTitle.text.toString()
             val todoType = todoType
             val userId = userId
-            createTodo(title, todoType!!, userId!!)
         }
 
         return binding.root
-    }
-
-    private fun createTodo(title: String, type: String, utid: Long) {
-        todoViewModel.createTodo(title, type, utid)
     }
 
     override fun onDestroy() {

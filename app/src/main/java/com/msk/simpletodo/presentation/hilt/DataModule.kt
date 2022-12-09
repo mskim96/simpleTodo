@@ -6,22 +6,27 @@ import androidx.datastore.preferences.core.PreferenceDataStoreFactory
 import androidx.datastore.preferences.core.Preferences
 import androidx.datastore.preferences.preferencesDataStoreFile
 import androidx.room.Room
+import androidx.room.RoomDatabase
+import androidx.sqlite.db.SupportSQLiteDatabase
 import com.msk.simpletodo.data.database.AppDatabase
-import com.msk.simpletodo.data.datasource.AuthDatasource
-import com.msk.simpletodo.data.datasource.AuthDatasourceImpl
-import com.msk.simpletodo.data.datasource.TodoDatasource
-import com.msk.simpletodo.data.datasource.TodoDatasourceImpl
-import com.msk.simpletodo.data.model.TodoDao
-import com.msk.simpletodo.data.model.UserDao
+import com.msk.simpletodo.data.datasource.auth.AuthDatasource
+import com.msk.simpletodo.data.datasource.auth.AuthDatasourceImpl
+import com.msk.simpletodo.data.datasource.todo.TodoDatasource
+import com.msk.simpletodo.data.datasource.todo.TodoDatasourceImpl
+import com.msk.simpletodo.data.model.auth.UserDao
+import com.msk.simpletodo.data.model.todo.TodoCategoryDao
+import com.msk.simpletodo.data.model.todo.TodoDao
 import com.msk.simpletodo.data.repository.AuthRepositoryImpl
 import com.msk.simpletodo.data.repository.TodoRepositoryImpl
-import com.msk.simpletodo.domain.auth.repository.AuthRepository
-import com.msk.simpletodo.domain.todo.repository.TodoRepository
+import com.msk.simpletodo.domain.repository.AuthRepository
+import com.msk.simpletodo.domain.repository.TodoRepository
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
+import kotlinx.coroutines.runBlocking
+import java.util.concurrent.Executors
 import javax.inject.Singleton
 
 @Module
@@ -30,12 +35,8 @@ object DataModule {
 
     @Singleton
     @Provides
-    fun provideRoom(@ApplicationContext context: Context): AppDatabase {
-        return Room.databaseBuilder(
-            context, AppDatabase::class.java,
-            "todo-database"
-        ).build()
-    }
+    fun provideRoom(@ApplicationContext context: Context): AppDatabase =
+        AppDatabase.getInstance(context)
 
 
     @Singleton
@@ -58,14 +59,20 @@ object DataModule {
 
     @Singleton
     @Provides
+    fun todoCategoryDao(appDatabase: AppDatabase): TodoCategoryDao {
+        return appDatabase.todoCategoryDao()
+    }
+
+    @Singleton
+    @Provides
     fun provideAuthDatasource(userDao: UserDao): AuthDatasource {
         return AuthDatasourceImpl(userDao)
     }
 
     @Singleton
     @Provides
-    fun provideTodoDatasource(todoDao: TodoDao): TodoDatasource {
-        return TodoDatasourceImpl(todoDao)
+    fun provideTodoDatasource(todoDao: TodoDao, todoCategoryDao: TodoCategoryDao): TodoDatasource {
+        return TodoDatasourceImpl(todoDao, todoCategoryDao)
     }
 
     @Singleton

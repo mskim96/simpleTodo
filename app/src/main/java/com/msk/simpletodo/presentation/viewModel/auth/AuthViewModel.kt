@@ -5,7 +5,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.msk.simpletodo.data.datastore.PreferDatastore
-import com.msk.simpletodo.domain.auth.usecase.SignUpUseCase
+import com.msk.simpletodo.domain.usecase.SignUpUseCase
 import com.msk.simpletodo.presentation.util.SignUpUser
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers

@@ -3,14 +3,13 @@ package com.msk.simpletodo.presentation.viewModel.todo
 import android.app.Activity
 import android.content.Context
 import android.content.ContextWrapper
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.msk.simpletodo.R
 import com.msk.simpletodo.databinding.TodoMainItemBinding
-import com.msk.simpletodo.domain.todo.model.TodoFrame
-import com.msk.simpletodo.domain.todo.model.TodoType
+import com.msk.simpletodo.domain.model.TodoFrame
+import com.msk.simpletodo.domain.model.TodoType
 import com.msk.simpletodo.presentation.view.todo.TodoActivity
 
 class TodoMainAdapter() : RecyclerView.Adapter<TodoMainAdapter.ToDoMainViewHolder>() {

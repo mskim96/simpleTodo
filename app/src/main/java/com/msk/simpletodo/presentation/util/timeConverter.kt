@@ -5,7 +5,7 @@ import java.util.*
 
 fun convertTimestampToDate(): String {
     val today = System.currentTimeMillis()
-    val sdf = SimpleDateFormat("yyyy/MM/dd", Locale.JAPAN)
+    val sdf = SimpleDateFormat("yyyy/MM/dd E", Locale("en", "ja"))
     return sdf.format(today)
 }
 

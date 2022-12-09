@@ -5,11 +5,9 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.os.bundleOf
 import androidx.fragment.app.commit
 import androidx.fragment.app.replace
-import androidx.lifecycle.ViewModelProvider
 import com.msk.simpletodo.R
 import com.msk.simpletodo.databinding.ActivityTodoBinding
-import com.msk.simpletodo.domain.todo.model.TodoType
-import com.msk.simpletodo.presentation.viewModel.auth.AuthViewModel
+import com.msk.simpletodo.domain.model.TodoType
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint

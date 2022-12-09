@@ -6,4 +6,7 @@
     <string name="signMainSubtitle">Simple todo application.\nThis application is created for study.</string>
     <string name="navSignUpButton">Start</string>
 
+    <!-- Todo Main -->
+    <string name="todayTodoFormat">You have %s Task to do Today.</string>
+    <string name="todayDateFormat">TODAY : %s</string>
 </resources>

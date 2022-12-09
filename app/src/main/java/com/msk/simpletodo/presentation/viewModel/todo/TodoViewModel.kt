@@ -1,74 +1,40 @@
 package com.msk.simpletodo.presentation.viewModel.todo
 
 import android.util.Log
-import androidx.datastore.core.DataStore
-import androidx.datastore.preferences.core.Preferences
-import androidx.datastore.preferences.core.longPreferencesKey
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.msk.simpletodo.data.model.TodoEntity
-import com.msk.simpletodo.domain.todo.usecase.GetUserWithTodoUseCase
-import com.msk.simpletodo.domain.todo.usecase.TodoCreateUseCase
+import com.msk.simpletodo.data.model.todo.TodoCategoryWithTodo
+import com.msk.simpletodo.domain.usecase.GetCategoryWithTodoUseCase
+import com.msk.simpletodo.domain.usecase.TodoCreateUseCase
+import com.msk.simpletodo.presentation.view.base.TodoState
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.map
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
 class TodoViewModel @Inject constructor(
     private val todoCreateUseCase: TodoCreateUseCase,
-    private val getUserWithTodoUseCase: GetUserWithTodoUseCase,
-    private val preferencesDataStore: DataStore<Preferences>
+    private val getCategoryWithTodoUseCase: GetCategoryWithTodoUseCase
 ) :
     ViewModel() {
 
-    private val _todoData = MutableLiveData<List<TodoEntity>>()
-    val todoData: LiveData<List<TodoEntity>> get() = _todoData
-
     init {
-        getUserWithTodo(1)
+        getCategoryWithTodo()
     }
 
-    val userIdFlow: Flow<Long?> = preferencesDataStore.data.map {
-        val USER_ID = longPreferencesKey("user_id")
-        it[USER_ID]
-    }
+    private val _categoryWithTodoResult: MutableStateFlow<TodoState<List<TodoCategoryWithTodo>>> =
+        MutableStateFlow(TodoState.Loading)
+    val categoryWithTodoResult = _categoryWithTodoResult.asStateFlow()
 
-    fun getUserWithTodo(id: Long) {
-        viewModelScope.launch(Dispatchers.IO) {
-            _todoData.postValue(getUserWithTodoUseCase.execute(id))
-        }
-    }
-
-
-    fun createTodo(title: String, todoType: String, utid: Long) {
-        viewModelScope.launch(Dispatchers.IO) {
-            when (todoType) {
-                "Person" -> todoCreateUseCase.execute(
-                    TodoEntity(
-                        title = title,
-                        todoType = todoType,
-                        utid = utid
-                    )
-                )
-                "Work" -> todoCreateUseCase.execute(
-                    TodoEntity(
-                        title = title,
-                        todoType = todoType,
-                        utid = utid
-                    )
-                )
-                "Study" -> todoCreateUseCase.execute(
-                    TodoEntity(
-                        title = title,
-                        todoType = todoType,
-                        utid = utid
-                    )
-                )
+    private fun getCategoryWithTodo() = viewModelScope.launch(Dispatchers.IO) {
+        runCatching {
+            getCategoryWithTodoUseCase.execute()
+        }.onSuccess { data ->
+            _categoryWithTodoResult.collect {
+                _categoryWithTodoResult.emit(it)
             }
         }
     }

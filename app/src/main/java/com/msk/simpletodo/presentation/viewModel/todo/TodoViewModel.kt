@@ -1,12 +1,11 @@
 package com.msk.simpletodo.presentation.viewModel.todo
 
-import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.msk.simpletodo.data.model.todo.TodoCategoryWithTodo
 import com.msk.simpletodo.domain.usecase.GetCategoryWithTodoUseCase
 import com.msk.simpletodo.domain.usecase.TodoCreateUseCase
-import com.msk.simpletodo.presentation.view.base.TodoState
+import com.msk.simpletodo.presentation.view.base.Result
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -17,7 +16,7 @@ import javax.inject.Inject
 @HiltViewModel
 class TodoViewModel @Inject constructor(
     private val todoCreateUseCase: TodoCreateUseCase,
-    private val getCategoryWithTodoUseCase: GetCategoryWithTodoUseCase
+    private val getCategoryWithTodoUseCase: GetCategoryWithTodoUseCase,
 ) :
     ViewModel() {
 
@@ -25,17 +24,32 @@ class TodoViewModel @Inject constructor(
         getCategoryWithTodo()
     }
 
-    private val _categoryWithTodoResult: MutableStateFlow<TodoState<List<TodoCategoryWithTodo>>> =
-        MutableStateFlow(TodoState.Loading)
+    private val _categoryWithTodoResult: MutableStateFlow<Result<List<TodoCategoryWithTodo>>> =
+        MutableStateFlow(Result.Loading)
     val categoryWithTodoResult = _categoryWithTodoResult.asStateFlow()
+
+    private val _categoryWithTodoSize: MutableStateFlow<Int> =
+        MutableStateFlow(0)
+    val categoryWithTodoSize = _categoryWithTodoSize.asStateFlow()
 
     private fun getCategoryWithTodo() = viewModelScope.launch(Dispatchers.IO) {
         runCatching {
+            // execute data
             getCategoryWithTodoUseCase.execute()
         }.onSuccess { data ->
-            _categoryWithTodoResult.collect {
-                _categoryWithTodoResult.emit(it)
+            data.collect {
+                // emit Success all list data
+                _categoryWithTodoResult.emit(Result.Success(it))
+
+                // for todoList size
+                var result = 0
+                Result.Success(it.forEach {
+                    result += it.todo.size
+                    _categoryWithTodoSize.emit(result)
+                })
             }
+        }.onFailure {
+            _categoryWithTodoResult.emit(Result.Error(it))
         }
     }
 }

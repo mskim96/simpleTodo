@@ -6,6 +6,8 @@
 
     <data>
 
+        <import type="com.msk.simpletodo.presentation.view.base.Result" />
+
         <variable
             name="username"
             type="String" />
@@ -109,6 +111,7 @@
             android:id="@+id/todoMainTodayTodoCount"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:text="@{@string/todayTodoFormat(vm.categoryWithTodoSize.toString())}"
             android:textSize="16sp"
             app:layout_constraintStart_toStartOf="@+id/guidelineLeft"
             app:layout_constraintTop_toBottomOf="@+id/textView6" />

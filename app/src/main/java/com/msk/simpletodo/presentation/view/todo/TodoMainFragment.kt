@@ -11,14 +11,13 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.msk.simpletodo.R
-import com.msk.simpletodo.data.model.todo.TodoCategoryWithTodo
 import com.msk.simpletodo.databinding.FragmentTodoMainBinding
 import com.msk.simpletodo.presentation.util.convertTimestampToDate
 import com.msk.simpletodo.presentation.util.convertTimestampToHour
+import com.msk.simpletodo.presentation.view.base.Result.Loading.successOrNull
 import com.msk.simpletodo.presentation.viewModel.todo.TodoMainAdapter
 import com.msk.simpletodo.presentation.viewModel.todo.TodoViewModel
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
 
 class TodoMainFragment : Fragment() {
@@ -29,7 +28,7 @@ class TodoMainFragment : Fragment() {
     private val todoViewModel: TodoViewModel by lazy { ViewModelProvider(requireActivity())[TodoViewModel::class.java] }
 
     override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
+        inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?,
     ): View? {
         binding =
             DataBindingUtil.inflate(layoutInflater, R.layout.fragment_todo_main, container, false)
@@ -40,21 +39,6 @@ class TodoMainFragment : Fragment() {
 
         val args: Bundle? = arguments
         val username = args?.getString("username")
-
-//        val resultTodayTodo = lifecycleScope.launch(Dispatchers.IO) {
-//            var result = 0
-//            todoViewModel.categoryWithTodoResult.collect {
-//                it.map {
-//                    result += it.todo.size
-//                }
-//            }
-//        }
-
-        lifecycleScope.launch(Dispatchers.IO) {
-            todoViewModel.categoryWithTodoResult.collect {
-                Log.d("TAG", "onCreateView: $it")
-            }
-        }
 
         binding.apply {
             lifecycleOwner = this@TodoMainFragment
@@ -72,7 +56,6 @@ class TodoMainFragment : Fragment() {
 
         return binding.root
     }
-
 
     override fun onDestroy() {
         super.onDestroy()

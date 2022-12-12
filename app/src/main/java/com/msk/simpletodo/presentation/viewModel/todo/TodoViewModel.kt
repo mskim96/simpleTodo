@@ -4,6 +4,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.msk.simpletodo.data.model.todo.TodoCategoryWithTodo
 import com.msk.simpletodo.domain.usecase.GetCategoryWithTodoUseCase
+import com.msk.simpletodo.domain.usecase.GetTodoWithCategoryByIdUseCase
 import com.msk.simpletodo.domain.usecase.TodoCreateUseCase
 import com.msk.simpletodo.presentation.view.base.Result
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -17,6 +18,7 @@ import javax.inject.Inject
 class TodoViewModel @Inject constructor(
     private val todoCreateUseCase: TodoCreateUseCase,
     private val getCategoryWithTodoUseCase: GetCategoryWithTodoUseCase,
+    private val getTodoWithCategoryByIdUseCase: GetTodoWithCategoryByIdUseCase,
 ) :
     ViewModel() {
 
@@ -32,7 +34,11 @@ class TodoViewModel @Inject constructor(
         MutableStateFlow(0)
     val categoryWithTodoSize = _categoryWithTodoSize.asStateFlow()
 
-    private fun getCategoryWithTodo() = viewModelScope.launch(Dispatchers.IO) {
+    private val _todoWithCategoryById: MutableStateFlow<Result<TodoCategoryWithTodo>> =
+        MutableStateFlow(Result.Loading)
+    val todoWithCategoryById = _todoWithCategoryById.asStateFlow()
+
+    fun getCategoryWithTodo() = viewModelScope.launch(Dispatchers.IO) {
         runCatching {
             // execute data
             getCategoryWithTodoUseCase.execute()
@@ -50,6 +56,22 @@ class TodoViewModel @Inject constructor(
             }
         }.onFailure {
             _categoryWithTodoResult.emit(Result.Error(it))
+        }
+    }
+
+    fun getTodoByCategoryId(id: Long) = viewModelScope.launch(Dispatchers.IO) {
+        runCatching {
+            getTodoWithCategoryByIdUseCase.execute(id)
+        }.onSuccess { data ->
+            data.collect {
+                _todoWithCategoryById.emit(Result.Success(it))
+            }
+        }
+    }
+
+    fun createTodo(content: String, categoryType: Long) {
+        viewModelScope.launch(Dispatchers.IO) {
+            todoCreateUseCase.execute(content, categoryType)
         }
     }
 }

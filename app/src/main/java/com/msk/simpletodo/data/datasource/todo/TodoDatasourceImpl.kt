@@ -12,8 +12,14 @@ class TodoDatasourceImpl @Inject constructor(
     private val todoDao: TodoDao,
     private val todoCategoryDao: TodoCategoryDao
 ) : TodoDatasource {
-    override suspend fun createTodo(todo: TodoEntity): Long {
+    override suspend fun createTodo(todo: TodoEntity) {
         return todoDao.createToDo(todo)
+    }
+
+    override fun getTodoByCategoryId(id: Long): Flow<TodoCategoryWithTodo> {
+        return flow {
+            emit(todoCategoryDao.getTodoByCategoryId(id))
+        }
     }
 
     override fun getCategoryWithTodo(): Flow<List<TodoCategoryWithTodo>> {

@@ -5,7 +5,7 @@ import com.msk.simpletodo.domain.repository.TodoRepository
 import javax.inject.Inject
 
 class TodoCreateUseCase @Inject constructor(private val repository: TodoRepository) {
-    suspend fun execute(todo: TodoEntity): Long {
-        return repository.createTodo(todo)
+    suspend fun execute(content: String, categoryType: Long) {
+        return repository.createTodo(content, categoryType)
     }
 }

@@ -7,7 +7,6 @@ import androidx.fragment.app.commit
 import androidx.fragment.app.replace
 import com.msk.simpletodo.R
 import com.msk.simpletodo.databinding.ActivityTodoBinding
-import com.msk.simpletodo.domain.model.TodoType
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -30,35 +29,20 @@ class TodoActivity() : AppCompatActivity() {
         }
     }
 
-    fun setFragment(todoType: TodoType) {
-        when (todoType) {
-            is TodoType.Person -> {
-                supportFragmentManager.commit {
-                    replace<TodoPersonFragment>(R.id.todoMainFrame)
-                    setReorderingAllowed(true)
-                    addToBackStack(null)
-                }
-            }
-            is TodoType.Work -> {
-                supportFragmentManager.commit {
-                    replace<TodoWorkFragment>(R.id.todoMainFrame)
-                    setReorderingAllowed(true)
-                    addToBackStack(null)
-                }
-            }
-            is TodoType.Study -> {
-                supportFragmentManager.commit {
-                    replace<TodoStudyFragment>(R.id.todoMainFrame)
-                    setReorderingAllowed(true)
-                    addToBackStack(null)
-                }
-            }
+    fun setListFragment(position: Int) {
+        supportFragmentManager.commit {
+            replace<TodoListFragment>(R.id.todoMainFrame, args = bundleOf("position" to position))
+            setReorderingAllowed(true)
+            addToBackStack(null)
         }
     }
 
-    fun setFragmentAddToDo() {
+    fun setFragmentAddToDo(position: Int) {
         supportFragmentManager.commit {
-            replace<TodoAddTodoFragment>(R.id.todoMainFrame)
+            replace<TodoAddTodoFragment>(
+                R.id.todoMainFrame,
+                args = bundleOf("position" to position)
+            )
             setReorderingAllowed(true)
             addToBackStack(null)
         }

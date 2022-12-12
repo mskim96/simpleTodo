@@ -5,59 +5,47 @@ import android.content.Context
 import android.content.ContextWrapper
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
-import com.msk.simpletodo.R
+import com.msk.simpletodo.data.model.todo.TodoCategoryWithTodo
 import com.msk.simpletodo.databinding.TodoMainItemBinding
-import com.msk.simpletodo.domain.model.TodoFrame
-import com.msk.simpletodo.domain.model.TodoType
+import com.msk.simpletodo.presentation.util.getDrawableId
 import com.msk.simpletodo.presentation.view.todo.TodoActivity
 
-class TodoMainAdapter() : RecyclerView.Adapter<TodoMainAdapter.ToDoMainViewHolder>() {
+class TodoMainAdapter() :
+    ListAdapter<TodoCategoryWithTodo, TodoMainAdapter.ToDoMainViewHolder>(DiffUtilCallback()) {
 
-    private val person = TodoFrame(type = TodoType.Person, "Person")
-    private val work = TodoFrame(type = TodoType.Work, "Work")
-    private val study = TodoFrame(type = TodoType.Study, "Study")
-    private val listTodoFrame = mutableListOf(person, work, study)
+    init {
+        setHasStableIds(true)
+    }
 
     inner class ToDoMainViewHolder(val binding: TodoMainItemBinding) :
         RecyclerView.ViewHolder(binding.root) {
-        fun bind(todoFrame: TodoFrame) {
-            when (todoFrame.type) {
-                TodoType.Person -> {
-                    binding.todoMainIcon.setImageResource(R.drawable.todo_user_icon)
-                    binding.todoFrameCard.setOnClickListener {
-                        (binding.root.context.findActivity() as TodoActivity).setFragment(todoFrame.type)
-                    }
-                }
-                TodoType.Work -> {
-                    binding.todoMainIcon.setImageResource(R.drawable.todo_work_icon)
-                    binding.todoFrameCard.setOnClickListener {
-                        (binding.root.context.findActivity() as TodoActivity).setFragment(todoFrame.type)
-                    }
-                }
-                TodoType.Study -> {
-                    binding.todoMainIcon.setImageResource(R.drawable.todo_study_icon)
-                    binding.todoFrameCard.setOnClickListener {
-                        (binding.root.context.findActivity() as TodoActivity).setFragment(todoFrame.type)
-                    }
-                }
+        fun bind(todoCategory: TodoCategoryWithTodo) {
+            val id =
+                getDrawableId(binding.root.context, "${todoCategory.todoCategory.categoryIcon}")
+            binding.todoMainIcon.setImageResource(id)
+            binding.todoCategory = todoCategory
+            binding.todoFrameCard.setOnClickListener {
+                (binding.root.context.findActivity() as TodoActivity).setListFragment(
+                    adapterPosition
+                )
             }
-            binding.todo = todoFrame
         }
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ToDoMainViewHolder {
-        val binding =
-            TodoMainItemBinding.inflate(LayoutInflater.from(parent.context), parent, false)
-        return ToDoMainViewHolder(binding)
+        return ToDoMainViewHolder(
+            TodoMainItemBinding.inflate(
+                LayoutInflater.from(parent.context),
+                parent,
+                false
+            )
+        )
     }
 
     override fun onBindViewHolder(holder: ToDoMainViewHolder, position: Int) {
-        return holder.bind(listTodoFrame[position])
-    }
-
-    override fun getItemCount(): Int {
-        return listTodoFrame.size
+        holder.bind(getItem(position))
     }
 
     fun Context.findActivity(): Context {
@@ -66,4 +54,5 @@ class TodoMainAdapter() : RecyclerView.Adapter<TodoMainAdapter.ToDoMainViewHolde
         }
         return this
     }
+
 }

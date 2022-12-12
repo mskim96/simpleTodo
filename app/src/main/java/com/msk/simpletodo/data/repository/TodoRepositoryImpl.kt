@@ -9,8 +9,13 @@ import javax.inject.Inject
 
 class TodoRepositoryImpl @Inject constructor(private val todoDatasource: TodoDatasource) :
     TodoRepository {
-    override suspend fun createTodo(todo: TodoEntity): Long {
-        return todoDatasource.createTodo(todo)
+
+    override suspend fun createTodo(content: String, categoryType: Long) {
+        return todoDatasource.createTodo(TodoEntity(content = content, fkCategory = categoryType))
+    }
+
+    override fun getTodoWithCategoryId(id: Long): Flow<TodoCategoryWithTodo> {
+        return todoDatasource.getTodoByCategoryId(id)
     }
 
     override fun getCategoryWithTodo(): Flow<List<TodoCategoryWithTodo>> {

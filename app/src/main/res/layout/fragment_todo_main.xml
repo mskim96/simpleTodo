@@ -21,6 +21,10 @@
             type="Integer" />
 
         <variable
+            name="adapter"
+            type="com.msk.simpletodo.presentation.viewModel.todo.TodoMainAdapter" />
+
+        <variable
             name="vm"
             type="com.msk.simpletodo.presentation.viewModel.todo.TodoViewModel" />
     </data>
@@ -138,6 +142,7 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
             android:layout_marginBottom="16dp"
+            android:adapter="@{adapter}"
             android:orientation="horizontal"
             app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
             app:layout_constraintBottom_toBottomOf="parent"

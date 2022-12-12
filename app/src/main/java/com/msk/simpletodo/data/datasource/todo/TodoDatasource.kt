@@ -5,7 +5,11 @@ import com.msk.simpletodo.data.model.todo.TodoEntity
 import kotlinx.coroutines.flow.Flow
 
 interface TodoDatasource {
-    suspend fun createTodo(todo: TodoEntity): Long
+    suspend fun createTodo(todo: TodoEntity)
 
+    // todo
+    fun getTodoByCategoryId(id: Long): Flow<TodoCategoryWithTodo>
+
+    // Todo With Category
     fun getCategoryWithTodo(): Flow<List<TodoCategoryWithTodo>>
 }

@@ -7,6 +7,7 @@
     <string name="navSignUpButton">Start</string>
 
     <!-- Todo Main -->
-    <string name="todayTodoFormat">You have %s Task to do Today.</string>
+    <string name="todayTodoFormat">You have %s Task to do today.</string>
     <string name="todayDateFormat">TODAY : %s</string>
+    <string name="categoryHaveTask">%s Tasks</string>
 </resources>

@@ -7,10 +7,14 @@ import android.view.ViewGroup
 import android.widget.AdapterView
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
-import com.msk.simpletodo.R
+import androidx.lifecycle.lifecycleScope
 import com.msk.simpletodo.databinding.FragmentTodoAddTodoBinding
+import com.msk.simpletodo.presentation.util.getDrawableId
+import com.msk.simpletodo.presentation.util.setCustomAdapter
+import com.msk.simpletodo.presentation.view.base.Result
 import com.msk.simpletodo.presentation.viewModel.todo.TodoViewModel
-import com.msk.simpletodo.presentation.viewModel.todo.setCustomAdapter
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 
 
 class TodoAddTodoFragment : Fragment() {
@@ -19,24 +23,43 @@ class TodoAddTodoFragment : Fragment() {
     private val binding get() = _binding!!
 
     private val todoViewModel by lazy { ViewModelProvider(requireActivity())[TodoViewModel::class.java] }
-    private var todoType: String? = null
-    private var userId: Long? = 0
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
     ): View? {
 
+        // get position number
+        val args: Bundle? = arguments
+        val position = args?.getInt("position")
+
+        // initial spinner item
+        val todoSpinnerList = mutableListOf<String>()
+        val todoImageList = mutableListOf<Int>()
+        var todoCategoryType: Int = position!! + 1
+
         _binding = FragmentTodoAddTodoBinding.inflate(inflater, container, false)
 
-        // for spinner
-        var todoTypeItem = mutableListOf("Person", "Work", "Study")
-        var todoTypeImage = mutableListOf(
-            R.drawable.todo_user_icon,
-            R.drawable.todo_work_icon,
-            R.drawable.todo_study_icon
-        )
+        lifecycleScope.launch(Dispatchers.IO) {
+            todoViewModel.categoryWithTodoResult.collect {
+                when (it) {
+                    is Result.Success -> {
+                        it.data.map { todoSpinnerList.add(it.todoCategory.category) }
+                        it.data.map {
+                            val id = getDrawableId(requireContext(), it.todoCategory.categoryIcon)
+                            todoImageList.add(id)
+                        }
+                        binding.todoTypeSpinner.setCustomAdapter(
+                            requireContext(),
+                            todoSpinnerList,
+                            todoImageList,
+                            position!!
+                        )
+                    }
+                    else -> null
+                }
+            }
+        }
 
-        binding.todoTypeSpinner.setCustomAdapter(requireContext(), todoTypeItem, todoTypeImage)
         binding.todoTypeSpinner.onItemSelectedListener =
             object : AdapterView.OnItemSelectedListener {
                 override fun onItemSelected(
@@ -45,17 +68,8 @@ class TodoAddTodoFragment : Fragment() {
                     position: Int,
                     id: Long
                 ) {
-                    when (todoTypeItem[position]) {
-                        "Person" -> {
-                            todoType = todoTypeItem[position]
-                        }
-                        "Work" -> {
-                            todoType = todoTypeItem[position]
-                        }
-                        "Study" -> {
-                            todoType = todoTypeItem[position]
-                        }
-                    }
+                    // select TodoCategory Type
+                    todoCategoryType = position + 1
                 }
 
                 override fun onNothingSelected(parent: AdapterView<*>?) {}
@@ -63,12 +77,18 @@ class TodoAddTodoFragment : Fragment() {
             }
 
         binding.addTodoButton.setOnClickListener {
-            val title = binding.todoTitle.text.toString()
-            val todoType = todoType
-            val userId = userId
+            val content = binding.todoTitle.text.toString()
+            val categoryType = todoCategoryType.toLong()
+
+            createTodo(content, categoryType)
         }
 
         return binding.root
+    }
+
+
+    private fun createTodo(content: String, categoryType: Long) {
+        todoViewModel.createTodo(content, categoryType)
     }
 
     override fun onDestroy() {

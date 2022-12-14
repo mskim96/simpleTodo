@@ -3,6 +3,7 @@ package com.msk.simpletodo.presentation.view.todo
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.os.bundleOf
+import androidx.fragment.app.Fragment
 import androidx.fragment.app.commit
 import androidx.fragment.app.replace
 import com.msk.simpletodo.R
@@ -46,6 +47,13 @@ class TodoActivity() : AppCompatActivity() {
             setReorderingAllowed(true)
             addToBackStack(null)
         }
+    }
+
+    fun completeFragment(fragment: Fragment) {
+        supportFragmentManager.beginTransaction().remove(fragment).commit()
+        fragment.onDestroy()
+        fragment.onDetach()
+        supportFragmentManager.popBackStack()
     }
 
     override fun onDestroy() {

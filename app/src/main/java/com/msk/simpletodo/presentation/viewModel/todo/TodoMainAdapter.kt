@@ -3,6 +3,7 @@ package com.msk.simpletodo.presentation.viewModel.todo
 import android.app.Activity
 import android.content.Context
 import android.content.ContextWrapper
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.ListAdapter
@@ -34,6 +35,7 @@ class TodoMainAdapter() :
         }
     }
 
+
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ToDoMainViewHolder {
         return ToDoMainViewHolder(
             TodoMainItemBinding.inflate(
@@ -46,6 +48,10 @@ class TodoMainAdapter() :
 
     override fun onBindViewHolder(holder: ToDoMainViewHolder, position: Int) {
         holder.bind(getItem(position))
+    }
+
+    override fun getItemId(position: Int): Long {
+        return position.toLong()
     }
 
     fun Context.findActivity(): Context {

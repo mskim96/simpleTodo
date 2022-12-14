@@ -39,7 +39,12 @@ class TodoAddTodoFragment : Fragment() {
 
         _binding = FragmentTodoAddTodoBinding.inflate(inflater, container, false)
 
-        lifecycleScope.launch(Dispatchers.IO) {
+        binding.backButton.setOnClickListener {
+            (activity as TodoActivity).completeFragment(this)
+        }
+
+
+        lifecycleScope.launch(Dispatchers.Main) {
             todoViewModel.categoryWithTodoResult.collect {
                 when (it) {
                     is Result.Success -> {
@@ -79,8 +84,8 @@ class TodoAddTodoFragment : Fragment() {
         binding.addTodoButton.setOnClickListener {
             val content = binding.todoTitle.text.toString()
             val categoryType = todoCategoryType.toLong()
-
             createTodo(content, categoryType)
+            (activity as TodoActivity).completeFragment(this)
         }
 
         return binding.root

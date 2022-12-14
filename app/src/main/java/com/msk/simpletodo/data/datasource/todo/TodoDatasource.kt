@@ -7,6 +7,8 @@ import kotlinx.coroutines.flow.Flow
 interface TodoDatasource {
     suspend fun createTodo(todo: TodoEntity)
 
+    suspend fun deleteTodo(todo: TodoEntity)
+
     // todo
     fun getTodoByCategoryId(id: Long): Flow<TodoCategoryWithTodo>
 

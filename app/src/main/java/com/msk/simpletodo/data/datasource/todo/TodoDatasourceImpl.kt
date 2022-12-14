@@ -16,6 +16,11 @@ class TodoDatasourceImpl @Inject constructor(
         return todoDao.createToDo(todo)
     }
 
+    override suspend fun deleteTodo(todo: TodoEntity) {
+        return todoDao.deleteTodo(todo)
+    }
+
+
     override fun getTodoByCategoryId(id: Long): Flow<TodoCategoryWithTodo> {
         return flow {
             emit(todoCategoryDao.getTodoByCategoryId(id))

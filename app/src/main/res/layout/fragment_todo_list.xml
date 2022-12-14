@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
 
     <data>
 
@@ -8,9 +9,13 @@
             name="todoCategory"
             type="com.msk.simpletodo.data.model.todo.TodoCategoryWithTodo" />
 
+        <variable
+            name="adapter"
+            type="com.msk.simpletodo.presentation.viewModel.todo.TodoDateAdapter" />
+
     </data>
 
-    <androidx.constraintlayout.widget.ConstraintLayout xmlns:tools="http://schemas.android.com/tools"
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         tools:context=".presentation.view.todo.TodoListFragment">
@@ -40,27 +45,45 @@
             android:id="@+id/todoCategoryWithTaskSize"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginTop="24dp"
             android:text="@{@string/categoryHaveTask(todoCategory.todo.size())}"
             android:textColor="@color/font_default"
-            android:textSize="16dp"
-            app:layout_constraintBottom_toTopOf="@+id/todoCategoryTitle"
-            app:layout_constraintStart_toStartOf="@+id/todoCategoryTitle" />
+            android:textSize="16sp"
+            app:layout_constraintStart_toStartOf="@+id/todoCategoryTitle"
+            app:layout_constraintTop_toBottomOf="@+id/todoCategoryIcon" />
+
 
         <TextView
             android:id="@+id/todoCategoryTitle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="24dp"
-            android:layout_marginTop="56dp"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="16dp"
             android:text="@{todoCategory.todoCategory.category}"
             android:textColor="@color/font_default"
-            android:textSize="36dp"
-            app:layout_constraintBottom_toBottomOf="parent"
+            android:textSize="36sp"
             app:layout_constraintEnd_toStartOf="@+id/guidelineTop"
             app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="@+id/guidelineLeft"
-            app:layout_constraintTop_toBottomOf="@+id/todoCategoryIcon"
-            app:layout_constraintVertical_bias="0.0" />
+            app:layout_constraintTop_toBottomOf="@+id/todoCategoryWithTaskSize" />
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/todoDateOfWeekRecycler"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_marginTop="48dp"
+            android:adapter="@{adapter}"
+            android:orientation="vertical"
+            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/guidelineRight"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="@+id/guidelineLeft"
+            app:layout_constraintTop_toBottomOf="@+id/progressBar"
+            app:layout_constraintVertical_bias="0.0"
+            tools:listitem="@layout/todo_date_item">
+
+        </androidx.recyclerview.widget.RecyclerView>
 
         <Button
             android:id="@+id/navAddTodoButton"
@@ -91,6 +114,18 @@
             android:layout_height="wrap_content"
             android:orientation="horizontal"
             app:layout_constraintGuide_begin="56dp" />
+
+        <ProgressBar
+            android:id="@+id/progressBar"
+            style="?android:attr/progressBarStyleHorizontal"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="32dp"
+            android:layout_marginEnd="16dp"
+            app:layout_constraintEnd_toStartOf="@+id/guidelineRight"
+            app:layout_constraintStart_toStartOf="@+id/guidelineLeft"
+            app:layout_constraintTop_toBottomOf="@+id/todoCategoryTitle" />
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>

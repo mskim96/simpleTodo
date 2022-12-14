@@ -11,7 +11,7 @@ import androidx.lifecycle.lifecycleScope
 import com.msk.simpletodo.databinding.FragmentTodoAddTodoBinding
 import com.msk.simpletodo.presentation.util.getDrawableId
 import com.msk.simpletodo.presentation.util.setCustomAdapter
-import com.msk.simpletodo.presentation.view.base.Result
+import com.msk.simpletodo.presentation.view.base.UiState
 import com.msk.simpletodo.presentation.viewModel.todo.TodoViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -25,7 +25,7 @@ class TodoAddTodoFragment : Fragment() {
     private val todoViewModel by lazy { ViewModelProvider(requireActivity())[TodoViewModel::class.java] }
 
     override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
+        inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?,
     ): View? {
 
         // get position number
@@ -45,9 +45,9 @@ class TodoAddTodoFragment : Fragment() {
 
 
         lifecycleScope.launch(Dispatchers.Main) {
-            todoViewModel.categoryWithTodoResult.collect {
+            todoViewModel.categoryWithTodo.collect {
                 when (it) {
-                    is Result.Success -> {
+                    is UiState.Success -> {
                         it.data.map { todoSpinnerList.add(it.todoCategory.category) }
                         it.data.map {
                             val id = getDrawableId(requireContext(), it.todoCategory.categoryIcon)
@@ -57,7 +57,7 @@ class TodoAddTodoFragment : Fragment() {
                             requireContext(),
                             todoSpinnerList,
                             todoImageList,
-                            position!!
+                            position
                         )
                     }
                     else -> null
@@ -71,7 +71,7 @@ class TodoAddTodoFragment : Fragment() {
                     parent: AdapterView<*>?,
                     view: View?,
                     position: Int,
-                    id: Long
+                    id: Long,
                 ) {
                     // select TodoCategory Type
                     todoCategoryType = position + 1

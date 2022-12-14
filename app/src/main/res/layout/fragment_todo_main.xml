@@ -6,10 +6,10 @@
 
     <data>
 
-        <import type="com.msk.simpletodo.presentation.view.base.Result" />
+        <import type="com.msk.simpletodo.presentation.view.base.UiState" />
 
         <variable
-            name="username"
+            name="name"
             type="String" />
 
         <variable
@@ -94,18 +94,18 @@
             android:id="@+id/todoMainUsername"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@{username}"
+            android:text="@{name}"
             android:textColor="@color/font_case"
             android:textSize="36sp"
             app:layout_constraintStart_toStartOf="@+id/guidelineLeft"
             app:layout_constraintTop_toBottomOf="@+id/todoMainGreeting" />
 
         <TextView
-            android:id="@+id/textView6"
+            android:id="@+id/textView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="24dp"
-            android:text="Write your main focus !"
+            android:text="Write your main focus,"
             android:textSize="16sp"
             app:layout_constraintStart_toStartOf="@+id/guidelineLeft"
             app:layout_constraintTop_toBottomOf="@+id/todoMainUsername" />
@@ -115,10 +115,10 @@
             android:id="@+id/todoMainTodayTodoCount"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@{@string/todayTodoFormat(vm.categoryWithTodoToday.toString())}"
+            android:text="Manage it your work for perfect day."
             android:textSize="16sp"
             app:layout_constraintStart_toStartOf="@+id/guidelineLeft"
-            app:layout_constraintTop_toBottomOf="@+id/textView6" />
+            app:layout_constraintTop_toBottomOf="@+id/textView" />
 
         <TextView
             android:id="@+id/todoToday"
@@ -143,7 +143,9 @@
             android:layout_marginStart="16dp"
             android:layout_marginBottom="16dp"
             android:adapter="@{adapter}"
+            android:clipToPadding="false"
             android:orientation="horizontal"
+            android:paddingRight="30dp"
             app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"

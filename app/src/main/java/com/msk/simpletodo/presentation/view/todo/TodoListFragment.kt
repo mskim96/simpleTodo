@@ -1,7 +1,6 @@
 package com.msk.simpletodo.presentation.view.todo
 
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -13,9 +12,8 @@ import com.msk.simpletodo.R
 import com.msk.simpletodo.data.model.todo.TodoEntity
 import com.msk.simpletodo.databinding.FragmentTodoListBinding
 import com.msk.simpletodo.presentation.util.getDrawableId
-import com.msk.simpletodo.presentation.view.base.Result
+import com.msk.simpletodo.presentation.view.base.UiState
 import com.msk.simpletodo.presentation.viewModel.todo.TodoDateAdapter
-import com.msk.simpletodo.presentation.viewModel.todo.TodoListAdapter
 import com.msk.simpletodo.presentation.viewModel.todo.TodoViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -28,7 +26,7 @@ class TodoListFragment : Fragment() {
     private val todoDateAdapter: TodoDateAdapter by lazy { TodoDateAdapter() }
 
     override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
+        inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?,
     ): View? {
         binding =
             DataBindingUtil.inflate(layoutInflater, R.layout.fragment_todo_list, container, false)
@@ -43,7 +41,7 @@ class TodoListFragment : Fragment() {
             todoViewModel.getTodoByCategoryId((position!!.toLong() + 1L))
             todoViewModel.todoWithCategoryById.collect {
                 when (it) {
-                    is Result.Success -> {
+                    is UiState.Success -> {
                         val id = getDrawableId(
                             requireContext(),
                             it.data.todoCategory.categoryIcon
@@ -69,7 +67,7 @@ class TodoListFragment : Fragment() {
                 lifecycleScope.launch(Dispatchers.Main) {
                     todoViewModel.todoWithCategoryById.collect {
                         when (it) {
-                            is Result.Success -> {
+                            is UiState.Success -> {
                                 deleteTodo(it.data.todo[position])
                             }
                             else -> null

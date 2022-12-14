@@ -1,6 +1,6 @@
 package com.msk.simpletodo.domain.repository
 
-import com.msk.simpletodo.data.model.todo.TodoCategoryWithTodo
+import com.msk.simpletodo.data.model.todo.CategoryWithTodo
 import com.msk.simpletodo.data.model.todo.TodoEntity
 import kotlinx.coroutines.flow.Flow
 
@@ -9,7 +9,7 @@ interface TodoRepository {
 
     suspend fun deleteTodo(todo: TodoEntity)
 
-    fun getTodoWithCategoryId(id: Long): Flow<TodoCategoryWithTodo>
+    fun getTodoWithCategoryId(id: Long): Flow<CategoryWithTodo>
 
-    fun getCategoryWithTodo(): Flow<List<TodoCategoryWithTodo>>
+    fun getCategoryWithTodo(): Flow<List<CategoryWithTodo>>
 }

@@ -33,11 +33,16 @@ abstract class AppDatabase : RoomDatabase() {
                     super.onCreate(db)
 
                     Executors.newSingleThreadExecutor().execute {
+                        // set Initial category item
                         runBlocking {
-                            getInstance(context).todoCategoryDao().createCategory(TodoCategory.PERSONAL)
-                            getInstance(context).todoCategoryDao().createCategory(TodoCategory.WORK)
-                            getInstance(context).todoCategoryDao().createCategory(TodoCategory.STUDY)
-                            getInstance(context).todoCategoryDao().createCategory(TodoCategory.OTHER)
+                            getInstance(context).todoCategoryDao()
+                                .createCategory(TodoCategory.PERSONAL)
+                            getInstance(context).todoCategoryDao()
+                                .createCategory(TodoCategory.WORK)
+                            getInstance(context).todoCategoryDao()
+                                .createCategory(TodoCategory.STUDY)
+                            getInstance(context).todoCategoryDao()
+                                .createCategory(TodoCategory.OTHER)
                         }
                     }
                 }

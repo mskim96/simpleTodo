@@ -7,7 +7,7 @@
 
         <variable
             name="todoCategory"
-            type="com.msk.simpletodo.data.model.todo.TodoCategoryWithTodo" />
+            type="com.msk.simpletodo.data.model.todo.CategoryWithTodo" />
 
         <variable
             name="adapter"
@@ -58,7 +58,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
-            android:layout_marginTop="16dp"
+            android:layout_marginTop="8dp"
             android:text="@{todoCategory.todoCategory.category}"
             android:textColor="@color/font_default"
             android:textSize="36sp"

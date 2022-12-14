@@ -1,7 +1,7 @@
 package com.msk.simpletodo.data.repository
 
 import com.msk.simpletodo.data.datasource.todo.TodoDatasource
-import com.msk.simpletodo.data.model.todo.TodoCategoryWithTodo
+import com.msk.simpletodo.data.model.todo.CategoryWithTodo
 import com.msk.simpletodo.data.model.todo.TodoEntity
 import com.msk.simpletodo.domain.repository.TodoRepository
 import kotlinx.coroutines.flow.Flow
@@ -18,11 +18,11 @@ class TodoRepositoryImpl @Inject constructor(private val todoDatasource: TodoDat
         return todoDatasource.deleteTodo(todo)
     }
 
-    override fun getTodoWithCategoryId(id: Long): Flow<TodoCategoryWithTodo> {
+    override fun getTodoWithCategoryId(id: Long): Flow<CategoryWithTodo> {
         return todoDatasource.getTodoByCategoryId(id)
     }
 
-    override fun getCategoryWithTodo(): Flow<List<TodoCategoryWithTodo>> {
+    override fun getCategoryWithTodo(): Flow<List<CategoryWithTodo>> {
         return todoDatasource.getCategoryWithTodo()
     }
 }

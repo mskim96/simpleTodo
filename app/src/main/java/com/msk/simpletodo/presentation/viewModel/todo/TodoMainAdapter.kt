@@ -3,18 +3,17 @@ package com.msk.simpletodo.presentation.viewModel.todo
 import android.app.Activity
 import android.content.Context
 import android.content.ContextWrapper
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
-import com.msk.simpletodo.data.model.todo.TodoCategoryWithTodo
+import com.msk.simpletodo.data.model.todo.CategoryWithTodo
 import com.msk.simpletodo.databinding.TodoMainItemBinding
 import com.msk.simpletodo.presentation.util.getDrawableId
 import com.msk.simpletodo.presentation.view.todo.TodoActivity
 
 class TodoMainAdapter() :
-    ListAdapter<TodoCategoryWithTodo, TodoMainAdapter.ToDoMainViewHolder>(DiffUtilCallback()) {
+    ListAdapter<CategoryWithTodo, TodoMainAdapter.ToDoMainViewHolder>(DiffUtilCallback()) {
 
     init {
         setHasStableIds(true)
@@ -22,15 +21,16 @@ class TodoMainAdapter() :
 
     inner class ToDoMainViewHolder(val binding: TodoMainItemBinding) :
         RecyclerView.ViewHolder(binding.root) {
-        fun bind(todoCategory: TodoCategoryWithTodo) {
-            val id =
-                getDrawableId(binding.root.context, "${todoCategory.todoCategory.categoryIcon}")
-            binding.todoMainIcon.setImageResource(id)
-            binding.todoCategory = todoCategory
-            binding.todoFrameCard.setOnClickListener {
-                (binding.root.context.findActivity() as TodoActivity).setListFragment(
-                    adapterPosition
-                )
+        fun bind(todoCategory: CategoryWithTodo) {
+            val id = getDrawableId(binding.root.context, todoCategory.todoCategory.categoryIcon)
+            binding.apply {
+                todoMainIcon.setImageResource(id)
+                todoCategoryItem = todoCategory
+                todoFrameCard.setOnClickListener {
+                    (binding.root.context.findActivity() as TodoActivity).setListFragment(
+                        adapterPosition
+                    )
+                }
             }
         }
     }
@@ -54,6 +54,7 @@ class TodoMainAdapter() :
         return position.toLong()
     }
 
+    // extension function for use activity method (hilt)
     fun Context.findActivity(): Context {
         while (this is ContextWrapper && this !is Activity) {
             return baseContext

@@ -1,31 +1,23 @@
 package com.msk.simpletodo.presentation.view.todo
 
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.databinding.DataBindingUtil
-import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
 import com.msk.simpletodo.R
-import com.msk.simpletodo.data.model.todo.TodoEntity
 import com.msk.simpletodo.databinding.FragmentTodoMainBinding
-import com.msk.simpletodo.presentation.util.convertTimestampToDOW
 import com.msk.simpletodo.presentation.util.convertTimestampToDate
 import com.msk.simpletodo.presentation.util.convertTimestampToHour
-import com.msk.simpletodo.presentation.view.base.Result
+import com.msk.simpletodo.presentation.view.base.BaseFragment
+import com.msk.simpletodo.presentation.view.base.UiState
 import com.msk.simpletodo.presentation.viewModel.todo.TodoMainAdapter
 import com.msk.simpletodo.presentation.viewModel.todo.TodoViewModel
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.flow.collect
-import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.launch
 
-class TodoMainFragment : Fragment() {
-
-    private lateinit var binding: FragmentTodoMainBinding
+class TodoMainFragment : BaseFragment<FragmentTodoMainBinding>(R.layout.fragment_todo_main) {
 
     private val todoMainAdapter: TodoMainAdapter by lazy { TodoMainAdapter() }
     private val todoViewModel: TodoViewModel by lazy { ViewModelProvider(requireActivity())[TodoViewModel::class.java] }
@@ -33,43 +25,36 @@ class TodoMainFragment : Fragment() {
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?,
     ): View? {
-        binding =
-            DataBindingUtil.inflate(layoutInflater, R.layout.fragment_todo_main, container, false)
-
+        // Get CategoryWithTodo data when fragment create
         todoViewModel.getCategoryWithTodo()
 
+        val view = super.onCreateView(inflater, container, savedInstanceState)
+        // get argument
         val args: Bundle? = arguments
         val username = args?.getString("username")
 
+        // collect categoryWithTodo data
         lifecycleScope.launch(Dispatchers.Main) {
-            todoViewModel.categoryWithTodoResult.collect {
+            todoViewModel.categoryWithTodo.collect {
                 when (it) {
-                    is Result.Success -> {
-                        todoMainAdapter.submitList(it.data)
-                    }
-                    else -> null
+                    is UiState.Loading -> it
+                    is UiState.Success -> todoMainAdapter.submitList(it.data)
+                    is UiState.Fail -> it.error
                 }
             }
         }
 
-        binding.apply {
-            lifecycleOwner = viewLifecycleOwner
+        bind {
+            // binding default information
+            name = username
+            date = convertTimestampToDate(null)
+            time = convertTimestampToHour()
 
-            this.username = username
-            this.date = convertTimestampToDate(null)
-            this.time = convertTimestampToHour()
-
-            this.vm = todoViewModel
-            this.adapter = todoMainAdapter
+            // binding vm, ad
+            vm = todoViewModel
+            adapter = todoMainAdapter
         }
 
-        // for recycler view
-
-        return binding.root
-    }
-
-    override fun onDestroy() {
-        super.onDestroy()
-        binding.unbind()
+        return view
     }
 }

@@ -1,19 +1,19 @@
 package com.msk.simpletodo.presentation.viewModel.todo
 
 import androidx.recyclerview.widget.DiffUtil
-import com.msk.simpletodo.data.model.todo.TodoCategoryWithTodo
+import com.msk.simpletodo.data.model.todo.CategoryWithTodo
 
-class DiffUtilCallback() : DiffUtil.ItemCallback<TodoCategoryWithTodo>() {
+class DiffUtilCallback() : DiffUtil.ItemCallback<CategoryWithTodo>() {
     override fun areItemsTheSame(
-        oldItem: TodoCategoryWithTodo,
-        newItem: TodoCategoryWithTodo
+        oldItem: CategoryWithTodo,
+        newItem: CategoryWithTodo,
     ) =
         oldItem.todo.size == newItem.todo.size
 
 
     override fun areContentsTheSame(
-        oldItem: TodoCategoryWithTodo,
-        newItem: TodoCategoryWithTodo
+        oldItem: CategoryWithTodo,
+        newItem: CategoryWithTodo,
     ) =
         oldItem.todo == oldItem.todo
 

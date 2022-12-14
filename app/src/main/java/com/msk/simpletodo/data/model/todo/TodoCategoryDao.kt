@@ -14,9 +14,9 @@ interface TodoCategoryDao {
 
     @Transaction
     @Query("SELECT * FROM todo_category_table WHERE tid =:id")
-    fun getTodoByCategoryId(id: Long): TodoCategoryWithTodo
+    fun getTodoByCategoryId(id: Long): CategoryWithTodo
 
     @Transaction
     @Query("SELECT * FROM todo_category_table")
-    fun getCategoryWithTodo(): List<TodoCategoryWithTodo>
+    fun getCategoryWithTodo(): List<CategoryWithTodo>
 }

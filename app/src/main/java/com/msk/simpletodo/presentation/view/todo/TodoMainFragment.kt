@@ -14,8 +14,7 @@ import com.msk.simpletodo.presentation.view.base.BaseFragment
 import com.msk.simpletodo.presentation.view.base.UiState
 import com.msk.simpletodo.presentation.viewModel.todo.TodoMainAdapter
 import com.msk.simpletodo.presentation.viewModel.todo.TodoViewModel
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.launch
+import kotlinx.coroutines.flow.collectLatest
 
 class TodoMainFragment : BaseFragment<FragmentTodoMainBinding>(R.layout.fragment_todo_main) {
 
@@ -26,20 +25,18 @@ class TodoMainFragment : BaseFragment<FragmentTodoMainBinding>(R.layout.fragment
         inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?,
     ): View? {
         // Get CategoryWithTodo data when fragment create
-        todoViewModel.getCategoryWithTodo()
 
         val view = super.onCreateView(inflater, container, savedInstanceState)
         // get argument
         val args: Bundle? = arguments
         val username = args?.getString("username")
 
-        // collect categoryWithTodo data
-        lifecycleScope.launch(Dispatchers.Main) {
-            todoViewModel.categoryWithTodo.collect {
-                when (it) {
-                    is UiState.Loading -> it
-                    is UiState.Success -> todoMainAdapter.submitList(it.data)
-                    is UiState.Fail -> it.error
+        lifecycleScope.launchWhenStarted {
+            todoViewModel.getCategoryWithTodo() // call category With TodoData
+            todoViewModel.categoryWithTodo.collectLatest { state ->
+                when (state) { // collect Latest from categoryWithTodo
+                    is UiState.Loading -> state // send data to todoAdapter
+                    is UiState.Success -> todoMainAdapter.submitList(state.data)
                 }
             }
         }

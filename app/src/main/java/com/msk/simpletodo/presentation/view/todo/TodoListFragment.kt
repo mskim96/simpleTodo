@@ -1,95 +1,84 @@
 package com.msk.simpletodo.presentation.view.todo
 
+import android.os.Build
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.databinding.DataBindingUtil
-import androidx.fragment.app.Fragment
+import androidx.annotation.RequiresApi
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
 import com.msk.simpletodo.R
 import com.msk.simpletodo.data.model.todo.TodoEntity
 import com.msk.simpletodo.databinding.FragmentTodoListBinding
 import com.msk.simpletodo.presentation.util.getDrawableId
-import com.msk.simpletodo.presentation.view.base.UiState
-import com.msk.simpletodo.presentation.viewModel.todo.TodoDateAdapter
+import com.msk.simpletodo.presentation.view.base.BaseFragment
+import com.msk.simpletodo.presentation.viewModel.todo.TodoListAdapter
 import com.msk.simpletodo.presentation.viewModel.todo.TodoViewModel
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.launch
+import kotlinx.coroutines.flow.collectLatest
 
-class TodoListFragment : Fragment() {
-
-    private lateinit var binding: FragmentTodoListBinding
+class TodoListFragment : BaseFragment<FragmentTodoListBinding>(R.layout.fragment_todo_list) {
 
     private val todoViewModel: TodoViewModel by lazy { ViewModelProvider(requireActivity())[TodoViewModel::class.java] }
-    private val todoDateAdapter: TodoDateAdapter by lazy { TodoDateAdapter() }
+    private val todoListAdapter: TodoListAdapter by lazy { TodoListAdapter() }
 
+    @RequiresApi(Build.VERSION_CODES.N)
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?,
     ): View? {
-        binding =
-            DataBindingUtil.inflate(layoutInflater, R.layout.fragment_todo_list, container, false)
-
+        val view = super.onCreateView(inflater, container, savedInstanceState)
+        // get argument
         val args: Bundle? = arguments
         val position = args?.getInt("position")
 
-        binding.backButton.setOnClickListener {
-            (activity as TodoActivity).completeFragment(this)
-        }
-        lifecycleScope.launch(Dispatchers.Main) {
+
+        lifecycleScope.launchWhenStarted {
+            // call categoryWithId function with args position
             todoViewModel.getTodoByCategoryId((position!!.toLong() + 1L))
-            todoViewModel.todoWithCategoryById.collect {
-                when (it) {
-                    is UiState.Success -> {
-                        val id = getDrawableId(
-                            requireContext(),
-                            it.data.todoCategory.categoryIcon
-                        )
+            todoViewModel.todoWithCategoryById.collectLatest { data ->
+                data?.let {
+                    val id = // set drawableIcon, adapter, result
+                        getDrawableId(requireContext(), data.todoCategory.categoryIcon)
+                    binding.todoCategoryIcon.setImageResource(id)
+                    binding.todoCategory = data
+                    todoListAdapter.setItem(data.todo)
 
-                        binding.todoCategoryIcon.setImageResource(id)
-                        binding.todoCategory = it.data
-
-                        todoDateAdapter.setItem(it.data.todo)
-                    }
-                    else -> null
+                    val done = it.todo.filter { it.done }.size // for progress bar
+                    val progressPt = ((done.toDouble() / it.todo.size.toDouble()) * 10).toInt()
+                    binding.progressBar.setProgress(progressPt, true)
                 }
             }
         }
 
-        binding.apply {
-            lifecycleOwner = viewLifecycleOwner
-            binding.adapter = todoDateAdapter
-        }
+        bind {
+            binding.adapter = todoListAdapter
 
-        todoDateAdapter.setOnPassStateInterface(object : TodoDateAdapter.OnPassStateInterface {
-            override fun passValue(position: Int) {
-                lifecycleScope.launch(Dispatchers.Main) {
-                    todoViewModel.todoWithCategoryById.collect {
-                        when (it) {
-                            is UiState.Success -> {
-                                deleteTodo(it.data.todo[position])
-                            }
-                            else -> null
-                        }
-                    }
-                }
+            // UI Click listener
+            backButton.setOnClickListener { // Nav back fragment
+                (activity as TodoActivity).completeFragment(this@TodoListFragment)
             }
-        })
+            navAddTodoButton.setOnClickListener { // nav CreateTodo Button
+                (activity as TodoActivity).setFragmentAddToDo(position!!)
+            }
 
-        binding.navAddTodoButton.setOnClickListener {
-            (activity as TodoActivity).setFragmentAddToDo(position!!)
+            // inside recycler item Event listener
+            todoListAdapter.setOnPassStateInterface(object : TodoListAdapter.OnPassStateInterface {
+                override fun passValue(todo: TodoEntity) = deleteTodo(todo)
+                override fun checkValue(todo: TodoEntity, checked: Boolean) =
+                    checkTodo(todo.copy(done = checked))
+            })
         }
-
-        return binding.root
+        return view
     }
 
+    /**
+     * method from viewModel
+     */
     fun deleteTodo(todo: TodoEntity) {
         todoViewModel.deleteTodo(todo)
     }
 
-    override fun onDestroy() {
-        super.onDestroy()
-        binding.unbind()
+    fun checkTodo(todo: TodoEntity) {
+        todoViewModel.checkTodo(todo)
     }
 }

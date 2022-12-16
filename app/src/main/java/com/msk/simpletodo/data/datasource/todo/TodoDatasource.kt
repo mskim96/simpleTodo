@@ -9,6 +9,8 @@ interface TodoDatasource {
 
     suspend fun deleteTodo(todo: TodoEntity)
 
+    suspend fun checkTodo(todo: TodoEntity)
+
     // todo
     fun getTodoByCategoryId(id: Long): Flow<CategoryWithTodo>
 

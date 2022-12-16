@@ -9,6 +9,8 @@ interface TodoRepository {
 
     suspend fun deleteTodo(todo: TodoEntity)
 
+    suspend fun checkTodo(todo: TodoEntity)
+
     fun getTodoWithCategoryId(id: Long): Flow<CategoryWithTodo>
 
     fun getCategoryWithTodo(): Flow<List<CategoryWithTodo>>

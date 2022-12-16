@@ -8,13 +8,13 @@ class DiffUtilCallback() : DiffUtil.ItemCallback<CategoryWithTodo>() {
         oldItem: CategoryWithTodo,
         newItem: CategoryWithTodo,
     ) =
-        oldItem.todo.size == newItem.todo.size
+        oldItem.todo.map { it.done } == newItem.todo.map { it.done }
 
 
     override fun areContentsTheSame(
         oldItem: CategoryWithTodo,
         newItem: CategoryWithTodo,
     ) =
-        oldItem.todo == oldItem.todo
+        oldItem.todo == newItem.todo
 
 }

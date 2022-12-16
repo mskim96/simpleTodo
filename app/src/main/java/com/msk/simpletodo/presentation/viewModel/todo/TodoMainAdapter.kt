@@ -1,14 +1,14 @@
 package com.msk.simpletodo.presentation.viewModel.todo
 
-import android.app.Activity
-import android.content.Context
-import android.content.ContextWrapper
+import android.os.Build
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.annotation.RequiresApi
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.msk.simpletodo.data.model.todo.CategoryWithTodo
 import com.msk.simpletodo.databinding.TodoMainItemBinding
+import com.msk.simpletodo.presentation.util.findActivity
 import com.msk.simpletodo.presentation.util.getDrawableId
 import com.msk.simpletodo.presentation.view.todo.TodoActivity
 
@@ -21,11 +21,15 @@ class TodoMainAdapter() :
 
     inner class ToDoMainViewHolder(val binding: TodoMainItemBinding) :
         RecyclerView.ViewHolder(binding.root) {
+        @RequiresApi(Build.VERSION_CODES.N)
         fun bind(todoCategory: CategoryWithTodo) {
             val id = getDrawableId(binding.root.context, todoCategory.todoCategory.categoryIcon)
-            binding.apply {
+            binding.apply { // set card information
                 todoMainIcon.setImageResource(id)
-                todoCategoryItem = todoCategory
+                todoCategoryItem = todoCategory // for binding
+                val done = todoCategory.todo.filter { it.done }.size // filter todoItem is done
+                val progressPt = (done.toDouble() / todoCategory.todo.size.toDouble() * 10).toInt()
+                progressBar.setProgress(progressPt, true) // set progress bar value
                 todoFrameCard.setOnClickListener {
                     (binding.root.context.findActivity() as TodoActivity).setListFragment(
                         adapterPosition
@@ -46,6 +50,7 @@ class TodoMainAdapter() :
         )
     }
 
+    @RequiresApi(Build.VERSION_CODES.N)
     override fun onBindViewHolder(holder: ToDoMainViewHolder, position: Int) {
         holder.bind(getItem(position))
     }
@@ -53,13 +58,4 @@ class TodoMainAdapter() :
     override fun getItemId(position: Int): Long {
         return position.toLong()
     }
-
-    // extension function for use activity method (hilt)
-    fun Context.findActivity(): Context {
-        while (this is ContextWrapper && this !is Activity) {
-            return baseContext
-        }
-        return this
-    }
-
 }

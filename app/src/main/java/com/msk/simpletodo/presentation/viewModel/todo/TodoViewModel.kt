@@ -1,18 +1,17 @@
 package com.msk.simpletodo.presentation.viewModel.todo
 
+import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.msk.simpletodo.data.model.todo.CategoryWithTodo
 import com.msk.simpletodo.data.model.todo.TodoEntity
-import com.msk.simpletodo.domain.usecase.GetCategoryWithTodoUseCase
-import com.msk.simpletodo.domain.usecase.GetTodoWithCategoryByIdUseCase
-import com.msk.simpletodo.domain.usecase.TodoCreateUseCase
-import com.msk.simpletodo.domain.usecase.TodoDeleteUseCase
+import com.msk.simpletodo.domain.usecase.*
 import com.msk.simpletodo.presentation.view.base.UiState
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -20,6 +19,7 @@ import javax.inject.Inject
 class TodoViewModel @Inject constructor(
     private val todoCreateUseCase: TodoCreateUseCase,
     private val todoDeleteUseCase: TodoDeleteUseCase,
+    private val todoCheckUseCase: TodoCheckUseCase,
     private val getCategoryWithTodoUseCase: GetCategoryWithTodoUseCase,
     private val getTodoWithCategoryByIdUseCase: GetTodoWithCategoryByIdUseCase,
 ) :
@@ -32,10 +32,9 @@ class TodoViewModel @Inject constructor(
         MutableStateFlow(UiState.Loading)
     val categoryWithTodo = _categoryWithTodo.asStateFlow()
 
-    private val _todoWithCategoryById: MutableStateFlow<UiState<CategoryWithTodo>> =
-        MutableStateFlow(UiState.Loading)
+    private val _todoWithCategoryById: MutableStateFlow<CategoryWithTodo?> =
+        MutableStateFlow(null)
     val todoWithCategoryById = _todoWithCategoryById.asStateFlow()
-
 
     /**
      * Get Data from local Database
@@ -46,8 +45,8 @@ class TodoViewModel @Inject constructor(
             getCategoryWithTodoUseCase.execute()
         }.onSuccess { data ->
             data.collect { _categoryWithTodo.emit(UiState.Success(it)) }
-        }.onFailure { throwable ->
-            _categoryWithTodo.emit(UiState.Fail(throwable))
+        }.onFailure {
+            return@onFailure
         }
     }
 
@@ -56,24 +55,36 @@ class TodoViewModel @Inject constructor(
         runCatching {
             getTodoWithCategoryByIdUseCase.execute(id)
         }.onSuccess { data ->
-            data.collect { _todoWithCategoryById.emit(UiState.Success(it)) }
-        }.onFailure { throwable ->
-            _todoWithCategoryById.emit(UiState.Fail(throwable))
+            data.collect { _todoWithCategoryById.emit(it) }
+        }.onFailure {
+            return@onFailure
         }
     }
 
     /**
      * CRUD Method
      */
-    fun createTodo(content: String, categoryType: Long) {
-        viewModelScope.launch(Dispatchers.IO) {
-            todoCreateUseCase.execute(content, categoryType)
+    fun createTodo(content: String, categoryType: Long) = viewModelScope.launch(Dispatchers.IO) {
+        // [createTodo] does not update mutableStateFlow because it is not a logic to update that screen
+        todoCreateUseCase.execute(content, categoryType)
+    }
+
+    fun deleteTodo(todo: TodoEntity) = viewModelScope.launch(Dispatchers.IO) {
+        todoDeleteUseCase.execute(todo) // Delete todoElement logic
+        _todoWithCategoryById.update { data -> // and update todoWithCategory mutable state for ui
+            data?.let { categoryWithTodo -> categoryWithTodo.copy(todo = data.todo - todo) }
         }
     }
 
-    fun deleteTodo(todo: TodoEntity) {
-        viewModelScope.launch(Dispatchers.IO) {
-            todoDeleteUseCase.execute(todo)
+    fun checkTodo(todo: TodoEntity) = viewModelScope.launch(Dispatchers.IO) {
+        todoCheckUseCase.execute(todo)
+        _todoWithCategoryById.update { data -> // Check todoElement logic
+            data?.let { categoryWithTodo -> // // and update todoWithCategory mutable state for ui
+                categoryWithTodo.copy(todo = categoryWithTodo.todo.map { currentTodo ->
+                    if (currentTodo.tid == todo.tid) todo else currentTodo
+                })
+            }
         }
     }
 }
+

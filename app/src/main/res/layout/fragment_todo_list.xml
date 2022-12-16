@@ -11,7 +11,7 @@
 
         <variable
             name="adapter"
-            type="com.msk.simpletodo.presentation.viewModel.todo.TodoDateAdapter" />
+            type="com.msk.simpletodo.presentation.viewModel.todo.TodoListAdapter" />
 
     </data>
 
@@ -73,15 +73,16 @@
             android:layout_height="0dp"
             android:layout_marginTop="48dp"
             android:adapter="@{adapter}"
+            android:clipToPadding="false"
             android:orientation="vertical"
+            android:paddingBottom="16dp"
             app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toStartOf="@+id/guidelineRight"
             app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="@+id/guidelineLeft"
             app:layout_constraintTop_toBottomOf="@+id/progressBar"
-            app:layout_constraintVertical_bias="0.0"
-            tools:listitem="@layout/todo_date_item">
+            tools:listitem="@layout/todo_list_item">
 
         </androidx.recyclerview.widget.RecyclerView>
 
@@ -123,6 +124,8 @@
             android:layout_marginStart="16dp"
             android:layout_marginTop="32dp"
             android:layout_marginEnd="16dp"
+            android:max="10"
+            android:progressTint="@color/font_default"
             app:layout_constraintEnd_toStartOf="@+id/guidelineRight"
             app:layout_constraintStart_toStartOf="@+id/guidelineLeft"
             app:layout_constraintTop_toBottomOf="@+id/todoCategoryTitle" />

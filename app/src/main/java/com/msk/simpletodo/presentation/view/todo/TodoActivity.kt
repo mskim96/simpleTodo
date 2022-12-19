@@ -1,6 +1,7 @@
 package com.msk.simpletodo.presentation.view.todo
 
 import android.os.Bundle
+import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
@@ -40,6 +41,7 @@ class TodoActivity() : AppCompatActivity() {
 
     fun setFragmentAddToDo(position: Int) {
         supportFragmentManager.commit {
+//            addSharedElement(v, "addToButton")
             replace<TodoAddTodoFragment>(
                 R.id.todoMainFrame,
                 args = bundleOf("position" to position)

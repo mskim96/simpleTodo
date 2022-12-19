@@ -30,7 +30,7 @@ class TodoMainAdapter() :
                 val done = todoCategory.todo.filter { it.done }.size // filter todoItem is done
                 val progressPt = (done.toDouble() / todoCategory.todo.size.toDouble() * 10).toInt()
                 progressBar.setProgress(progressPt, true) // set progress bar value
-                todoFrameCard.setOnClickListener {
+                itemView.setOnClickListener {
                     (binding.root.context.findActivity() as TodoActivity).setListFragment(
                         adapterPosition
                     )

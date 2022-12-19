@@ -14,6 +14,7 @@ import com.msk.simpletodo.presentation.view.todo.TodoActivity
 import com.msk.simpletodo.presentation.viewModel.auth.AuthViewModel
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 
 /**
@@ -33,12 +34,12 @@ class AuthActivity : AppCompatActivity() {
 
         // when username exist on datastore, nav TodoActivity
         lifecycleScope.launch(Dispatchers.IO) {
-            sharedViewModel.userNameFlow.collect {
-                if (it != null) {
+            sharedViewModel.userNameFlow.collectLatest { // get user information
+                if (it != null) { // if username not null
                     val intent = Intent(this@AuthActivity, TodoActivity::class.java)
-                    intent.putExtra("username", it)
-                    intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
-                    intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                    intent.putExtra("username", it) // send username and nav to todoActivity
+                    intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK)
+                    intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
                     startActivity(intent)
                 }
             }

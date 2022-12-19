@@ -1,27 +1,35 @@
 package com.msk.simpletodo.presentation.view.auth
 
+import android.content.Context
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.animation.AnimationUtils
+import android.view.inputmethod.InputMethodManager
 import androidx.core.widget.doAfterTextChanged
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.lifecycleScope
+import com.msk.simpletodo.R
 import com.msk.simpletodo.databinding.FragmentSignUpEmailBinding
 import com.msk.simpletodo.presentation.util.SignUpUser
 import com.msk.simpletodo.presentation.util.validate
 import com.msk.simpletodo.presentation.viewModel.auth.AuthViewModel
+import kotlinx.coroutines.launch
 
 class SignUpEmailFragment : Fragment() {
 
+    // binding
     private var _binding: FragmentSignUpEmailBinding? = null
     private val binding get() = _binding!!
 
+    // init viewModel
     private val sharedViewModel by lazy { ViewModelProvider(requireActivity())[AuthViewModel::class.java] }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?,
-    ): View? {
+    ): View {
         _binding = FragmentSignUpEmailBinding.inflate(inflater, container, false)
 
         // screen element
@@ -29,13 +37,26 @@ class SignUpEmailFragment : Fragment() {
         val signUpEmailLayout = binding.signUpEmailLayout
         val signUpEmail = binding.signUpEmail
         val textClearButton = binding.textClearButton
+        val imm = // for soft keyboard
+            requireActivity().getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
 
         // set button disabled
         signUpEmailCompleteButton.isEnabled = false
         textClearButton.visibility = View.GONE
 
         textClearButton.setOnClickListener {
-            signUpEmail.text = null
+            signUpEmail.text = null // text clear
+        }
+
+        /**
+         * If don't use launchWhenStarted, the soft keyboard won't open
+         */
+        lifecycleScope.launchWhenStarted {
+            launch { // for auto open soft keyboard
+                signUpEmail.requestFocus() // send focus
+                imm.showSoftInput(signUpEmail, 0) // open soft keyboard
+                signUpEmailCompleteButton.visibility = View.VISIBLE
+            }
         }
 
         // When editText changed
@@ -63,6 +84,17 @@ class SignUpEmailFragment : Fragment() {
             val email = signUpEmail.text?.trim().toString()
             sharedViewModel.putUserEmail(SignUpUser.Email, email)
             (activity as AuthActivity).navFragment(SignUpUsernameFragment())
+        }
+
+        /**
+         * Animation
+         */
+        AnimationUtils.loadAnimation(requireContext(), R.anim.text_animation_500).also {
+            binding.signUpEmailTitle.startAnimation(it)
+        }
+
+        AnimationUtils.loadAnimation(requireContext(), R.anim.item_fade_up_700).also {
+            signUpEmailCompleteButton.startAnimation(it)
         }
 
         return binding.root

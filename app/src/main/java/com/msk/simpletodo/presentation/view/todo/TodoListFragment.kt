@@ -5,9 +5,12 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.animation.AnimationUtils
 import androidx.annotation.RequiresApi
+import androidx.core.content.ContextCompat
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
+import androidx.recyclerview.widget.DividerItemDecoration
 import com.msk.simpletodo.R
 import com.msk.simpletodo.data.model.todo.TodoEntity
 import com.msk.simpletodo.databinding.FragmentTodoListBinding
@@ -27,6 +30,7 @@ class TodoListFragment : BaseFragment<FragmentTodoListBinding>(R.layout.fragment
         inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?,
     ): View? {
         val view = super.onCreateView(inflater, container, savedInstanceState)
+
         // get argument
         val args: Bundle? = arguments
         val position = args?.getInt("position")
@@ -41,10 +45,11 @@ class TodoListFragment : BaseFragment<FragmentTodoListBinding>(R.layout.fragment
                         getDrawableId(requireContext(), data.todoCategory.categoryIcon)
                     binding.todoCategoryIcon.setImageResource(id)
                     binding.todoCategory = data
-                    todoListAdapter.setItem(data.todo)
+                    todoListAdapter.setItem(data.todo.reversed())
 
                     val done = it.todo.filter { it.done }.size // for progress bar
                     val progressPt = ((done.toDouble() / it.todo.size.toDouble()) * 10).toInt()
+                    binding.progressPercent.text = "${progressPt * 10}%"
                     binding.progressBar.setProgress(progressPt, true)
                 }
             }
@@ -52,6 +57,12 @@ class TodoListFragment : BaseFragment<FragmentTodoListBinding>(R.layout.fragment
 
         bind {
             binding.adapter = todoListAdapter
+            binding.todoDateOfWeekRecycler.addItemDecoration(
+                DividerItemDecoration(
+                    requireContext(),
+                    DividerItemDecoration.VERTICAL
+                )
+            )
 
             // UI Click listener
             backButton.setOnClickListener { // Nav back fragment
@@ -60,14 +71,25 @@ class TodoListFragment : BaseFragment<FragmentTodoListBinding>(R.layout.fragment
             navAddTodoButton.setOnClickListener { // nav CreateTodo Button
                 (activity as TodoActivity).setFragmentAddToDo(position!!)
             }
+            navAddTodoButton.setColorFilter(ContextCompat.getColor(requireContext(), R.color.white))
 
             // inside recycler item Event listener
             todoListAdapter.setOnPassStateInterface(object : TodoListAdapter.OnPassStateInterface {
                 override fun passValue(todo: TodoEntity) = deleteTodo(todo)
+
                 override fun checkValue(todo: TodoEntity, checked: Boolean) =
                     checkTodo(todo.copy(done = checked))
             })
         }
+
+        AnimationUtils.loadAnimation(requireContext(), R.anim.item_fade_up_500).also {
+            binding.todoCategoryWithTaskSize.startAnimation(it)
+        }
+
+        AnimationUtils.loadAnimation(requireContext(), R.anim.item_fade_up).also {
+            binding.todoCategoryTitle.startAnimation(it)
+        }
+
         return view
     }
 
@@ -82,3 +104,12 @@ class TodoListFragment : BaseFragment<FragmentTodoListBinding>(R.layout.fragment
         todoViewModel.checkTodo(todo)
     }
 }
+
+
+
+
+
+
+
+
+

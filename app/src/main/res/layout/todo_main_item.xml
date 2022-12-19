@@ -31,6 +31,7 @@
                 android:id="@+id/todoMainIcon"
                 android:layout_width="24dp"
                 android:layout_height="24dp"
+                android:transitionName="@{@string/categoryIconTransition(String.valueOf(todoCategoryItem.todoCategory.tid))}"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 
@@ -53,16 +54,18 @@
                 android:text="@{todoCategoryItem.todoCategory.category}"
                 android:textColor="@color/font_case"
                 android:textSize="28dp"
+                android:transitionName="@{@string/categoryNameTransition(String.valueOf(todoCategoryItem.todoCategory.category))}"
                 app:layout_constraintBottom_toTopOf="@+id/progressBar"
                 app:layout_constraintStart_toStartOf="parent" />
 
             <ProgressBar
-                android:progressTint="@color/font_default"
                 android:id="@+id/progressBar"
                 style="?android:attr/progressBarStyleHorizontal"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:max="10"
+                android:progressTint="@color/font_default"
+                android:transitionName="categoryProgress"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent" />

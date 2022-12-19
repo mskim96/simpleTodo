@@ -21,7 +21,7 @@ fun convertTimestampToHour(): Int {
 }
 
 fun convertTimestampToDOW(time: Long?): String {
-    val sdf = SimpleDateFormat("E", Locale("en", "ja"))
+    val sdf = SimpleDateFormat("EE", Locale("en", "ja"))
     if (time == null) {
         val today = System.currentTimeMillis()
         return sdf.format(today)

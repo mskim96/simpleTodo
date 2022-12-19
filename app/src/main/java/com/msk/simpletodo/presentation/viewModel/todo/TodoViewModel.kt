@@ -72,7 +72,9 @@ class TodoViewModel @Inject constructor(
     fun deleteTodo(todo: TodoEntity) = viewModelScope.launch(Dispatchers.IO) {
         todoDeleteUseCase.execute(todo) // Delete todoElement logic
         _todoWithCategoryById.update { data -> // and update todoWithCategory mutable state for ui
-            data?.let { categoryWithTodo -> categoryWithTodo.copy(todo = data.todo - todo) }
+            data?.let { categoryWithTodo ->
+                categoryWithTodo.copy(todo = categoryWithTodo.todo - todo)
+            }
         }
     }
 
@@ -87,4 +89,3 @@ class TodoViewModel @Inject constructor(
         }
     }
 }
-

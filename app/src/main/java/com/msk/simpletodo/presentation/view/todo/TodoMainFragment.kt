@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.animation.AnimationUtils
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
 import com.msk.simpletodo.R
@@ -50,6 +51,19 @@ class TodoMainFragment : BaseFragment<FragmentTodoMainBinding>(R.layout.fragment
             // binding vm, ad
             vm = todoViewModel
             adapter = todoMainAdapter
+        }
+
+        /**
+         * TodoMainFragment Animation
+         */
+        AnimationUtils.loadAnimation(requireContext(), R.anim.text_animation_500).also {
+            binding.todoMainGreeting.startAnimation(it)
+            binding.todoMainUsername.startAnimation(it)
+        }
+
+        AnimationUtils.loadAnimation(requireContext(), R.anim.text_animation_1000).also {
+            binding.textView.startAnimation(it)
+            binding.todoMainTodayTodoCount.startAnimation(it)
         }
 
         return view

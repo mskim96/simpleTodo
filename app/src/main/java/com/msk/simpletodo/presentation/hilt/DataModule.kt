@@ -5,15 +5,13 @@ import androidx.datastore.core.DataStore
 import androidx.datastore.preferences.core.PreferenceDataStoreFactory
 import androidx.datastore.preferences.core.Preferences
 import androidx.datastore.preferences.preferencesDataStoreFile
-import androidx.room.Room
-import androidx.room.RoomDatabase
-import androidx.sqlite.db.SupportSQLiteDatabase
 import com.msk.simpletodo.data.database.AppDatabase
 import com.msk.simpletodo.data.datasource.auth.AuthDatasource
 import com.msk.simpletodo.data.datasource.auth.AuthDatasourceImpl
 import com.msk.simpletodo.data.datasource.todo.TodoDatasource
 import com.msk.simpletodo.data.datasource.todo.TodoDatasourceImpl
 import com.msk.simpletodo.data.model.auth.UserDao
+import com.msk.simpletodo.data.model.movie.MovieDao
 import com.msk.simpletodo.data.model.todo.TodoCategoryDao
 import com.msk.simpletodo.data.model.todo.TodoDao
 import com.msk.simpletodo.data.repository.AuthRepositoryImpl
@@ -25,8 +23,6 @@ import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
-import kotlinx.coroutines.runBlocking
-import java.util.concurrent.Executors
 import javax.inject.Singleton
 
 @Module
@@ -61,6 +57,12 @@ object DataModule {
     @Provides
     fun todoCategoryDao(appDatabase: AppDatabase): TodoCategoryDao {
         return appDatabase.todoCategoryDao()
+    }
+
+    @Singleton
+    @Provides
+    fun movieDao(appDatabase: AppDatabase): MovieDao {
+        return appDatabase.movieDao()
     }
 
     @Singleton

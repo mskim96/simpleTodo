@@ -4,9 +4,14 @@ import android.content.Context
 import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
+import androidx.room.TypeConverter
+import androidx.room.TypeConverters
 import androidx.sqlite.db.SupportSQLiteDatabase
+import com.msk.simpletodo.data.mapper.ListConverter
 import com.msk.simpletodo.data.model.auth.UserDao
 import com.msk.simpletodo.data.model.auth.UserEntity
+import com.msk.simpletodo.data.model.movie.Movie
+import com.msk.simpletodo.data.model.movie.MovieDao
 import com.msk.simpletodo.data.model.todo.TodoCategory
 import com.msk.simpletodo.data.model.todo.TodoCategoryDao
 import com.msk.simpletodo.data.model.todo.TodoDao
@@ -16,14 +21,16 @@ import java.util.concurrent.Executors
 
 
 @Database(
-    entities = [UserEntity::class, TodoEntity::class, TodoCategory::class],
+    entities = [UserEntity::class, TodoEntity::class, TodoCategory::class, Movie::class],
     version = 1,
     exportSchema = false
 )
+@TypeConverters(ListConverter::class)
 abstract class AppDatabase : RoomDatabase() {
     abstract fun userDao(): UserDao
     abstract fun todoDao(): TodoDao
     abstract fun todoCategoryDao(): TodoCategoryDao
+    abstract fun movieDao(): MovieDao
 
     companion object {
         fun getInstance(context: Context): AppDatabase = Room

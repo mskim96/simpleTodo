@@ -1,11 +1,10 @@
 package com.msk.simpletodo.presentation.viewModel.todo
 
-import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.msk.simpletodo.data.model.todo.CategoryWithTodo
 import com.msk.simpletodo.data.model.todo.TodoEntity
-import com.msk.simpletodo.domain.usecase.*
+import com.msk.simpletodo.domain.usecase.todo.*
 import com.msk.simpletodo.presentation.view.base.UiState
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers

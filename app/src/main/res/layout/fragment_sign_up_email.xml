@@ -6,19 +6,6 @@
     android:layout_height="match_parent"
     tools:context=".presentation.view.auth.SignUpEmailFragment">
 
-    <ImageButton
-        android:layout_width="48dp"
-        android:layout_height="48dp"
-        android:layout_marginStart="12dp"
-        android:backgroundTint="@color/white"
-        android:clickable="false"
-        android:contentDescription="@null"
-        android:src="@drawable/current_app_icon"
-        app:layout_constraintBottom_toTopOf="@+id/guidelineTop"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        tools:ignore="SpeakableTextPresentCheck" />
-
     <TextView
         android:id="@+id/signUpEmailTitle"
         android:layout_width="0dp"
@@ -72,15 +59,20 @@
         app:layout_constraintTop_toTopOf="@+id/signUpEmailLayout"
         tools:ignore="SpeakableTextPresentCheck" />
 
+
     <Button
+        android:background="@drawable/default_button_sub"
         android:id="@+id/signUpEmailCompleteButton"
+        android:textColor="@color/background_white"
         android:layout_width="match_parent"
         android:layout_height="80dp"
         android:text="next"
         android:visibility="gone"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@+id/guidelineRight"
-        app:layout_constraintStart_toStartOf="@+id/guidelineLeft" />
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent" />
+
 
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/guidelineLeft"

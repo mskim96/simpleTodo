@@ -5,7 +5,11 @@ import com.msk.simpletodo.data.model.auth.UserEntity
 import javax.inject.Inject
 
 class AuthDatasourceImpl @Inject constructor(private val userDao: UserDao) : AuthDatasource {
-    override suspend fun createAccount(user: UserEntity){
+    override suspend fun createAccount(user: UserEntity) {
         userDao.createAccount(user = user)
+    }
+
+    override suspend fun getUserByEmail(email: String) {
+        userDao.getUserByEmail(email)
     }
 }

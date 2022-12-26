@@ -87,9 +87,10 @@ class SignUpUsernameFragment : Fragment() {
 
         signUpUsernameCompleteButton.setOnClickListener {
             val email = sharedViewModel.userDataEmail.value!!
+            val password = sharedViewModel.userDataPassword.value!!
             val username = signUpUsername.text?.trim().toString()
 
-            createAccount(email, username)
+            createAccount(email, password, username)
             navTodoActivity(username)
         }
 
@@ -108,8 +109,8 @@ class SignUpUsernameFragment : Fragment() {
     }
 
     // create Account method from viewModel
-    private fun createAccount(email: String, username: String) {
-        sharedViewModel.createAccount(email, username)
+    private fun createAccount(email: String, password: String, username: String) {
+        sharedViewModel.createAccount(email, password, username)
     }
 
     private fun navTodoActivity(username: String) {

@@ -5,6 +5,9 @@ import androidx.datastore.core.DataStore
 import androidx.datastore.preferences.core.PreferenceDataStoreFactory
 import androidx.datastore.preferences.core.Preferences
 import androidx.datastore.preferences.preferencesDataStoreFile
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.auth.ktx.auth
+import com.google.firebase.ktx.Firebase
 import com.msk.simpletodo.data.database.AppDatabase
 import com.msk.simpletodo.data.datasource.auth.AuthDatasource
 import com.msk.simpletodo.data.datasource.auth.AuthDatasourceImpl
@@ -40,6 +43,11 @@ object DataModule {
     fun providePreferencesDataStore(@ApplicationContext context: Context): DataStore<Preferences> {
         return PreferenceDataStoreFactory.create(produceFile = { context.preferencesDataStoreFile("settings") })
     }
+
+    @Singleton
+    @Provides
+    fun firebaseAuth(): FirebaseAuth =
+        Firebase.auth
 
     @Singleton
     @Provides
@@ -79,8 +87,8 @@ object DataModule {
 
     @Singleton
     @Provides
-    fun provideAuthRepository(authDatasource: AuthDatasource): AuthRepository {
-        return AuthRepositoryImpl(authDatasource)
+    fun provideAuthRepository(authDatasource: AuthDatasource, firebaseAuth: FirebaseAuth): AuthRepository {
+        return AuthRepositoryImpl(authDatasource, firebaseAuth)
     }
 
     @Singleton

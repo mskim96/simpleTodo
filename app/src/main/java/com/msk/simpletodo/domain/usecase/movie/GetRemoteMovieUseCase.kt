@@ -12,4 +12,8 @@ class GetRemoteMovieUseCase @Inject constructor(private val repository: MovieRep
     suspend fun execute(page: Int): Flow<List<Movie>> {
         return repository.getRemoteMovies(page)
     }
+
+    suspend fun getTopRatingMovies(): Flow<List<Movie>> {
+        return repository.getTopRatingMovies()
+    }
 }

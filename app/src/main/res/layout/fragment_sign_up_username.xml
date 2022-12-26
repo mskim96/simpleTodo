@@ -6,19 +6,6 @@
     android:layout_height="match_parent"
     tools:context=".presentation.view.auth.SignUpUsernameFragment">
 
-    <ImageButton
-        android:layout_width="48dp"
-        android:layout_height="48dp"
-        android:layout_marginStart="12dp"
-        android:backgroundTint="@color/white"
-        android:clickable="false"
-        android:contentDescription="@null"
-        android:src="@drawable/current_app_icon"
-        app:layout_constraintBottom_toTopOf="@+id/guidelineTop"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        tools:ignore="SpeakableTextPresentCheck" />
-
     <TextView
         android:id="@+id/signUpUsernameTitle"
         android:layout_width="0dp"
@@ -80,8 +67,10 @@
         android:id="@+id/signUpUsernameCompleteButton"
         android:layout_width="match_parent"
         android:layout_height="80dp"
+        android:background="@drawable/default_button_sub"
         android:text="Complete !"
         android:textAllCaps="false"
+        android:textColor="@color/background_white"
         android:visibility="gone"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@+id/guidelineRight"

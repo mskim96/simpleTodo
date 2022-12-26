@@ -9,12 +9,17 @@
     <color name="white">#FFFFFFFF</color>
 
     <!--BackGround-->
-    <color name="background_white">#F2F2F2F2</color>
+    <color name="background_white">#F0F0EE</color>
+    <color name="background_silver">#EAEAEA</color>
+    <color name="movie_background">#1A1A1A</color>
 
     <!--Typo-->
     <color name="font_case">#333333</color>
     <color name="font_header">#000000</color>
     <color name="font_default">#616161</color>
+    <color name="font_placeholder">#AEAEAE</color>
+
+    <color name="font_movie_default">#FFFFFF</color>
 
     <!--Form-->
     <color name="form_correct">#009000</color>

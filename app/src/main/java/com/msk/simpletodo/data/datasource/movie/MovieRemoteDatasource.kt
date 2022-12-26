@@ -5,5 +5,5 @@ import kotlinx.coroutines.flow.Flow
 
 interface MovieRemoteDatasource {
     suspend fun getRemoteMovies(page: Int): Flow<List<MovieResponse.MovieData.MovieModel>>
-
+    suspend fun getRatingMovies(): Flow<List<MovieResponse.MovieData.MovieModel>>
 }

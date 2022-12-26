@@ -2,8 +2,8 @@
     <string name="app_name">simpleTodo</string>
 
     <!-- Sign Main -->
-    <string name="signMainTitle">Todo, Simple. Practice.</string>
-    <string name="signMainSubtitle">Simple todo application.\nThis application is created for study.</string>
+    <string name="signMainTitle">Welcome</string>
+    <string name="signMainSubtitle">This application is created for study.</string>
     <string name="navSignUpButton">Start</string>
 
     <!-- Todo Main -->
@@ -16,4 +16,7 @@
     <!-- transition -->
     <string name="categoryIconTransition">icon %s</string>
     <string name="categoryNameTransition">name %s</string>
+
+    <string name="web_client_id">1039287833889-q6hi2thn0lqf27e5j9bjdhbu82ptqnog.apps.googleusercontent.com</string>
+
 </resources>

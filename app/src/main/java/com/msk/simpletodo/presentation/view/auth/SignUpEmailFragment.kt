@@ -16,6 +16,7 @@ import com.msk.simpletodo.databinding.FragmentSignUpEmailBinding
 import com.msk.simpletodo.presentation.util.SignUpUser
 import com.msk.simpletodo.presentation.util.validate
 import com.msk.simpletodo.presentation.viewModel.auth.AuthViewModel
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 
 class SignUpEmailFragment : Fragment() {
@@ -27,6 +28,11 @@ class SignUpEmailFragment : Fragment() {
     // init viewModel
     private val sharedViewModel by lazy { ViewModelProvider(requireActivity())[AuthViewModel::class.java] }
 
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        (activity as AuthActivity).activityFullScreen(1)
+    }
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?,
     ): View {
@@ -37,6 +43,7 @@ class SignUpEmailFragment : Fragment() {
         val signUpEmailLayout = binding.signUpEmailLayout
         val signUpEmail = binding.signUpEmail
         val textClearButton = binding.textClearButton
+
         val imm = // for soft keyboard
             requireActivity().getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
 
@@ -51,11 +58,12 @@ class SignUpEmailFragment : Fragment() {
         /**
          * If don't use launchWhenStarted, the soft keyboard won't open
          */
-        lifecycleScope.launchWhenStarted {
+        lifecycleScope.launchWhenCreated {
             launch { // for auto open soft keyboard
+                delay(300)
+                signUpEmailCompleteButton.visibility = View.VISIBLE
                 signUpEmail.requestFocus() // send focus
                 imm.showSoftInput(signUpEmail, 0) // open soft keyboard
-                signUpEmailCompleteButton.visibility = View.VISIBLE
             }
         }
 
@@ -83,7 +91,7 @@ class SignUpEmailFragment : Fragment() {
         signUpEmailCompleteButton.setOnClickListener {
             val email = signUpEmail.text?.trim().toString()
             sharedViewModel.putUserEmail(SignUpUser.Email, email)
-            (activity as AuthActivity).navFragment(SignUpUsernameFragment())
+            (activity as AuthActivity).navFragment(SignUpPwFragment())
         }
 
         /**

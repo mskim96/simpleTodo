@@ -8,6 +8,8 @@ interface MovieLocalDatasource {
      * Get Method
      */
     suspend fun getLocalMovies(): Flow<List<Movie>>
+    suspend fun getMoviesToGenre(genres: String): Flow<List<Movie>>
+    suspend fun getMoviesToRating(): Flow<List<Movie>>
 
     /**
      * CRUD Method

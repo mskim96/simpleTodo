@@ -17,6 +17,14 @@ class MovieLocalDatasourceImpl @Inject constructor(
         emit(movieDao.getAllMovies())
     }
 
+    override suspend fun getMoviesToGenre(genres: String): Flow<List<Movie>> = flow {
+        emit(movieDao.getMoviesToGenre(listOf(genres)))
+    }
+
+    override suspend fun getMoviesToRating(): Flow<List<Movie>> = flow {
+        emit(movieDao.getMoviesToRating())
+    }
+
     /**
      * CRUD Method
      */

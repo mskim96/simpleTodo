@@ -9,6 +9,9 @@ interface UserDao {
     @Query("SELECT * FROM user_information_table")
     fun getAllUser(): List<UserEntity>
 
+    @Query("SELECT * FROM user_information_table WHERE user_email =:email")
+    fun getUserByEmail(email: String): UserEntity
+
     @Insert
-    suspend fun createAccount(user: UserEntity): Long
+    fun createAccount(user: UserEntity): Long
 }

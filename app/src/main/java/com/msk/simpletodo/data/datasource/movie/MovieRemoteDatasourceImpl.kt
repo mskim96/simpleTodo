@@ -10,8 +10,13 @@ class MovieRemoteDatasourceImpl @Inject constructor(
     private val apiInterface: ApiInterface,
 ) :
     MovieRemoteDatasource {
-    override suspend fun getRemoteMovies(page: Int): Flow<List<MovieResponse.MovieData.MovieModel>> = flow {
-        apiInterface.getNewMovies(page).body()?.data?.movies?.let { emit(it) }
+    override suspend fun getRemoteMovies(page: Int): Flow<List<MovieResponse.MovieData.MovieModel>> =
+        flow {
+            apiInterface.getNewMovies(page).body()?.data?.movies?.let { emit(it) }
+        }
+
+    override suspend fun getRatingMovies(): Flow<List<MovieResponse.MovieData.MovieModel>> = flow {
+        apiInterface.getTopRatingMovie().body()?.data?.movies?.let { emit(it) }
     }
 
 }

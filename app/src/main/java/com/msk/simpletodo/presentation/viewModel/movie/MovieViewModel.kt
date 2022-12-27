@@ -121,7 +121,7 @@ class MovieViewModel @Inject constructor(
      * TODO : Change function name
      */
     private fun getRemoteMovie() = viewModelScope.launch(Dispatchers.IO) {
-        for (i in 1..10) {
+        for (i in 1..2) {
             runCatching {
                 getRemoteMovieUseCase.execute(i)
             }.onSuccess { data ->

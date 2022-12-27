@@ -14,6 +14,11 @@
         <item name="android:statusBarColor">@android:color/transparent</item>
     </style>
 
+    <style name="Theme.todo" parent="Theme.MaterialComponents.DayNight.NoActionBar">
+        <item name="android:windowLightStatusBar" tools:targetApi="m">true</item>
+        <item name="android:statusBarColor">@android:color/white</item>
+    </style>
+
     <!-- For Input label -->
     <style name="holderSizeStyle" parent="TextAppearance.AppCompat">
         <item name="android:textSize">14sp</item>
@@ -26,6 +31,14 @@
 
     <style name="AppBottomSheetDialogTheme" parent="Theme.MaterialComponents.Light.BottomSheetDialog">
         <item name="bottomSheetStyle">@style/AppModalStyle</item>
+    </style>
+
+    <style name="CustomNavTextStyle" parent="Widget.AppCompat.TextView">
+        <item name="android:textSize">32sp</item>
+        <item name="android:paddingHorizontal" tools:targetApi="o">32dp</item>
+        <item name="android:layout_marginTop">32dp</item>
+        <item name="android:gravity">center</item>
+        <item name="android:layout_gravity">center</item>
     </style>
 
 </resources>

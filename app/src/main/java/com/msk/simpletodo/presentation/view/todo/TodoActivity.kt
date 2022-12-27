@@ -1,14 +1,17 @@
 package com.msk.simpletodo.presentation.view.todo
 
+import android.content.Intent
 import android.os.Bundle
-import android.view.View
+import android.widget.ImageView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.os.bundleOf
+import androidx.core.view.GravityCompat
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.commit
 import androidx.fragment.app.replace
 import com.msk.simpletodo.R
 import com.msk.simpletodo.databinding.ActivityTodoBinding
+import com.msk.simpletodo.presentation.view.movie.MovieActivity
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -22,6 +25,7 @@ class TodoActivity() : AppCompatActivity() {
         _binding = ActivityTodoBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
+
         // Get username from Auth Activity and send username to TodoMainFragment
         val username = intent.getStringExtra("username")
         val bundleUsername = bundleOf("username" to username)
@@ -29,7 +33,31 @@ class TodoActivity() : AppCompatActivity() {
             replace<TodoMainFragment>(R.id.todoMainFrame, args = bundleUsername)
             setReorderingAllowed(true)
         }
+        val navigationView = binding.mainNavigationView
+        val headerView = navigationView.getHeaderView(0)
+        val header = headerView.findViewById<ImageView>(R.id.navClearButton)
+        header.setOnClickListener { closeNav() }
+        navigationView.setNavigationItemSelectedListener {
+            val id = it.itemId
+            if (id == R.id.menu_movie) {
+                val intent = Intent(this@TodoActivity, MovieActivity::class.java)
+                startActivity(intent)
+                this.finish()
+            }
+            true
+        }
     }
+
+    fun openNav() {
+        val drawerLayout = binding.mainDrawerLayout
+        drawerLayout.openDrawer(GravityCompat.START)
+    }
+
+    fun closeNav() {
+        val drawerLayout = binding.mainDrawerLayout
+        drawerLayout.closeDrawer(GravityCompat.START)
+    }
+
 
     fun setListFragment(position: Int) {
         supportFragmentManager.commit {

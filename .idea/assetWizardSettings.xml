@@ -11,11 +11,27 @@
                   <entry key="vectorAssetStep">
                     <value>
                       <PersistentState>
+                        <option name="children">
+                          <map>
+                            <entry key="clipartAsset">
+                              <value>
+                                <PersistentState>
+                                  <option name="values">
+                                    <map>
+                                      <entry key="url" value="file:$USER_HOME$/Library/Android/sdk/icons/material/materialicons/play_arrow/baseline_play_arrow_24.xml" />
+                                    </map>
+                                  </option>
+                                </PersistentState>
+                              </value>
+                            </entry>
+                          </map>
+                        </option>
                         <option name="values">
                           <map>
                             <entry key="assetSourceType" value="FILE" />
-                            <entry key="outputName" value="current_mail" />
-                            <entry key="sourceFile" value="$PROJECT_DIR$/app/src/main/res/drawable/mail.svg" />
+                            <entry key="color" value="ffffff" />
+                            <entry key="outputName" value="movie_settings_icon" />
+                            <entry key="sourceFile" value="$PROJECT_DIR$/app/src/main/res/drawable/settings.svg" />
                           </map>
                         </option>
                       </PersistentState>

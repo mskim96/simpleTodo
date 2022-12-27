@@ -21,6 +21,7 @@ import com.google.firebase.auth.ktx.auth
 import com.google.firebase.ktx.Firebase
 import com.msk.simpletodo.R
 import com.msk.simpletodo.databinding.ActivityAuthBinding
+import com.msk.simpletodo.presentation.view.todo.TodoActivity
 import dagger.hilt.android.AndroidEntryPoint
 
 /**
@@ -40,14 +41,14 @@ class AuthActivity : AppCompatActivity() {
     override fun onStart() {
         super.onStart()
         val currentUser = auth.currentUser
-//        if (currentUser != null) {
-//            val intent = Intent(this@AuthActivity, TodoActivity::class.java)
-//            intent.putExtra("username", currentUser.displayName)
-//            // send username and nav to todoActivity
-//            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK)
-//            intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
-//            startActivity(intent)
-//        }
+        if (currentUser != null) {
+            val intent = Intent(this@AuthActivity, TodoActivity::class.java)
+            intent.putExtra("username", currentUser.displayName)
+            // send username and nav to todoActivity
+            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK)
+            intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+            startActivity(intent)
+        }
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {

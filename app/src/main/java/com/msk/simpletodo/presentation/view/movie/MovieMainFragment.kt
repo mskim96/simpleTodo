@@ -1,9 +1,11 @@
 package com.msk.simpletodo.presentation.view.movie
 
+import android.os.Build
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.annotation.RequiresApi
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
 import com.msk.simpletodo.R
@@ -25,6 +27,7 @@ class MovieMainFragment : BaseFragment<FragmentMovieMainBinding>(R.layout.fragme
     private val movieActionAdapter by lazy { MovieActionAdapter() }
     private val movieComedyAdapter by lazy { MovieComedyAdapter() }
 
+    @RequiresApi(Build.VERSION_CODES.M)
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
     ): View? {
@@ -65,6 +68,16 @@ class MovieMainFragment : BaseFragment<FragmentMovieMainBinding>(R.layout.fragme
             dramaAdapter = movieDramaAdapter
             actionAdapter = movieActionAdapter
             comedyAdapter = movieComedyAdapter
+        }
+
+        binding.movieMainScrollView.setOnScrollChangeListener { _, _, scrollY, _, oldScrollY ->
+
+            if (scrollY > 1100) {
+                binding.movieMainHeader.setBackgroundColor(resources.getColor(R.color.black))
+            }
+            if (oldScrollY > scrollY && scrollY < 1100) {
+                binding.movieMainHeader.setBackgroundColor(resources.getColor(com.google.android.material.R.color.mtrl_btn_transparent_bg_color))
+            }
         }
 
         movieNewestAdapter.setViewAndMovieListener(object : MovieNewestAdapter.OnClickListener {

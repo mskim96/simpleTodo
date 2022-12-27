@@ -29,6 +29,7 @@
             type="com.msk.simpletodo.presentation.viewModel.todo.TodoViewModel" />
     </data>
 
+
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -56,22 +57,9 @@
             android:textSize="18sp"
             android:textStyle="bold"
             app:layout_constraintBottom_toTopOf="@+id/guidelineTop"
-            app:layout_constraintEnd_toStartOf="@+id/todoSearchButton"
-            app:layout_constraintStart_toEndOf="@+id/todoSideNavButton"
-            app:layout_constraintTop_toTopOf="parent" />
-
-        <ImageButton
-            android:id="@+id/todoSearchButton"
-            android:layout_width="48dp"
-            android:layout_height="48dp"
-            android:layout_marginEnd="12dp"
-            android:backgroundTint="@color/white"
-            android:contentDescription="@null"
-            android:src="@drawable/todo_search_icon"
-            app:layout_constraintBottom_toTopOf="@+id/guidelineTop"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            tools:ignore="SpeakableTextPresentCheck" />
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
 
         <TextView

@@ -51,6 +51,10 @@ class TodoMainFragment : BaseFragment<FragmentTodoMainBinding>(R.layout.fragment
             // binding vm, ad
             vm = todoViewModel
             adapter = todoMainAdapter
+
+            todoSideNavButton.setOnClickListener {
+                (activity as TodoActivity).openNav()
+            }
         }
 
         /**

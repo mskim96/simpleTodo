@@ -27,31 +27,4 @@ class UserEntityReadWriteTest {
     private lateinit var signUpUseCase: SignUpUseCase
     private lateinit var signInUseCase: SignUpUseCase
     private lateinit var viewModel: AuthViewModel
-
-    @Before
-    fun createDb() {
-        val context = ApplicationProvider.getApplicationContext<Context>()
-        db = Room.inMemoryDatabaseBuilder(
-            context, AppDatabase::class.java
-        ).build()
-        userDao = db.userDao()
-        datasource = AuthDatasourceImpl(userDao)
-        repository = AuthRepositoryImpl(datasource)
-        signUpUseCase = SignUpUseCase(repository)
-    }
-
-    @After
-    @Throws(IOException::class)
-    fun closeDb() {
-        db.close()
-    }
-
-    @Test
-    @Throws(Exception::class)
-    fun writeUserAndReadInList() {
-//        viewModel.createAccount(email = "123@test.com", "12345", "test")
-//        CoroutineScope(Dispatchers.IO).launch {
-//            assertThat(viewModel.userResult.value, equalTo(1L))
-//        }
-    }
 }

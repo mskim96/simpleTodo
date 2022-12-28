@@ -20,13 +20,16 @@
             app:layout_constraintTop_toTopOf="parent" />
 
         <com.google.android.material.bottomnavigation.BottomNavigationView
+            app:itemPaddingBottom="8dp"
             android:id="@+id/movieBottomNavigation"
+            style="@style/bottomNavigationStyle"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@color/movie_background"
-            android:padding="16dp"
-            app:itemIconTint="@color/white"
-            app:itemTextColor="@color/white"
+            android:background="@color/black"
+            android:padding="8dp"
+            android:visibility="visible"
+            app:itemRippleColor="@null"
+            app:labelVisibilityMode="unlabeled"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"

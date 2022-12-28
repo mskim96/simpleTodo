@@ -2,6 +2,7 @@ package com.msk.simpletodo.presentation.view.movie
 
 import android.os.Build
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -71,6 +72,10 @@ class MovieMainFragment : BaseFragment<FragmentMovieMainBinding>(R.layout.fragme
         }
 
         binding.movieMainScrollView.setOnScrollChangeListener { _, _, scrollY, _, oldScrollY ->
+            (activity as MovieActivity).hideBottomNavigation()
+            if(scrollY < oldScrollY) {
+                (activity as MovieActivity).setBottomNavigation()
+            }
 
             if (scrollY > 1100) {
                 binding.movieMainHeader.setBackgroundColor(resources.getColor(R.color.black))

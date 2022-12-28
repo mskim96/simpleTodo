@@ -64,11 +64,11 @@
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="parent" />
 
-                    <LinearLayout
+                    <androidx.constraintlayout.widget.ConstraintLayout
+                        android:id="@+id/linearLayout"
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:background="@drawable/movie_main_gradient"
-                        android:orientation="vertical"
+                        android:layout_height="150dp"
+                        android:background="@drawable/movie_detail_gradient"
                         app:layout_constraintBottom_toBottomOf="@+id/movieMainPoster"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent">
@@ -78,117 +78,128 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginStart="24dp"
-                            android:layout_marginTop="16dp"
+                            android:layout_marginTop="36dp"
                             android:text="BLISS"
                             android:textColor="@color/white"
-                            android:textSize="42sp"
+                            android:textSize="32sp"
                             android:textStyle="bold"
-                            app:layout_constraintBottom_toTopOf="@+id/textView8"
-                            app:layout_constraintStart_toStartOf="parent" />
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toTopOf="parent" />
 
-                        <LinearLayout
-                            android:layout_width="match_parent"
+                        <TextView
+                            android:id="@+id/textView8"
+                            android:layout_width="0dp"
                             android:layout_height="wrap_content"
-                            android:orientation="horizontal">
+                            android:layout_marginTop="8dp"
+                            android:layout_marginBottom="16dp"
+                            android:layout_weight="2"
+                            android:ellipsize="end"
+                            android:maxLines="2"
+                            android:text="Emily spots Greg on the street \nand attempts to rescue him."
+                            android:textColor="@color/white"
+                            android:textSize="16sp"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintStart_toStartOf="@+id/textView6"
+                            app:layout_constraintTop_toBottomOf="@+id/textView6"
+                            app:layout_constraintVertical_bias="0.0" />
 
-                            <TextView
-                                android:id="@+id/textView8"
-                                android:layout_width="0dp"
-                                android:layout_height="wrap_content"
-                                android:layout_marginLeft="24dp"
-                                android:layout_marginTop="8dp"
-                                android:layout_marginBottom="16dp"
-                                android:layout_weight="2"
-                                android:ellipsize="end"
-                                android:maxLines="2"
-                                android:text="While Isabel gets more crystals, Emily spots Greg on the street and attempts to rescue him."
-                                android:textColor="@color/white"
-                                android:textSize="18sp" />
+                        <ImageButton
+                            android:layout_width="48dp"
+                            android:layout_height="48dp"
+                            android:layout_marginEnd="24dp"
+                            android:background="@drawable/movie_button_play"
+                            android:src="@drawable/movie_play_icon"
+                            app:layout_constraintBottom_toBottomOf="@+id/textView8"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintTop_toTopOf="@+id/textView6" />
 
-                            <Space
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_weight="1" />
-
-                        </LinearLayout>
-                    </LinearLayout>
-
-                    <ImageButton
-                        android:layout_width="48dp"
-                        android:layout_height="48dp"
-                        android:layout_marginEnd="32dp"
-                        android:layout_marginBottom="48dp"
-                        android:background="@drawable/movie_button_play"
-                        android:src="@drawable/movie_play_icon"
-                        app:layout_constraintBottom_toBottomOf="parent"
-                        app:layout_constraintEnd_toEndOf="parent" />
+                    </androidx.constraintlayout.widget.ConstraintLayout>
 
                 </androidx.constraintlayout.widget.ConstraintLayout>
 
-                <LinearLayout
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:background="@drawable/movie_detail_gradient2"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginHorizontal="24dp"
-                    android:layout_marginTop="16dp">
+                    android:paddingHorizontal="24dp"
+                    android:paddingTop="16dp"
+                    android:paddingBottom="40dp"
+                    >
 
                     <TextView
-                        android:layout_width="wrap_content"
+                        android:id="@+id/textView13"
+                        android:layout_width="0dp"
                         android:layout_height="wrap_content"
-                        android:layout_marginRight="8dp"
-                        android:layout_weight="1"
 
+                        android:layout_marginEnd="8dp"
+                        android:layout_weight="1"
                         android:background="@drawable/default_button_oauth"
                         android:backgroundTint="#3A68F8"
                         android:padding="8dp"
                         android:text="Drama"
                         android:textAlignment="center"
-                        android:textColor="@color/white" />
+                        android:textColor="@color/white"
+                        app:layout_constraintEnd_toStartOf="@+id/textView12"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
 
                     <TextView
-                        android:layout_width="wrap_content"
+                        android:id="@+id/textView12"
+                        android:layout_width="0dp"
                         android:layout_height="wrap_content"
-                        android:layout_marginRight="8dp"
-                        android:layout_weight="1"
-                        android:backgroundTint="#3A68F8"
+                        android:layout_marginEnd="8dp"
                         android:background="@drawable/default_button_oauth"
+                        android:backgroundTint="#3A68F8"
                         android:padding="8dp"
                         android:text="Suspense"
                         android:textAlignment="center"
-                        android:textColor="@color/white" />
-
+                        android:textColor="@color/white"
+                        app:layout_constraintBottom_toBottomOf="@+id/textView13"
+                        app:layout_constraintEnd_toStartOf="@+id/textView14"
+                        app:layout_constraintStart_toEndOf="@+id/textView13"
+                        app:layout_constraintTop_toTopOf="@+id/textView13" />
 
                     <TextView
-                        android:layout_width="wrap_content"
+                        android:id="@+id/textView14"
+                        android:layout_width="0dp"
                         android:layout_height="wrap_content"
-                        android:layout_weight="1"
+                        android:layout_marginEnd="8dp"
                         android:background="@drawable/default_button_oauth"
-                        android:padding="8dp"
-                        android:layout_marginRight="8dp"
                         android:backgroundTint="#3A68F8"
+                        android:padding="8dp"
                         android:text="Crime"
                         android:textAlignment="center"
-                        android:textColor="@color/white" />
+                        android:textColor="@color/white"
+                        app:layout_constraintBottom_toBottomOf="@+id/textView12"
+                        app:layout_constraintEnd_toStartOf="@+id/textView15"
+                        app:layout_constraintStart_toEndOf="@+id/textView12"
+                        app:layout_constraintTop_toTopOf="@+id/textView12" />
 
                     <TextView
-                        android:layout_width="wrap_content"
+                        android:id="@+id/textView15"
+                        android:layout_width="0dp"
                         android:layout_height="wrap_content"
+                        android:layout_marginEnd="8dp"
                         android:layout_weight="1"
                         android:background="@drawable/default_button_oauth"
-                        android:padding="8dp"
                         android:backgroundTint="#3A68F8"
+                        android:padding="8dp"
                         android:text="Thriller"
                         android:textAlignment="center"
-                        android:textColor="@color/white" />
+                        android:textColor="@color/white"
+                        app:layout_constraintBottom_toBottomOf="@+id/textView14"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toEndOf="@+id/textView14"
+                        app:layout_constraintTop_toTopOf="@+id/textView14" />
 
 
-
-                </LinearLayout>
+                </androidx.constraintlayout.widget.ConstraintLayout>
 
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginHorizontal="12dp"
-                    android:layout_marginTop="24dp"
                     android:layout_marginBottom="8dp"
                     android:gravity="center_vertical"
                     android:text="Newest Movie"
@@ -203,6 +214,7 @@
                     android:layout_marginHorizontal="12dp"
                     android:adapter="@{newestAdapter}"
                     android:orientation="horizontal"
+                    android:overScrollMode="never"
                     app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
                     app:layout_constraintEnd_toStartOf="@+id/guidelineRight"
                     app:layout_constraintHorizontal_bias="0.0"

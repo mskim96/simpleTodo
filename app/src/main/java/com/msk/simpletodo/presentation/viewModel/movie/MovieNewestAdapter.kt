@@ -35,7 +35,6 @@ class MovieNewestAdapter :
             Glide.with(binding.root).load(currentMovie.coverImg).override(130, 130)
                 .into(binding.movieThumbnail)
             binding.movie = currentMovie
-
             binding.movieThumbnail.setOnClickListener {
                 // after add callback
                 listener?.sendViewAndMovie(binding.movieThumbnail, currentMovie)

@@ -26,11 +26,14 @@ data class MovieResponse(
             @SerializedName("genres")
             val genres: List<String>,
 
-            @SerializedName("description_full")
+            @SerializedName("summary")
             val description: String,
 
-            @SerializedName("medium_cover_image")
-            val coverImg: String
+            @SerializedName("large_cover_image")
+            val coverImg: String,
+
+            @SerializedName("background_image")
+            val backgroundImg: String
         )
     }
 }

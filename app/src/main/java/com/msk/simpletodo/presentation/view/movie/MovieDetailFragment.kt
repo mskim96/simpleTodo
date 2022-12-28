@@ -24,16 +24,13 @@ class MovieDetailFragment :
         inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
     ): View? {
         val view = super.onCreateView(inflater, container, savedInstanceState)
+        (activity as MovieActivity).hideBottomNavigation()
 
         lifecycleScope.launchWhenStarted {
             movieViewModel.movieDetailData.collectLatest {
                 Glide.with(binding.root).load(it?.coverImg).into(binding.movieThumbnail)
                 binding.movie = it
             }
-        }
-
-        bind {
-            backButton.setOnClickListener { (activity as MovieActivity).navBackButton() }
         }
 
         (view?.parent as? ViewGroup)?.doOnPreDraw { startPostponedEnterTransition() }

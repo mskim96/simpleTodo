@@ -26,5 +26,8 @@ data class Movie(
     val description: String,
 
     @ColumnInfo(name = "movie_coverImg")
-    val coverImg: String
+    val coverImg: String,
+
+    @ColumnInfo(name = "movie_backgroundImg")
+    val backgroundImg: String
 )

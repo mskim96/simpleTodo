@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.View
 import android.view.WindowManager
 import androidx.appcompat.app.AppCompatActivity
+import androidx.fragment.app.Fragment
 import androidx.fragment.app.commit
 import androidx.fragment.app.replace
 import com.msk.simpletodo.R
@@ -33,6 +34,61 @@ class MovieActivity : AppCompatActivity() {
             replace<MovieMainFragment>(R.id.movieMainFrame)
             setReorderingAllowed(true)
         }
+
+        binding.movieBottomNavigation.setOnItemSelectedListener {
+            when (it.itemId) {
+                R.id.movie_home -> {
+                    navBottomNavFragment(MovieMainFragment())
+                    true
+                }
+                R.id.movie_search -> {
+                    navBottomNavFragment(MovieSearchFragment())
+                    true
+                }
+                R.id.movie_favorite -> {
+                    navBottomNavFragment(MovieLikeFragment())
+                    true
+                }
+                R.id.movie_setting -> {
+                    navBottomNavFragment(MovieSettingFragment())
+                    true
+                }
+                else -> false
+            }
+        }
+    }
+
+    fun hideBottomNavigation() {
+        binding.movieBottomNavigation.visibility = View.GONE
+    }
+
+    fun setBottomNavigation() {
+        binding.movieBottomNavigation.visibility = View.VISIBLE
+    }
+
+    fun navBottomNavFragment(fragmentName: Fragment) {
+        when (fragmentName) {
+            is MovieMainFragment -> supportFragmentManager.commit {
+                replace<MovieMainFragment>(R.id.movieMainFrame)
+                setReorderingAllowed(true)
+            }
+
+            is MovieSearchFragment -> supportFragmentManager.commit {
+                replace<MovieSearchFragment>(R.id.movieMainFrame)
+                setReorderingAllowed(true)
+            }
+
+            is MovieLikeFragment -> supportFragmentManager.commit {
+                replace<MovieLikeFragment>(R.id.movieMainFrame)
+                setReorderingAllowed(true)
+            }
+
+            is MovieSettingFragment -> supportFragmentManager.commit {
+                replace<MovieSettingFragment>(R.id.movieMainFrame)
+                setReorderingAllowed(true)
+            }
+        }
+
     }
 
     // TODO: Set Main Fragment replace and nav Function
@@ -43,6 +99,7 @@ class MovieActivity : AppCompatActivity() {
             addToBackStack(null)
         }
     }
+
 
     fun navBackButton() {
         supportFragmentManager.commit {

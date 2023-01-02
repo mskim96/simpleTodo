@@ -9,9 +9,7 @@ import com.msk.simpletodo.domain.usecase.movie.GetRemoteMovieUseCase
 import com.msk.simpletodo.domain.usecase.movie.SaveMovieLocalUseCase
 import com.msk.simpletodo.presentation.view.base.UiState
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
 import javax.inject.Inject
@@ -26,7 +24,7 @@ class MovieViewModel @Inject constructor(
 
     init {
         viewModelScope.launch(Dispatchers.IO) {
-            getLocalMovieUseCase.execute().collect {
+            getLocalMovieUseCase.getMoviesFromLocal().collect {
                 if (it.size < 15) {
                     getRemoteMovie()
                     return@collect
@@ -61,10 +59,9 @@ class MovieViewModel @Inject constructor(
     private val _movieDetailData: MutableStateFlow<Movie?> = MutableStateFlow(null)
     val movieDetailData = _movieDetailData.asStateFlow()
 
-
     private fun getMoviesToNewest() = viewModelScope.launch(Dispatchers.IO) {
         runCatching {
-            getLocalMovieUseCase.execute()
+            getLocalMovieUseCase.getMoviesFromLocal()
         }.onSuccess { data ->
             data.collect {
                 _movieNewest.emit(it.subList(0, 15).toList())
@@ -74,7 +71,7 @@ class MovieViewModel @Inject constructor(
 
     private fun getMoviesToRating() = viewModelScope.launch(Dispatchers.IO) {
         runCatching {
-            getLocalMovieUseCase.getMoviesToRating()
+            getLocalMovieUseCase.getLocalMoviesToRating()
         }.onSuccess { data ->
             data.collect {
                 if (it.size < 15) getTopRatingMovies() else _movieTopRating.emit(
@@ -89,7 +86,7 @@ class MovieViewModel @Inject constructor(
 
     private fun getMoviesToGenre(genres: String) = viewModelScope.launch(Dispatchers.IO) {
         runCatching {
-            getLocalMovieUseCase.getMoviesToGenre(genres)
+            getLocalMovieUseCase.getLocalMoviesToGenre(genres)
         }.onSuccess { data ->
             data.collect {
                 when (genres) {
@@ -130,11 +127,6 @@ class MovieViewModel @Inject constructor(
                 }
             }.onFailure { return@onFailure }
         }
-        getMoviesToNewest()
-        getMoviesToRating()
-        getMoviesToGenre("Drama")
-        getMoviesToGenre("Action")
-        getMoviesToGenre("Comedy")
     }
 
     private fun getTopRatingMovies() = viewModelScope.launch(Dispatchers.IO) {

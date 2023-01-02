@@ -1,6 +1,7 @@
 package com.msk.simpletodo.presentation.view.todo
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -38,6 +39,7 @@ class TodoMainFragment : BaseFragment<FragmentTodoMainBinding>(R.layout.fragment
                 when (state) { // collect Latest from categoryWithTodo
                     is UiState.Loading -> state // send data to todoAdapter
                     is UiState.Success -> todoMainAdapter.submitList(state.data)
+                    is UiState.Error -> Log.d("TAG", "onCreateView: ${state.message}")
                 }
             }
         }

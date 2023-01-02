@@ -6,7 +6,6 @@ import com.msk.simpletodo.data.mapper.movieMapper
 import com.msk.simpletodo.data.model.movie.Movie
 import com.msk.simpletodo.domain.repository.MovieRepository
 import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.flow.flow
 import javax.inject.Inject
 
@@ -15,28 +14,34 @@ class MovieRepositoryImpl @Inject constructor(
     private val movieLocalDatasource: MovieLocalDatasource
 ) :
     MovieRepository {
-    override suspend fun getRemoteMovies(page: Int): Flow<List<Movie>> = flow {
+    /**
+     * get movie data from Remote
+     */
+    override suspend fun getMoviesFromRemote(page: Int): Flow<List<Movie>> = flow {
         movieRemoteDatasource.getRemoteMovies(page).collect {
             emit(movieMapper(it))
         }
     }
 
-    override suspend fun getTopRatingMovies(): Flow<List<Movie>> = flow {
+    override suspend fun getTopRatingMoviesFromRemote(): Flow<List<Movie>> = flow {
         movieRemoteDatasource.getRatingMovies().collect {
             emit(movieMapper(it))
         }
     }
 
-    override suspend fun getMoviesToGenre(genres: String): Flow<List<Movie>> {
-        return movieLocalDatasource.getMoviesToGenre("%${genres}%")
+    /**
+     * get movie data from Local
+     */
+    override fun getMoviesFromLocal(): Flow<List<Movie>> = flow {
+        emit(movieLocalDatasource.getLocalMovies())
     }
 
-    override suspend fun getMoviesToRating(): Flow<List<Movie>> {
-        return movieLocalDatasource.getMoviesToRating()
+    override fun getLocalMoviesToGenre(genres: String): Flow<List<Movie>> = flow {
+        emit(movieLocalDatasource.getLocalMoviesToGenre("%${genres}%"))
     }
 
-    override suspend fun getLocalMovies(): Flow<List<Movie>> {
-        return movieLocalDatasource.getLocalMovies()
+    override fun getLocalMoviesToRating(): Flow<List<Movie>> = flow {
+        emit(movieLocalDatasource.getLocalMoviesToRating())
     }
 
     override suspend fun insertMoviesLocal(movie: List<Movie>) {

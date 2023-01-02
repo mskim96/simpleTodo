@@ -13,8 +13,8 @@ fun movieMapper(movieResponseList: List<MovieResponse.MovieData.MovieModel>): Li
             rating = ceil(it.rating),
             genres = it.genres,
             description = it.description,
-            coverImg = it.coverImg,
-            backgroundImg = it.backgroundImg
+            coverImgMedium = it.coverImgMedium,
+            coverImgLarge = it.coverImgLarge
         )
     }
 }

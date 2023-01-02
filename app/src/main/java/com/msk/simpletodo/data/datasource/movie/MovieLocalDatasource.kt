@@ -1,18 +1,30 @@
 package com.msk.simpletodo.data.datasource.movie
 
 import com.msk.simpletodo.data.model.movie.Movie
-import kotlinx.coroutines.flow.Flow
 
 interface MovieLocalDatasource {
     /**
-     * Get Method
+     * Get Movies from Local database
+     * GET Method
      */
-    suspend fun getLocalMovies(): Flow<List<Movie>>
-    suspend fun getMoviesToGenre(genres: String): Flow<List<Movie>>
-    suspend fun getMoviesToRating(): Flow<List<Movie>>
+    suspend fun getLocalMovies(): List<Movie>
+
+    /**
+     * Get Movies by rating from Local database
+     * GET Method
+     */
+    suspend fun getLocalMoviesToRating(): List<Movie>
+
+    /**
+     * Get Movies by genres from Local database
+     * GET Method
+     */
+    suspend fun getLocalMoviesToGenre(genres: String): List<Movie>
 
     /**
      * CRUD Method
+     * Insert movie data to local
+     * Get Movie data from Remote
      */
     suspend fun insertMoviesLocal(movie: List<Movie>)
 }

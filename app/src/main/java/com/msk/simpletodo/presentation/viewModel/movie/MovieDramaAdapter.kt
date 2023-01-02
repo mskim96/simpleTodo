@@ -29,7 +29,7 @@ class MovieDramaAdapter : ListAdapter<Movie, MovieDramaAdapter.MovieViewHolder>(
     inner class MovieViewHolder(val binding: MovieItemListBinding) :
         RecyclerView.ViewHolder(binding.root) {
         fun bind(currentMovie: Movie) {
-            Glide.with(binding.root).load(currentMovie.coverImg).override(130, 200)
+            Glide.with(binding.root).load(currentMovie.coverImgLarge).override(130, 200)
                 .into(binding.movieThumbnail)
             binding.movie = currentMovie
             binding.movieThumbnail.setOnClickListener {

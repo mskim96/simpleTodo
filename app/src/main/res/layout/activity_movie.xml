@@ -27,7 +27,6 @@
             android:layout_height="wrap_content"
             android:background="@color/black"
             android:padding="8dp"
-            android:visibility="visible"
             app:itemRippleColor="@null"
             app:labelVisibilityMode="unlabeled"
             app:layout_constraintBottom_toBottomOf="parent"

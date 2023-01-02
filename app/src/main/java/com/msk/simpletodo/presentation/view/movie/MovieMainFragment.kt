@@ -35,6 +35,7 @@ class MovieMainFragment : BaseFragment<FragmentMovieMainBinding>(R.layout.fragme
         val view = super.onCreateView(inflater, container, savedInstanceState)
 
         lifecycleScope.launchWhenStarted {
+            (activity as MovieActivity).setBottomNavigation()
             launch {
                 movieViewModel.movieNewest.collectLatest {
                     movieNewestAdapter.submitList(it)
@@ -72,10 +73,6 @@ class MovieMainFragment : BaseFragment<FragmentMovieMainBinding>(R.layout.fragme
         }
 
         binding.movieMainScrollView.setOnScrollChangeListener { _, _, scrollY, _, oldScrollY ->
-            (activity as MovieActivity).hideBottomNavigation()
-            if(scrollY < oldScrollY) {
-                (activity as MovieActivity).setBottomNavigation()
-            }
 
             if (scrollY > 1100) {
                 binding.movieMainHeader.setBackgroundColor(resources.getColor(R.color.black))

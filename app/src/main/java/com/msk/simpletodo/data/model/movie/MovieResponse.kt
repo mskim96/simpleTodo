@@ -3,7 +3,6 @@ package com.msk.simpletodo.data.model.movie
 import com.google.gson.annotations.SerializedName
 
 data class MovieResponse(
-
     @SerializedName("data")
     val data: MovieData
 ) {
@@ -29,11 +28,11 @@ data class MovieResponse(
             @SerializedName("summary")
             val description: String,
 
-            @SerializedName("large_cover_image")
-            val coverImg: String,
+            @SerializedName("medium_cover_image")
+            val coverImgMedium: String,
 
-            @SerializedName("background_image")
-            val backgroundImg: String
+            @SerializedName("large_cover_image")
+            val coverImgLarge: String,
         )
     }
 }

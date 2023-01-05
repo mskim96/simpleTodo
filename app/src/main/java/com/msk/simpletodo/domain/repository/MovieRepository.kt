@@ -18,4 +18,13 @@ interface MovieRepository {
     fun getMoviesFromLocal(): Flow<List<Movie>>
 
     suspend fun insertMoviesLocal(movie: List<Movie>)
+
+    /**
+     * TODO : TEST
+     */
+
+    suspend fun getMoviesByNewestRemote(page: Int): Flow<List<Movie>>
+    suspend fun getMoviesByGenreRemote(genre: String, page: Int): Flow<List<Movie>>
+    suspend fun getMoviesByRatingRemote(rating: Int, page: Int): Flow<List<Movie>>
+    suspend fun getMoviesByQueryRemote(query: String, page: Int): Flow<List<Movie>>
 }

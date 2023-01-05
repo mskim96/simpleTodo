@@ -1,7 +1,7 @@
 package com.msk.simpletodo.presentation.hilt
 
-import com.msk.simpletodo.data.api.ApiClient
-import com.msk.simpletodo.data.api.ApiInterface
+import com.msk.simpletodo.data.api.MovieClient
+import com.msk.simpletodo.data.api.MovieInterface
 import com.msk.simpletodo.data.datasource.movie.*
 import com.msk.simpletodo.data.model.movie.MovieDao
 import com.msk.simpletodo.data.repository.MovieRepositoryImpl
@@ -21,7 +21,7 @@ object ApiModule {
 
     @Singleton
     @Provides
-    fun provideApiInterface(retrofit: Retrofit): ApiInterface {
+    fun provideApiInterface(retrofit: Retrofit): MovieInterface {
         return retrofit.create()
     }
 
@@ -29,14 +29,14 @@ object ApiModule {
     @Provides
     fun provideRetrofit(): Retrofit {
         return Retrofit.Builder()
-            .baseUrl(ApiClient.BASE_URL)
+            .baseUrl(MovieClient.BASE_URL)
             .addConverterFactory(GsonConverterFactory.create()).build()
     }
 
     @Singleton
     @Provides
-    fun provideMovieRemoteDatasource(apiInterface: ApiInterface): MovieRemoteDatasource {
-        return MovieRemoteDatasourceImpl(apiInterface)
+    fun provideMovieRemoteDatasource(movieInterface: MovieInterface): MovieRemoteDatasource {
+        return MovieRemoteDatasourceImpl(movieInterface)
     }
 
     @Singleton

@@ -8,7 +8,6 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.commit
 import androidx.fragment.app.replace
 import com.msk.simpletodo.R
-import com.msk.simpletodo.data.model.movie.Movie
 import com.msk.simpletodo.databinding.ActivityMovieBinding
 import dagger.hilt.android.AndroidEntryPoint
 

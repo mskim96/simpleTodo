@@ -2,7 +2,7 @@ package com.msk.simpletodo.data.repository
 
 import com.msk.simpletodo.data.datasource.movie.MovieLocalDatasource
 import com.msk.simpletodo.data.datasource.movie.MovieRemoteDatasource
-import com.msk.simpletodo.data.mapper.movieMapper
+import com.msk.simpletodo.data.mapper.movieDataMapper
 import com.msk.simpletodo.data.model.movie.Movie
 import com.msk.simpletodo.domain.repository.MovieRepository
 import kotlinx.coroutines.flow.Flow
@@ -19,13 +19,13 @@ class MovieRepositoryImpl @Inject constructor(
      */
     override suspend fun getMoviesFromRemote(page: Int): Flow<List<Movie>> = flow {
         movieRemoteDatasource.getRemoteMovies(page).collect {
-            emit(movieMapper(it))
+            emit(movieDataMapper(it))
         }
     }
 
     override suspend fun getTopRatingMoviesFromRemote(): Flow<List<Movie>> = flow {
         movieRemoteDatasource.getRatingMovies().collect {
-            emit(movieMapper(it))
+            emit(movieDataMapper(it))
         }
     }
 
@@ -46,5 +46,41 @@ class MovieRepositoryImpl @Inject constructor(
 
     override suspend fun insertMoviesLocal(movie: List<Movie>) {
         movieLocalDatasource.insertMoviesLocal(movie)
+    }
+
+    /**
+     * TODO : TEST
+     */
+
+    override suspend fun getMoviesByNewestRemote(
+        page: Int
+    ): Flow<List<Movie>> = flow {
+        movieRemoteDatasource.getMoviesByNewest(page).collect {
+            emit(movieDataMapper(it))
+        }
+    }
+
+    override suspend fun getMoviesByGenreRemote(
+        genre: String, page: Int
+    ): Flow<List<Movie>> = flow {
+        movieRemoteDatasource.getMoviesByGenre(genre, page).collect {
+            emit(movieDataMapper(it))
+        }
+    }
+
+    override suspend fun getMoviesByRatingRemote(
+        rating: Int, page: Int
+    ): Flow<List<Movie>> = flow {
+        movieRemoteDatasource.getMoviesByRating(rating, page).collect {
+            emit(movieDataMapper(it))
+        }
+    }
+
+    override suspend fun getMoviesByQueryRemote(
+        query: String, page: Int
+    ): Flow<List<Movie>> = flow {
+        movieRemoteDatasource.getMoviesByQuery(query, page).collect {
+            emit(movieDataMapper(it))
+        }
     }
 }

@@ -28,7 +28,7 @@ class MovieDetailFragment :
 
         lifecycleScope.launchWhenStarted {
             movieViewModel.movieDetailData.collectLatest {
-                Glide.with(binding.root).load(it?.coverImgLarge).into(binding.movieThumbnail)
+                Glide.with(binding.root).load(it?.coverImg).into(binding.movieThumbnail)
                 binding.movie = it
             }
         }

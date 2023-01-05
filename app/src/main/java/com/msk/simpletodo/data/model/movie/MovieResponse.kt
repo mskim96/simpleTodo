@@ -28,11 +28,8 @@ data class MovieResponse(
             @SerializedName("summary")
             val description: String,
 
-            @SerializedName("medium_cover_image")
-            val coverImgMedium: String,
-
             @SerializedName("large_cover_image")
-            val coverImgLarge: String,
+            val coverImg: String,
         )
     }
 }

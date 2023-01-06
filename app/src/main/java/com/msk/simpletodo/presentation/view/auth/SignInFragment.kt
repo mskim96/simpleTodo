@@ -118,7 +118,7 @@ class SignInFragment : Fragment() {
         return binding.root
     }
 
-    fun signIn(email: String, password: String) = lifecycleScope.launch(Dispatchers.IO) {
+    private fun signIn(email: String, password: String) = lifecycleScope.launch(Dispatchers.IO) {
         sharedViewModel.signInAccount(email, password)
     }
 

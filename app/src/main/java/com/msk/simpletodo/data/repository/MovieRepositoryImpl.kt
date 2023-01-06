@@ -6,6 +6,7 @@ import com.msk.simpletodo.data.mapper.movieDataMapper
 import com.msk.simpletodo.data.model.movie.Movie
 import com.msk.simpletodo.domain.repository.MovieRepository
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.debounce
 import kotlinx.coroutines.flow.flow
 import javax.inject.Inject
 
@@ -36,7 +37,11 @@ class MovieRepositoryImpl @Inject constructor(
         emit(movieLocalDatasource.getLocalMovies())
     }
 
-    override fun getLocalMoviesToGenre(genres: String): Flow<List<Movie>> = flow {
+    override fun getMoviesByQuery(query: String): Flow<List<Movie>> = flow {
+        emit(movieLocalDatasource.getLocalMoviesByQuery("%${query}%"))
+    }
+
+    override fun getMoviesByGenreLocal(genres: String): Flow<List<Movie>> = flow {
         emit(movieLocalDatasource.getLocalMoviesToGenre("%${genres}%"))
     }
 

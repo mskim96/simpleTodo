@@ -13,9 +13,10 @@ interface MovieRepository {
     /**
      * Get Movies from Local datasource
      */
-    fun getLocalMoviesToGenre(genres: String): Flow<List<Movie>>
+    fun getMoviesByGenreLocal(genres: String): Flow<List<Movie>>
     fun getLocalMoviesToRating(): Flow<List<Movie>>
     fun getMoviesFromLocal(): Flow<List<Movie>>
+    fun getMoviesByQuery(query: String): Flow<List<Movie>>
 
     suspend fun insertMoviesLocal(movie: List<Movie>)
 

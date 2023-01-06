@@ -3,13 +3,11 @@ package com.msk.simpletodo.presentation.view.movie
 import android.os.Build
 import android.os.Bundle
 import android.os.Parcelable
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
-import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.msk.simpletodo.R
 import com.msk.simpletodo.data.model.movie.Movie

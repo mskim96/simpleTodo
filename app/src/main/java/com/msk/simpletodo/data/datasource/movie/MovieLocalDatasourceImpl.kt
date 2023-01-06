@@ -22,6 +22,10 @@ class MovieLocalDatasourceImpl @Inject constructor(
         return movieDao.getMoviesToGenre(listOf(genres))
     }
 
+    override suspend fun getLocalMoviesByQuery(query: String): List<Movie> {
+        return movieDao.getMoviesByQuery(query)
+    }
+
     override suspend fun insertMoviesLocal(movie: List<Movie>) {
         movieDao.insertMovies(movie = movie.toTypedArray())
     }

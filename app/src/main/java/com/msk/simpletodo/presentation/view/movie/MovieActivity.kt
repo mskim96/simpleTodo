@@ -99,6 +99,23 @@ class MovieActivity : AppCompatActivity() {
         }
     }
 
+    fun navDetailInnerFragment(position: Int) {
+        when (position) {
+            0 -> {
+                supportFragmentManager.commit {
+                    replace<MovieDetailInfoFragment>(R.id.innerDetailFrame)
+                    setReorderingAllowed(true)
+                }
+            }
+            1 -> {
+                supportFragmentManager.commit {
+                    replace<MovieDetailRelFragment>(R.id.innerDetailFrame)
+                    setReorderingAllowed(true)
+                }
+            }
+        }
+    }
+
 
     fun navBackButton() {
         supportFragmentManager.commit {

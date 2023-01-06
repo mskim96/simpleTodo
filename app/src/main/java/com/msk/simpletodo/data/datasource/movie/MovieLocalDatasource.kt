@@ -22,6 +22,12 @@ interface MovieLocalDatasource {
     suspend fun getLocalMoviesToGenre(genres: String): List<Movie>
 
     /**
+     * Get Movies by Query from Local database
+     * GET Method
+     */
+    suspend fun getLocalMoviesByQuery(query: String): List<Movie>
+
+    /**
      * CRUD Method
      * Insert movie data to local
      * Get Movie data from Remote

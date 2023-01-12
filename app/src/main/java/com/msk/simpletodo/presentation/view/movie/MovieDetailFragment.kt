@@ -32,14 +32,14 @@ class MovieDetailFragment :
         lifecycleScope.launchWhenStarted {
             movieViewModel.movieDetailData.collectLatest {
                 Glide.with(binding.root).load(it?.coverImg).into(binding.movieThumbnail)
-                binding.movie = it
                 binding.genreRecyclerView.adapter = MovieGenreAdapter(it!!)
+                binding.movie = it
             }
         }
 
-        binding.tabs.addOnTabSelectedListener(object: TabLayout.OnTabSelectedListener {
+        binding.tabs.addOnTabSelectedListener(object : TabLayout.OnTabSelectedListener {
             override fun onTabSelected(tab: TabLayout.Tab?) {
-                when(tab?.position) {
+                when (tab?.position) {
                     0 -> (activity as MovieActivity).navDetailInnerFragment(0)
                     1 -> (activity as MovieActivity).navDetailInnerFragment(1)
                 }

@@ -9,7 +9,7 @@ class AuthDatasourceImpl @Inject constructor(private val userDao: UserDao) : Aut
         userDao.createAccount(user = user)
     }
 
-    override suspend fun getUserByEmail(email: String) {
-        userDao.getUserByEmail(email)
+    override suspend fun getUserByEmail(email: String): UserEntity {
+        return userDao.getUserByEmail(email)
     }
 }

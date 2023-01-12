@@ -7,36 +7,8 @@
     <data>
 
         <variable
-            name="newestAdapter"
-            type="com.msk.simpletodo.presentation.viewModel.movie.adapter.MovieNewestAdapter" />
-
-        <variable
-            name="topRatingAdapter"
-            type="com.msk.simpletodo.presentation.viewModel.movie.adapter.MovieTopRatingAdapter" />
-
-        <variable
-            name="dramaAdapter"
-            type="com.msk.simpletodo.presentation.viewModel.movie.adapter.MovieDramaAdapter" />
-
-        <variable
-            name="actionAdapter"
-            type="com.msk.simpletodo.presentation.viewModel.movie.adapter.MovieActionAdapter" />
-
-        <variable
-            name="comedyAdapter"
-            type="com.msk.simpletodo.presentation.viewModel.movie.adapter.MovieComedyAdapter" />
-
-        <variable
-            name="thrillerAdapter"
-            type="com.msk.simpletodo.presentation.viewModel.movie.adapter.MovieThrillerAdapter" />
-
-        <variable
-            name="animationAdapter"
-            type="com.msk.simpletodo.presentation.viewModel.movie.adapter.MovieAnimationAdapter" />
-
-        <variable
-            name="adventureAdapter"
-            type="com.msk.simpletodo.presentation.viewModel.movie.adapter.MovieAdventureAdapter" />
+            name="movieMainAdapter"
+            type="com.msk.simpletodo.presentation.viewModel.movie.adapter.MovieMainAdapter" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -198,187 +170,24 @@
                     app:layout_constraintStart_toEndOf="@+id/textView14"
                     app:layout_constraintTop_toTopOf="@+id/textView14" />
 
-                <LinearLayout
-                    android:id="@+id/recyclerLayout"
-                    android:layout_width="0dp"
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/movieMainRecycler"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:layout_marginLeft="24dp"
+                    android:clipToPadding="true"
                     android:orientation="vertical"
-                    android:paddingBottom="108dp"
+                    android:overScrollMode="never"
+                    android:paddingBottom="90dp"
+                    app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                    app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintHorizontal_bias="0.0"
-                    app:layout_constraintStart_toStartOf="@+id/guidelineLeft"
-                    app:layout_constraintTop_toBottomOf="@+id/view2">
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="16dp"
-                        android:layout_marginBottom="8dp"
-                        android:text="Newest Movie"
-                        android:textColor="@color/white"
-                        android:textSize="24dp"
-                        android:textStyle="bold" />
-
-                    <androidx.recyclerview.widget.RecyclerView
-                        android:id="@+id/newestRecycler"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:adapter="@{newestAdapter}"
-                        android:nestedScrollingEnabled="false"
-                        android:orientation="horizontal"
-                        android:overScrollMode="never"
-                        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-                        tools:listitem="@layout/movie_item_list" />
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="16dp"
-                        android:layout_marginBottom="8dp"
-                        android:text="Top Rating Movie"
-                        android:textColor="@color/white"
-                        android:textSize="24dp"
-                        android:textStyle="bold" />
-
-                    <androidx.recyclerview.widget.RecyclerView
-                        android:id="@+id/topRatingRecycler"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:adapter="@{topRatingAdapter}"
-                        android:nestedScrollingEnabled="false"
-                        android:orientation="horizontal"
-                        android:overScrollMode="never"
-                        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-                        tools:listitem="@layout/movie_item_list" />
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="16dp"
-                        android:layout_marginBottom="8dp"
-                        android:text="Drama"
-                        android:textColor="@color/white"
-                        android:textSize="24dp"
-                        android:textStyle="bold" />
-
-                    <androidx.recyclerview.widget.RecyclerView
-                        android:id="@+id/dramaRecycler"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:adapter="@{dramaAdapter}"
-                        android:nestedScrollingEnabled="false"
-                        android:orientation="horizontal"
-                        android:overScrollMode="never"
-                        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-                        tools:listitem="@layout/movie_item_list" />
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="16dp"
-                        android:layout_marginBottom="8dp"
-                        android:text="Action"
-                        android:textColor="@color/white"
-                        android:textSize="24dp"
-                        android:textStyle="bold" />
-
-                    <androidx.recyclerview.widget.RecyclerView
-                        android:id="@+id/actionRecycler"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:adapter="@{actionAdapter}"
-                        android:nestedScrollingEnabled="false"
-                        android:orientation="horizontal"
-                        android:overScrollMode="never"
-                        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-                        tools:listitem="@layout/movie_item_list" />
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="16dp"
-                        android:layout_marginBottom="8dp"
-                        android:text="Comedy"
-                        android:textColor="@color/white"
-                        android:textSize="24dp"
-                        android:textStyle="bold" />
-
-                    <androidx.recyclerview.widget.RecyclerView
-                        android:id="@+id/comedyRecycler"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:adapter="@{comedyAdapter}"
-                        android:nestedScrollingEnabled="false"
-                        android:orientation="horizontal"
-                        android:overScrollMode="never"
-                        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-                        tools:listitem="@layout/movie_item_list" />
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="16dp"
-                        android:layout_marginBottom="8dp"
-                        android:text="Thriller"
-                        android:textColor="@color/white"
-                        android:textSize="24dp"
-                        android:textStyle="bold" />
-
-                    <androidx.recyclerview.widget.RecyclerView
-                        android:id="@+id/thrillerRecycler"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:adapter="@{thrillerAdapter}"
-                        android:nestedScrollingEnabled="false"
-                        android:orientation="horizontal"
-                        android:overScrollMode="never"
-                        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-                        tools:listitem="@layout/movie_item_list" />
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="16dp"
-                        android:layout_marginBottom="8dp"
-                        android:text="Animation"
-                        android:textColor="@color/white"
-                        android:textSize="24dp"
-                        android:textStyle="bold" />
-
-                    <androidx.recyclerview.widget.RecyclerView
-                        android:id="@+id/animationRecycler"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:adapter="@{animationAdapter}"
-                        android:nestedScrollingEnabled="false"
-                        android:orientation="horizontal"
-                        android:overScrollMode="never"
-                        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-                        tools:listitem="@layout/movie_item_list" />
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="16dp"
-                        android:layout_marginBottom="8dp"
-                        android:text="Adventure"
-                        android:textColor="@color/white"
-                        android:textSize="24dp"
-                        android:textStyle="bold" />
-
-                    <androidx.recyclerview.widget.RecyclerView
-                        android:id="@+id/adventureRecycler"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:adapter="@{adventureAdapter}"
-                        android:nestedScrollingEnabled="false"
-                        android:orientation="horizontal"
-                        android:overScrollMode="never"
-                        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-                        tools:listitem="@layout/movie_item_list" />
-
-
-                </LinearLayout>
+                    app:layout_constraintHorizontal_bias="1.0"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/view2"
+                    app:layout_constraintVertical_bias="0.0"
+                    tools:listitem="@layout/movie_item_section" />
 
                 <androidx.constraintlayout.widget.Guideline
                     android:id="@+id/guidelineLeft"

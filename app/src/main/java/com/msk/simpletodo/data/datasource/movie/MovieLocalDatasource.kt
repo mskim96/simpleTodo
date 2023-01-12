@@ -1,37 +1,37 @@
 package com.msk.simpletodo.data.datasource.movie
 
-import com.msk.simpletodo.data.model.movie.Movie
+import com.msk.simpletodo.data.model.movie.MovieEntity
 
 interface MovieLocalDatasource {
     /**
      * Get Movies from Local database
      * GET Method
      */
-    suspend fun getLocalMovies(): List<Movie>
+    suspend fun getMoviesByNewestLocal(): List<MovieEntity>
 
     /**
      * Get Movies by rating from Local database
      * GET Method
      */
-    suspend fun getLocalMoviesToRating(): List<Movie>
+    suspend fun getMoviesByRatingLocal(rating: Int): List<MovieEntity>
 
     /**
      * Get Movies by genres from Local database
      * GET Method
      */
-    suspend fun getLocalMoviesToGenre(genres: String): List<Movie>
+    suspend fun getMoviesByGenreLocal(genres: String): List<MovieEntity>
 
     /**
      * Get Movies by Query from Local database
      * GET Method
      */
-    suspend fun getLocalMoviesByQuery(query: String): List<Movie>
+    suspend fun getMoviesByQueryLocal(query: String): List<MovieEntity>
 
     /**
      * CRUD Method
      * Insert movie data to local
      * Get Movie data from Remote
      */
-    suspend fun insertMoviesLocal(movie: List<Movie>)
+    suspend fun insertMovies(movie: List<MovieEntity>)
 }
 

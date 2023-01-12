@@ -1,15 +1,12 @@
 package com.msk.simpletodo.domain.model
 
-sealed class MovieGenre {
-    object Drama : MovieGenre() //
-
-    object Action : MovieGenre() //
-
-    object Comedy : MovieGenre() //
-
-    object Thriller : MovieGenre()
-
-    object Animation : MovieGenre()
-
-    object Adventure : MovieGenre()
+enum class MovieGenre(val value: String) {
+    ACTION("Action"),
+    ANIMATION("Animation"),
+    ADVENTURE("Adventure"),
+    COMEDY("Comedy"),
+    DRAMA("Drama"),
+    THRILLER("Thriller");
 }
+
+

@@ -1,12 +1,12 @@
 package com.msk.simpletodo.presentation.viewModel.movie.diff
 
 import androidx.recyclerview.widget.DiffUtil
-import com.msk.simpletodo.data.model.movie.Movie
+import com.msk.simpletodo.domain.model.MovieWrapper
 
-class MovieDiffCallback() : DiffUtil.ItemCallback<Movie>() {
-    override fun areItemsTheSame(oldItem: Movie, newItem: Movie): Boolean =
-        oldItem.id == newItem.id
+class MovieDiffCallback() : DiffUtil.ItemCallback<MovieWrapper>() {
+    override fun areItemsTheSame(oldItem: MovieWrapper, newItem: MovieWrapper): Boolean =
+        oldItem.movies == newItem.movies
 
-    override fun areContentsTheSame(oldItem: Movie, newItem: Movie): Boolean =
+    override fun areContentsTheSame(oldItem: MovieWrapper, newItem: MovieWrapper): Boolean =
         oldItem == newItem
 }

@@ -2,68 +2,37 @@ package com.msk.simpletodo.presentation.viewModel.movie
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.msk.simpletodo.data.model.movie.Movie
+import com.msk.simpletodo.data.mapper.wrapper
+import com.msk.simpletodo.domain.model.Movie
 import com.msk.simpletodo.domain.model.MovieGenre
-import com.msk.simpletodo.domain.usecase.movie.GetLocalMovieUseCase
-import com.msk.simpletodo.domain.usecase.movie.GetRemoteMovieUseCase
-import com.msk.simpletodo.domain.usecase.movie.SaveMovieLocalUseCase
+import com.msk.simpletodo.domain.model.MovieWrapper
+import com.msk.simpletodo.domain.usecase.movie.GetMovieUseCase
 import com.msk.simpletodo.presentation.view.base.UiState
-import com.msk.simpletodo.presentation.view.base.UiState.Loading.getSuccessData
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.asStateFlow
-import kotlinx.coroutines.flow.collectLatest
-import kotlinx.coroutines.flow.update
+import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
 import javax.inject.Inject
+import kotlin.random.Random
 
 @HiltViewModel
 class MovieViewModel @Inject constructor(
-    private val getRemoteMovieUseCase: GetRemoteMovieUseCase,
-    private val saveMovieLocalUseCase: SaveMovieLocalUseCase,
-    private val getLocalMovieUseCase: GetLocalMovieUseCase
-) :
-    ViewModel() {
+    private val getMovieUseCase: GetMovieUseCase,
+) : ViewModel() {
 
     /**
      * Get Movie data from local database
      */
-    private val _movieNewest: MutableStateFlow<UiState<List<Movie>>> =
+    private val _movieData: MutableStateFlow<UiState<List<MovieWrapper>>> =
         MutableStateFlow(UiState.Loading)
-    val movieNewest = _movieNewest.asStateFlow()
+    val movieData = _movieData.asStateFlow()
 
-    private val _movieTopRating: MutableStateFlow<UiState<List<Movie>>> =
-        MutableStateFlow(UiState.Loading)
-    val movieTopRating = _movieTopRating.asStateFlow()
+    private val _movieCombineData: MutableStateFlow<List<MovieWrapper>> =
+        MutableStateFlow(listOf())
+    private val movieCombineData = _movieCombineData.asStateFlow()
 
-    private val _movieDrama: MutableStateFlow<UiState<List<Movie>>> =
-        MutableStateFlow(UiState.Loading)
-    val movieDrama = _movieDrama.asStateFlow()
-
-    private val _movieAction: MutableStateFlow<UiState<List<Movie>>> =
-        MutableStateFlow(UiState.Loading)
-    val movieAction = _movieAction.asStateFlow()
-
-    private val _movieComedy: MutableStateFlow<UiState<List<Movie>>> =
-        MutableStateFlow(UiState.Loading)
-    val movieComedy = _movieComedy.asStateFlow()
-
-    private val _movieThriller: MutableStateFlow<UiState<List<Movie>>> =
-        MutableStateFlow(UiState.Loading)
-    val movieThriller = _movieThriller.asStateFlow()
-
-    private val _movieAnimation: MutableStateFlow<UiState<List<Movie>>> =
-        MutableStateFlow(UiState.Loading)
-    val movieAnimation = _movieAnimation.asStateFlow()
-
-    private val _movieAdventure: MutableStateFlow<UiState<List<Movie>>> =
-        MutableStateFlow(UiState.Loading)
-    val movieAdventure = _movieAdventure.asStateFlow()
-
-
-    private val _movieSearchResult: MutableStateFlow<UiState<List<Movie>>> =
-        MutableStateFlow(UiState.Loading)
+    private val _movieSearchResult: MutableStateFlow<List<Movie>> =
+        MutableStateFlow(listOf())
     val movieSearchResult = _movieSearchResult.asStateFlow()
 
     val movieSearchQuery = MutableStateFlow("")
@@ -71,19 +40,13 @@ class MovieViewModel @Inject constructor(
     private val _movieDetailData: MutableStateFlow<Movie?> = MutableStateFlow(null)
     val movieDetailData = _movieDetailData.asStateFlow()
 
-    private val _movieRelData: MutableStateFlow<UiState<List<Movie>>> =
-        MutableStateFlow(UiState.Loading)
+    private val _movieRelData: MutableStateFlow<List<Movie>> =
+        MutableStateFlow(listOf())
     val movieRelData = _movieRelData.asStateFlow()
 
     init {
-        getMoviesByNewestLocal()
-        getMoviesByRatingLocal(8)
-        getMoviesByGenreLocal(MovieGenre.Drama)
-        getMoviesByGenreLocal(MovieGenre.Action)
-        getMoviesByGenreLocal(MovieGenre.Comedy)
-        getMoviesByGenreLocal(MovieGenre.Adventure)
-        getMoviesByGenreLocal(MovieGenre.Thriller)
-        getMoviesByGenreLocal(MovieGenre.Animation)
+        getMoviesByAllData()
+        combineMoviesCollect()
         getMoviesByQuery()
     }
 
@@ -94,203 +57,88 @@ class MovieViewModel @Inject constructor(
         _movieDetailData.emit(movie)
     }
 
-    /**
-     * Local Method
-     */
+    private fun combineMoviesCollect() = viewModelScope.launch(Dispatchers.IO) {
+        movieCombineData.collectLatest { _movieData.emit(UiState.Success(it)) }
+    }
 
-    private fun getMoviesByNewestLocal() = viewModelScope.launch(Dispatchers.IO) {
-        getLocalMovieUseCase.getMoviesFromLocal().collectLatest {
-            if (it.isNullOrEmpty()) {
-                getMoviesByNewestRemote(1)
-            } else {
-                _movieNewest.emit(UiState.Success(it))
+    private fun getMoviesByAllData() = viewModelScope.launch(Dispatchers.IO) {
+        launch {
+            combineFirstMoviesFlow()
+            combineFirstGenreMoviesFlow()
+            combineSecondGenreMoviesFlow()
+        }
+    }
+
+    private fun getMoviesByNewest(): Flow<MovieWrapper> = flow {
+        runCatching {
+            getMovieUseCase.getMoviesByNewest()
+        }.onSuccess { data ->
+            data.collect {
+                emit(wrapper("Newest", it))
             }
         }
-    }
+    }.flowOn(Dispatchers.IO)
 
-    private fun getMoviesByGenreLocal(genres: MovieGenre) = viewModelScope.launch(Dispatchers.IO) {
-        getLocalMovieUseCase.getMoviesByGenreLocal(genres).collectLatest {
-            if (it.isNullOrEmpty()) {
-                getMoviesByGenreRemote(genres, 1)
-            } else {
-                when (genres) {
-                    is MovieGenre.Action -> _movieAction.emit(UiState.Success(it))
-                    is MovieGenre.Drama -> _movieDrama.emit(UiState.Success(it))
-                    is MovieGenre.Comedy -> _movieComedy.emit(UiState.Success(it))
-                    is MovieGenre.Animation -> _movieAnimation.emit(UiState.Success(it))
-                    is MovieGenre.Thriller -> _movieThriller.emit(UiState.Success(it))
-                    is MovieGenre.Adventure -> _movieAdventure.emit(UiState.Success(it))
-                }
+    private fun getMoviesByRating(rating: Int): Flow<MovieWrapper> = flow {
+        runCatching {
+            getMovieUseCase.getMoviesByRating(rating)
+        }.onSuccess { data ->
+            data.collect {
+                emit(wrapper("Top Rating Movie", it))
             }
         }
-    }
+    }.flowOn(Dispatchers.IO)
 
-    fun getMoviesByGenreRelated(genres: String) = viewModelScope.launch(Dispatchers.IO) {
-        getLocalMovieUseCase.getMoviesByGenreRelated(genres).collectLatest {
-            _movieRelData.emit(UiState.Success(it.slice(0..13)))
-        }
-    }
-
-    private fun getMoviesByRatingLocal(rating: Int) = viewModelScope.launch(Dispatchers.IO) {
-        getLocalMovieUseCase.getMoviesByRatingLocal().collectLatest {
-            if (it.isNullOrEmpty()) {
-                getMoviesByRatingRemote(rating, 1)
-            } else {
-                _movieTopRating.emit(UiState.Success(it))
+    private fun getMoviesByGenre(genres: MovieGenre): Flow<MovieWrapper> = flow {
+        runCatching {
+            getMovieUseCase.getMoviesByGenre(genres.value)
+        }.onSuccess { data ->
+            data.collect {
+                emit(wrapper(genres.value, it))
             }
         }
-    }
+    }.flowOn(Dispatchers.IO)
 
-    fun getMoviesByQuery() = viewModelScope.launch(Dispatchers.IO) {
+    private fun getMoviesByQuery() = viewModelScope.launch(Dispatchers.IO) {
         movieSearchQuery.collectLatest {
             if (!it.isNullOrBlank()) {
-                getLocalMovieUseCase.getMoviesByQuery(it).collectLatest { data ->
-                    _movieSearchResult.emit(UiState.Success(data))
+                getMovieUseCase.getMoviesByQuery(it).collectLatest { data ->
+                    _movieSearchResult.emit(data)
                 }
             }
         }
     }
 
-    /**
-     * Remote Method
-     */
-
-    private fun getMoviesByNewestRemote(page: Int) = viewModelScope.launch(Dispatchers.IO) {
+    fun getMoviesByGenreRel(genres: String) = viewModelScope.launch(Dispatchers.IO) {
         runCatching {
-            getRemoteMovieUseCase.getMoviesByNewestRemote(page)
+            getMovieUseCase.getMoviesByQuery(genres)
         }.onSuccess { data ->
             data.collectLatest {
-                saveMovieLocalUseCase.execute(it)
-                _movieNewest.emit(UiState.Success(it))
-            }
-        }.onFailure { throwable -> UiState.Error(throwable) }
-    }
-
-    private fun getMoviesByRatingRemote(rating: Int, page: Int) =
-        viewModelScope.launch(Dispatchers.IO) {
-            runCatching {
-                getRemoteMovieUseCase.getMoviesByRatingRemote(rating, page)
-            }.onSuccess { data ->
-                data.collectLatest {
-                    saveMovieLocalUseCase.execute(it)
-                    _movieTopRating.emit(UiState.Success(it))
-                }
-            }.onFailure { throwable -> UiState.Error(throwable) }
-        }
-
-    private fun getMoviesByGenreRemote(genres: MovieGenre, page: Int) =
-        viewModelScope.launch(Dispatchers.IO) {
-            runCatching {
-                getRemoteMovieUseCase.getMoviesByGenreRemote(genres, page)
-            }.onSuccess { data ->
-                data.collectLatest {
-                    when (genres) {
-                        is MovieGenre.Action -> {
-                            saveMovieLocalUseCase.execute(it)
-                            _movieAction.emit(UiState.Success(it))
-                        }
-                        is MovieGenre.Drama -> {
-                            saveMovieLocalUseCase.execute(it)
-                            _movieDrama.emit(UiState.Success(it))
-                        }
-                        is MovieGenre.Comedy -> {
-                            saveMovieLocalUseCase.execute(it)
-                            _movieComedy.emit(UiState.Success(it))
-                        }
-                        is MovieGenre.Animation -> {
-                            saveMovieLocalUseCase.execute(it)
-                            _movieAnimation.emit(UiState.Success(it))
-                        }
-                        is MovieGenre.Thriller -> {
-                            saveMovieLocalUseCase.execute(it)
-                            _movieThriller.emit(UiState.Success(it))
-                        }
-                        is MovieGenre.Adventure -> {
-                            saveMovieLocalUseCase.execute(it)
-                            _movieAdventure.emit(UiState.Success(it))
-                        }
-                    }
-                }
-            }.onFailure { throwable -> UiState.Error(throwable) }
-        }
-
-    // search method
-//    fun getMoviesByQueryRemote(query: String, page: Int) = viewModelScope.launch(Dispatchers.IO) {
-//        getRemoteMovieUseCase.getMoviesByQueryRemote(query, page).collectLatest {
-//            UiState.Success(query, it))
-//        }
-//    }
-
-    /**
-     * get Movie data more (infinite scroll)
-     */
-
-    fun getNewestPage(currentPage: Int) = viewModelScope.launch {
-        getRemoteMovieUseCase.getMoviesByNewestRemote(currentPage).collectLatest { data ->
-            saveMovieLocalUseCase.execute(data)
-            _movieNewest.update { UiState.Success(it.getSuccessData()!!.plus(data)) }
-        }
-    }
-
-    fun getTopRatingPage(currentPage: Int) = viewModelScope.launch {
-        getRemoteMovieUseCase.getMoviesByRatingRemote(8, currentPage).collectLatest { data ->
-            saveMovieLocalUseCase.execute(data)
-            _movieTopRating.update { UiState.Success(it.getSuccessData()!!.plus(data)) }
-        }
-    }
-
-    fun getGenrePage(genre: MovieGenre, currentPage: Int) = viewModelScope.launch {
-        getRemoteMovieUseCase.getMoviesByGenreRemote(genre, currentPage).collectLatest { data ->
-            when (genre) {
-                is MovieGenre.Action -> {
-                    _movieAction.update {
-                        saveMovieLocalUseCase.execute(data)
-                        UiState.Success(
-                            it.getSuccessData()!!.plus(data)
-                        )
-                    }
-                }
-                is MovieGenre.Drama -> {
-                    _movieDrama.update {
-                        saveMovieLocalUseCase.execute(data)
-                        UiState.Success(
-                            it.getSuccessData()!!.plus(data)
-                        )
-                    }
-                }
-                is MovieGenre.Comedy -> {
-                    saveMovieLocalUseCase.execute(data)
-                    _movieComedy.update {
-                        UiState.Success(
-                            it.getSuccessData()!!.plus(data)
-                        )
-                    }
-                }
-                is MovieGenre.Animation -> {
-                    saveMovieLocalUseCase.execute(data)
-                    _movieAnimation.update {
-                        UiState.Success(
-                            it.getSuccessData()!!.plus(data)
-                        )
-                    }
-                }
-                is MovieGenre.Thriller -> {
-                    saveMovieLocalUseCase.execute(data)
-                    _movieThriller.update {
-                        UiState.Success(
-                            it.getSuccessData()!!.plus(data)
-                        )
-                    }
-                }
-                is MovieGenre.Adventure -> {
-                    saveMovieLocalUseCase.execute(data)
-                    _movieAdventure.update {
-                        UiState.Success(
-                            it.getSuccessData()!!.plus(data)
-                        )
-                    }
-                }
+                val shuffle = (0..10).random()
+                _movieRelData.emit(it.slice(shuffle..shuffle + 3))
             }
         }
     }
+
+    private suspend fun combineFirstMoviesFlow() = combine(
+        getMoviesByNewest(), getMoviesByRating(8),
+    ) { m1: MovieWrapper, m2: MovieWrapper ->
+        listOf(m1, m2)
+    }.collectLatest { _movieCombineData.emit(it) }
+
+    private suspend fun combineFirstGenreMoviesFlow() = combine(
+        getMoviesByGenre(MovieGenre.ACTION),
+        getMoviesByGenre(MovieGenre.ANIMATION),
+        getMoviesByGenre(MovieGenre.ADVENTURE),
+    ) { m1, m2, m3 ->
+        listOf(m1, m2, m3)
+    }.collectLatest { data -> _movieCombineData.update { it + data } }
+
+    private suspend fun combineSecondGenreMoviesFlow() = combine(
+        getMoviesByGenre(MovieGenre.COMEDY),
+        getMoviesByGenre(MovieGenre.DRAMA),
+        getMoviesByGenre(MovieGenre.THRILLER),
+    ) { m1, m2, m3 ->
+        listOf(m1, m2, m3)
+    }.collectLatest { data -> _movieCombineData.update { it + data } }
 }

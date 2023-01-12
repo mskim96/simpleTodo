@@ -1,10 +1,10 @@
-package com.msk.simpletodo.data.mapper
+package com.msk.simpletodo.data.converter
 
 import androidx.room.TypeConverter
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 
-class ListConverter {
+class TypeConverter {
 
     @TypeConverter
     fun fromStringList(value: List<String>): String {
@@ -19,7 +19,7 @@ class ListConverter {
             listOf()
         }
     }
-}
 
-inline fun <reified T> Gson.fromJson(json: String) =
-    fromJson<T>(json, object : TypeToken<T>() {}.type)
+    private inline fun <reified T> Gson.fromJson(json: String) =
+        fromJson<T>(json, object : TypeToken<T>() {}.type)
+}

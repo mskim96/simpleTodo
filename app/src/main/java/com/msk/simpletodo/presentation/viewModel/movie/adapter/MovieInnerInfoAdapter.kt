@@ -3,8 +3,6 @@ package com.msk.simpletodo.presentation.viewModel.movie.adapter
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import com.msk.simpletodo.data.model.movie.Movie
-import com.msk.simpletodo.databinding.MovieGenreItemBinding
 import com.msk.simpletodo.databinding.MovieInfoItemBinding
 
 class MovieInnerInfoAdapter(val data: List<String>) :

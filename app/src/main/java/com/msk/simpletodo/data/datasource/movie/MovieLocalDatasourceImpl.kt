@@ -1,32 +1,32 @@
 package com.msk.simpletodo.data.datasource.movie
 
-import com.msk.simpletodo.data.model.movie.Movie
 import com.msk.simpletodo.data.model.movie.MovieDao
+import com.msk.simpletodo.data.model.movie.MovieEntity
 import javax.inject.Inject
 
 class MovieLocalDatasourceImpl @Inject constructor(
     private val movieDao: MovieDao
 ) : MovieLocalDatasource {
 
-    override suspend fun getLocalMovies(): List<Movie> {
-        return movieDao.getAllMovies()
+    override suspend fun getMoviesByNewestLocal(): List<MovieEntity> {
+        return movieDao.getMoviesByNewestLocal()
     }
 
-    override suspend fun getLocalMoviesToRating(): List<Movie> {
-        return movieDao.getMoviesToRating()
+    override suspend fun getMoviesByRatingLocal(rating: Int): List<MovieEntity> {
+        return movieDao.getMoviesByRatingLocal(rating)
     }
 
-    override suspend fun getLocalMoviesToGenre(genres: String): List<Movie> {
+    override suspend fun getMoviesByGenreLocal(genres: String): List<MovieEntity> {
         // parameter genres convert [string] to [list]
         // It's because the genre that MovieEntity has is List format
-        return movieDao.getMoviesToGenre(listOf(genres))
+        return movieDao.getMoviesByGenreLocal(genres = listOf(genres))
     }
 
-    override suspend fun getLocalMoviesByQuery(query: String): List<Movie> {
-        return movieDao.getMoviesByQuery(query)
+    override suspend fun getMoviesByQueryLocal(query: String): List<MovieEntity> {
+        return movieDao.getMoviesByQueryLocal(query = query)
     }
 
-    override suspend fun insertMoviesLocal(movie: List<Movie>) {
+    override suspend fun insertMovies(movie: List<MovieEntity>) {
         movieDao.insertMovies(movie = movie.toTypedArray())
     }
 }

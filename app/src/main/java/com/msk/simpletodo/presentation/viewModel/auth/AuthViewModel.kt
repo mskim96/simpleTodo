@@ -5,8 +5,11 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.google.android.gms.tasks.Task
+import com.google.firebase.auth.FirebaseUser
 import com.msk.simpletodo.data.datastore.PreferDatastore
+import com.msk.simpletodo.data.model.auth.UserEntity
 import com.msk.simpletodo.domain.usecase.auth.SignInUseCase
+import com.msk.simpletodo.domain.usecase.auth.SignOutUseCase
 import com.msk.simpletodo.domain.usecase.auth.SignUpUseCase
 import com.msk.simpletodo.presentation.util.SignUpUser
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -16,6 +19,7 @@ import kotlinx.coroutines.channels.BufferOverflow
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.asSharedFlow
+import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 import kotlin.coroutines.resume
@@ -26,7 +30,8 @@ import kotlin.coroutines.suspendCoroutine
 class AuthViewModel @Inject constructor(
     private val signUpUseCase: SignUpUseCase,
     private val signInUseCase: SignInUseCase,
-    private val preferDatastore: PreferDatastore
+    private val preferDatastore: PreferDatastore,
+    private val signOutUseCase: SignOutUseCase,
 ) : ViewModel() {
 
     // Livedata for signup: user information
@@ -75,6 +80,22 @@ class AuthViewModel @Inject constructor(
         }.onFailure {
             _loginResult.emit(null)
         }
+    }
+
+    suspend fun getUserByEmail(email: String): UserEntity {
+        return signInUseCase.getUserByEmail(email)
+    }
+
+    fun signOutAccount() = viewModelScope.launch(Dispatchers.IO) {
+        signOutUseCase.invoke()
+    }
+
+    fun saveUserInLocal(firebaseUser: FirebaseUser) = viewModelScope.launch(Dispatchers.IO) {
+        signUpUseCase.saveUserInLocal(
+            uid = firebaseUser.uid,
+            email = firebaseUser.email.toString(),
+            username = firebaseUser.displayName.toString()
+        )
     }
 }
 

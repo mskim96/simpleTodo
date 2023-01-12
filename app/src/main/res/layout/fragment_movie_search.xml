@@ -53,7 +53,7 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
             android:layout_marginTop="32dp"
-            android:text="Movie "
+            android:text="Movie &amp; Drama : "
             android:textColor="@color/placeholder"
             android:textSize="24dp"
             android:textStyle="bold"
@@ -86,7 +86,7 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/textView19"
                 app:spanCount="3"
-                tools:listitem="@layout/movie_item_list" />
+                tools:listitem="@layout/movie_item_movie" />
 
         </androidx.core.widget.NestedScrollView>
 

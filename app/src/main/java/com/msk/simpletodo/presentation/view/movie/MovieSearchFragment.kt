@@ -1,6 +1,7 @@
 package com.msk.simpletodo.presentation.view.movie
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -8,8 +9,8 @@ import androidx.core.widget.doAfterTextChanged
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
-import com.msk.simpletodo.data.model.movie.Movie
 import com.msk.simpletodo.databinding.FragmentMovieSearchBinding
+import com.msk.simpletodo.domain.model.Movie
 import com.msk.simpletodo.presentation.view.base.UiState
 import com.msk.simpletodo.presentation.viewModel.movie.MovieViewModel
 import com.msk.simpletodo.presentation.viewModel.movie.adapter.GridItemDecoration
@@ -33,19 +34,12 @@ class MovieSearchFragment : Fragment() {
         val movieSearch = binding.movieSearch
         val textClearButton = binding.textClearButton
 
-
         lifecycleScope.launchWhenStarted {
             (activity as MovieActivity).setBottomNavigation()
             movieSearch.setText(movieViewModel.movieSearchQuery.value)
             launch {
-                movieViewModel.movieSearchResult.collectLatest { state ->
-                    when (state) {
-                        is UiState.Loading -> state
-                        is UiState.Success -> {
-                            movieSearchAdapter.submitList(state.data)
-                        }
-                        is UiState.Error -> IllegalStateException()
-                    }
+                movieViewModel.movieSearchResult.collectLatest { data ->
+                    movieSearchAdapter.submitList(data)
                 }
             }
         }
@@ -53,7 +47,6 @@ class MovieSearchFragment : Fragment() {
         movieSearch.doAfterTextChanged {
             if (movieSearch.text.isNullOrBlank()) {
                 textClearButton.visibility = View.GONE
-                movieSearchAdapter.submitList(null)
             } else {
                 lifecycleScope.launch { movieViewModel.movieSearchQuery.emit(it.toString()) }
                 textClearButton.visibility = View.VISIBLE
@@ -62,7 +55,10 @@ class MovieSearchFragment : Fragment() {
 
         textClearButton.setOnClickListener {
             movieSearch.text = null
-            lifecycleScope.launch { movieViewModel.movieSearchQuery.emit("")}
+            lifecycleScope.launch {
+                movieViewModel.movieSearchQuery.emit("")
+                movieSearchAdapter.submitList(null)
+            }
         }
 
         binding.movieSearchRecycler.addItemDecoration(GridItemDecoration())

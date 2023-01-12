@@ -1,13 +1,12 @@
 package com.msk.simpletodo.data.mapper
 
-import com.msk.simpletodo.data.model.movie.Movie
-import com.msk.simpletodo.data.model.movie.MovieResponse
+import com.msk.simpletodo.data.model.movie.MovieEntity
+import com.msk.simpletodo.domain.model.Movie
 import kotlin.math.ceil
 
-fun movieDataMapper(movieResponseList: List<MovieResponse.MovieData.MovieModel>): List<Movie> {
-    return movieResponseList.map {
+fun mapper(movieEntity: List<MovieEntity>): List<Movie> {
+    return movieEntity.map {
         Movie(
-            id = it.id,
             title = it.title,
             year = it.year,
             rating = ceil(it.rating),

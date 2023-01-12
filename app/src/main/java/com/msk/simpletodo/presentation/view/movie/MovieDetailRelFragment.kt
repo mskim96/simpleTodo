@@ -1,17 +1,14 @@
 package com.msk.simpletodo.presentation.view.movie
 
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
-import com.msk.simpletodo.R
-import com.msk.simpletodo.data.model.movie.Movie
 import com.msk.simpletodo.databinding.FragmentMovieDetailRelBinding
-import com.msk.simpletodo.presentation.view.base.UiState
+import com.msk.simpletodo.domain.model.Movie
 import com.msk.simpletodo.presentation.viewModel.movie.MovieViewModel
 import com.msk.simpletodo.presentation.viewModel.movie.adapter.GridItemDecoration
 import com.msk.simpletodo.presentation.viewModel.movie.adapter.MovieInnerRelAdapter
@@ -36,21 +33,15 @@ class MovieDetailRelFragment : Fragment() {
 
         _binding = FragmentMovieDetailRelBinding.inflate(inflater, container, false)
         lifecycleScope.launchWhenStarted {
-            launch {
-                movieViewModel.movieDetailData.collectLatest {
-                    if (it != null) {
-                        movieViewModel.getMoviesByGenreRelated(it.genres[0])
-                    }
-                }
+            movieViewModel.movieDetailData.collectLatest {
+                it?.genres?.get(0)?.let { genres -> movieViewModel.getMoviesByGenreRel(genres) }
             }
+        }
 
+        lifecycleScope.launchWhenStarted {
             launch {
-                movieViewModel.movieRelData.collectLatest { state ->
-                    when (state) {
-                        is UiState.Loading -> {}
-                        is UiState.Success -> movieInnerRelAdapter.submitList(state.data)
-                        is UiState.Error -> throw IllegalStateException()
-                    }
+                movieViewModel.movieRelData.collectLatest { data ->
+                    movieInnerRelAdapter.submitList(data)
                 }
             }
         }

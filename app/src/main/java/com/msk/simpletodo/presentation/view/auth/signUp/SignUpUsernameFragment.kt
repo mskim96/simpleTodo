@@ -1,4 +1,4 @@
-package com.msk.simpletodo.presentation.view.auth
+package com.msk.simpletodo.presentation.view.auth.signUp
 
 import android.content.Context
 import android.content.Intent
@@ -92,17 +92,6 @@ class SignUpUsernameFragment : Fragment() {
 
             createAccount(email, password, username)
             navTodoActivity(username)
-        }
-
-        /**
-         * Animation
-         */
-        AnimationUtils.loadAnimation(requireContext(), R.anim.text_animation_500).also {
-            binding.signUpUsernameTitle.startAnimation(it)
-        }
-
-        AnimationUtils.loadAnimation(requireContext(), R.anim.item_fade_up_700).also {
-            signUpUsernameCompleteButton.startAnimation(it)
         }
 
         return binding.root

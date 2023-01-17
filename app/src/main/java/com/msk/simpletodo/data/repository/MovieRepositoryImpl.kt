@@ -1,12 +1,15 @@
 package com.msk.simpletodo.data.repository
 
+import android.util.Log
 import com.msk.simpletodo.data.datasource.movie.MovieLocalDatasource
 import com.msk.simpletodo.data.datasource.movie.MovieRemoteDatasource
 import com.msk.simpletodo.data.mapper.mapper
+import com.msk.simpletodo.data.mapper.reverseMap
 import com.msk.simpletodo.data.model.movie.MovieEntity
 import com.msk.simpletodo.domain.model.Movie
 import com.msk.simpletodo.domain.repository.MovieRepository
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.flow.flow
 import javax.inject.Inject
 
@@ -30,7 +33,7 @@ class MovieRepositoryImpl @Inject constructor(
 
     override fun getMoviesByRating(rating: Int): Flow<List<Movie>> = flow {
         val moviesRatingInLocal = movieLocalDatasource.getMoviesByRatingLocal(rating)
-        if (moviesRatingInLocal.isNotEmpty() && moviesRatingInLocal.size > 20 ) {
+        if (moviesRatingInLocal.isNotEmpty() && moviesRatingInLocal.size > 20) {
             emit(mapper(moviesRatingInLocal))
             return@flow
         }
@@ -67,7 +70,21 @@ class MovieRepositoryImpl @Inject constructor(
         }
     }
 
+    override suspend fun getMoviesByLike(uid: String): Flow<List<Movie>> = flow {
+        movieRemoteDatasource.getMoviesByLike(uid).collect { data ->
+            emit(mapper(data))
+        }
+    }
+
     override suspend fun insertMoviesLocal(movie: List<MovieEntity>) {
         movieLocalDatasource.insertMovies(movie)
+    }
+
+    override suspend fun saveMoviesByLike(uid: String, movie: Movie) {
+        movieRemoteDatasource.saveMoviesByLike(uid, reverseMap(movie))
+    }
+
+    override suspend fun deleteMoviesByLike(uid: String, movie: Movie) {
+        movieRemoteDatasource.deleteMoviesByLike(uid, reverseMap(movie))
     }
 }

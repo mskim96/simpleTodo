@@ -35,8 +35,8 @@
                           <map>
                             <entry key="assetSourceType" value="FILE" />
                             <entry key="color" value="ffffff" />
-                            <entry key="outputName" value="movie_shape_wave" />
-                            <entry key="sourceFile" value="$PROJECT_DIR$/app/src/main/res/drawable/wave.svg" />
+                            <entry key="outputName" value="auth_onboarding3" />
+                            <entry key="sourceFile" value="$PROJECT_DIR$/app/src/main/res/drawable/undraw_time_management_re_tk5w.svg" />
                           </map>
                         </option>
                       </PersistentState>

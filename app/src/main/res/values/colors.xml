@@ -12,6 +12,10 @@
     <color name="background_white">#F0F0EE</color>
     <color name="background_silver">#EAEAEA</color>
     <color name="movie_background">#1A1A1A</color>
+    <color name="auth_background">#F5F5F5</color>
+
+    <!--Button Color-->
+    <color name="default_blue">#3A68F8</color>
 
     <!--Typo-->
     <color name="font_case">#333333</color>

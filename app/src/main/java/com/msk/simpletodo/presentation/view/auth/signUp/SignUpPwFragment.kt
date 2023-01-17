@@ -1,4 +1,4 @@
-package com.msk.simpletodo.presentation.view.auth
+package com.msk.simpletodo.presentation.view.auth.signUp
 
 import android.content.Context
 import android.os.Bundle
@@ -15,6 +15,7 @@ import com.msk.simpletodo.R
 import com.msk.simpletodo.databinding.FragmentSignUpPwBinding
 import com.msk.simpletodo.presentation.util.SignUpUser
 import com.msk.simpletodo.presentation.util.validate
+import com.msk.simpletodo.presentation.view.auth.AuthActivity
 import com.msk.simpletodo.presentation.viewModel.auth.AuthViewModel
 import kotlinx.coroutines.launch
 
@@ -68,19 +69,6 @@ class SignUpPwFragment : Fragment() {
             val password = signUpPassword.text.toString().trim()
             sharedViewModel.putUserPassword(SignUpUser.Password, password)
             (activity as AuthActivity).navFragment(SignUpUsernameFragment())
-        }
-
-
-        /**
-         * Animations
-         */
-
-        AnimationUtils.loadAnimation(requireContext(), R.anim.text_animation_500).also {
-            binding.signUpPasswordTitle.startAnimation(it)
-        }
-
-        AnimationUtils.loadAnimation(requireContext(), R.anim.item_fade_up_700).also {
-            signUpPasswordCompleteButton.startAnimation(it)
         }
 
         return binding.root

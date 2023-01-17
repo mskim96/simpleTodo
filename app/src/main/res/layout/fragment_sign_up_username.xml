@@ -4,20 +4,20 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".presentation.view.auth.SignUpUsernameFragment">
+    tools:context=".presentation.view.auth.signUp.SignUpUsernameFragment">
 
     <TextView
         android:id="@+id/signUpUsernameTitle"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="64dp"
+        android:layout_marginTop="48dp"
+        android:fontFamily="serif"
         android:text="What's your name?"
         android:textColor="@color/font_case"
-        android:textSize="36sp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
+        android:textSize="28sp"
+        app:layout_constraintEnd_toStartOf="@+id/guidelineRight"
         app:layout_constraintStart_toStartOf="@+id/guidelineLeft"
-        app:layout_constraintTop_toTopOf="@+id/guidelineTop" />
+        app:layout_constraintTop_toTopOf="parent" />
 
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/signUpUsernameLayout"
@@ -63,14 +63,17 @@
         app:layout_constraintTop_toTopOf="@+id/signUpUsernameLayout"
         tools:ignore="SpeakableTextPresentCheck" />
 
-    <Button
+    <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/signUpUsernameCompleteButton"
         android:layout_width="match_parent"
-        android:layout_height="80dp"
+        android:layout_height="64dp"
         android:background="@drawable/default_button_sub"
-        android:text="Complete !"
+        android:backgroundTint="@color/default_blue"
+        android:fontFamily="sans-serif"
+        android:text="Complete"
         android:textAllCaps="false"
         android:textColor="@color/background_white"
+        android:textSize="18sp"
         android:visibility="gone"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@+id/guidelineRight"
@@ -91,12 +94,5 @@
         android:layout_height="wrap_content"
         android:orientation="vertical"
         app:layout_constraintGuide_end="24dp" />
-
-    <androidx.constraintlayout.widget.Guideline
-        android:id="@+id/guidelineTop"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        app:layout_constraintGuide_begin="56dp" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

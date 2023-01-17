@@ -30,4 +30,18 @@ interface MovieRemoteDatasource {
     suspend fun getMoviesByQuery(
         query: String,
     ): Flow<List<MovieEntity>>
+
+    suspend fun getMoviesByLike(
+        uid: String
+    ): Flow<List<MovieEntity>>
+
+    suspend fun saveMoviesByLike(
+        uid: String,
+        movie: MovieEntity
+    )
+
+    suspend fun deleteMoviesByLike(
+        uid: String,
+        movie: MovieEntity
+    )
 }

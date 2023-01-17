@@ -25,4 +25,8 @@ class GetMovieUseCase @Inject constructor(private val repository: MovieRepositor
     fun getMoviesByQuery(query: String): Flow<List<Movie>> {
         return repository.getMoviesByQuery(query)
     }
+
+    suspend fun getMoviesByLike(uid: String): Flow<List<Movie>> {
+        return repository.getMoviesByLike(uid)
+    }
 }

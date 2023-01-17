@@ -2,7 +2,7 @@ package com.msk.simpletodo.domain.model
 
 class SkeletonUi {
     companion object {
-        val movie = Movie("", 0, 0.0f, listOf(), "", "")
+        val movie = Movie(1, "", 0, 0.0f, listOf(), "", "")
         val skeletonMovie = listOf<MovieWrapper>(
             MovieWrapper("Newest", listOf(movie, movie, movie)),
             MovieWrapper("Top Rating Movie", listOf(movie, movie, movie)),

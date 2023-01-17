@@ -12,9 +12,12 @@ interface MovieRepository {
     fun getMoviesByRating(rating: Int): Flow<List<Movie>>
     fun getMoviesByGenre(genre: String): Flow<List<Movie>>
     fun getMoviesByQuery(query: String): Flow<List<Movie>>
+    suspend fun getMoviesByLike(uid: String): Flow<List<Movie>>
 
     /**
      * CRUD Method
      */
     suspend fun insertMoviesLocal(movie: List<MovieEntity>)
+    suspend fun saveMoviesByLike(uid: String, movie: Movie)
+    suspend fun deleteMoviesByLike(uid: String, movie: Movie)
 }

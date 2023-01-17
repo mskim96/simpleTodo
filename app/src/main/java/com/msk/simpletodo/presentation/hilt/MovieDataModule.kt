@@ -1,5 +1,6 @@
 package com.msk.simpletodo.presentation.hilt
 
+import com.google.firebase.firestore.FirebaseFirestore
 import com.msk.simpletodo.data.database.AppDatabase
 import com.msk.simpletodo.data.datasource.movie.MovieLocalDatasource
 import com.msk.simpletodo.data.datasource.movie.MovieLocalDatasourceImpl
@@ -22,7 +23,9 @@ object MovieDataModule {
 
     @Singleton
     @Provides
-    fun provideMovieLocalDatasource(movieDao: MovieDao): MovieLocalDatasource {
+    fun provideMovieLocalDatasource(
+        movieDao: MovieDao,
+    ): MovieLocalDatasource {
         return MovieLocalDatasourceImpl(movieDao)
     }
 }

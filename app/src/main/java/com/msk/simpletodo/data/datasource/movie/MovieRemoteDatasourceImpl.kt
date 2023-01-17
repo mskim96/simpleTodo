@@ -1,13 +1,20 @@
 package com.msk.simpletodo.data.datasource.movie
 
+import android.util.Log
+import com.google.firebase.firestore.FirebaseFirestore
+import com.google.firebase.firestore.ktx.toObjects
 import com.msk.simpletodo.data.api.MovieApiInterface
 import com.msk.simpletodo.data.model.movie.MovieEntity
+import com.msk.simpletodo.presentation.viewModel.auth.toSuspendable
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
+import kotlinx.coroutines.withContext
 import javax.inject.Inject
 
 class MovieRemoteDatasourceImpl @Inject constructor(
     private val movieApiInterface: MovieApiInterface,
+    private val fireStore: FirebaseFirestore
 ) : MovieRemoteDatasource {
 
     override suspend fun getMoviesByNewest(
@@ -31,5 +38,25 @@ class MovieRemoteDatasourceImpl @Inject constructor(
         query: String,
     ): Flow<List<MovieEntity>> = flow {
         movieApiInterface.getMoviesByQuery(query).body()?.data?.movies?.let { emit(it) }
+    }
+
+    override suspend fun getMoviesByLike(uid: String): Flow<List<MovieEntity>> = flow {
+        val movies = fireStore.collection("uid").document(uid).collection("movies")
+            .get().toSuspendable().toObjects(MovieEntity::class.java)
+        emit(movies)
+    }
+
+    override suspend fun saveMoviesByLike(uid: String, movie: MovieEntity) {
+        withContext(Dispatchers.IO) {
+            fireStore.collection("uid").document(uid).collection("movies")
+                .document(movie.id.toString()).set(movie).toSuspendable()
+        }
+    }
+
+    override suspend fun deleteMoviesByLike(uid: String, movie: MovieEntity) {
+        withContext(Dispatchers.IO) {
+            fireStore.collection("uid").document(uid).collection("movies")
+                .document(movie.id.toString()).delete().toSuspendable()
+        }
     }
 }

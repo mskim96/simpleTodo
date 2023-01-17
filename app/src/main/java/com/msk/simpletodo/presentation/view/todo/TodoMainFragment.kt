@@ -59,19 +59,6 @@ class TodoMainFragment : BaseFragment<FragmentTodoMainBinding>(R.layout.fragment
             }
         }
 
-        /**
-         * TodoMainFragment Animation
-         */
-        AnimationUtils.loadAnimation(requireContext(), R.anim.text_animation_500).also {
-            binding.todoMainGreeting.startAnimation(it)
-            binding.todoMainUsername.startAnimation(it)
-        }
-
-        AnimationUtils.loadAnimation(requireContext(), R.anim.text_animation_1000).also {
-            binding.textView.startAnimation(it)
-            binding.todoMainTodayTodoCount.startAnimation(it)
-        }
-
         return view
     }
 }

@@ -85,7 +85,6 @@ class TodoActivity() : AppCompatActivity() {
 
     fun setFragmentAddToDo(position: Int) {
         supportFragmentManager.commit {
-//            addSharedElement(v, "addToButton")
             replace<TodoAddTodoFragment>(
                 R.id.todoMainFrame,
                 args = bundleOf("position" to position)
@@ -103,12 +102,12 @@ class TodoActivity() : AppCompatActivity() {
     }
 
     override fun onDestroy() {
-        super.onDestroy()
         lifecycleScope.launch(Dispatchers.IO) {
             val currentUser = auth.currentUser
             val checkLocalUser = authViewModel.getUserByEmail(auth.currentUser?.email.toString())
             if (checkLocalUser == null) authViewModel.saveUserInLocal(currentUser!!)
         }
         _binding = null
+        super.onDestroy()
     }
 }

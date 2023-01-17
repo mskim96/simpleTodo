@@ -48,7 +48,9 @@ class MovieSearchFragment : Fragment() {
             if (movieSearch.text.isNullOrBlank()) {
                 textClearButton.visibility = View.GONE
             } else {
-                lifecycleScope.launch { movieViewModel.movieSearchQuery.emit(it.toString()) }
+                lifecycleScope.launch {
+                    movieViewModel.movieSearchQuery.emit(it.toString())
+                }
                 textClearButton.visibility = View.VISIBLE
             }
         }

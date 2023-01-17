@@ -82,14 +82,6 @@ class TodoListFragment : BaseFragment<FragmentTodoListBinding>(R.layout.fragment
             })
         }
 
-        AnimationUtils.loadAnimation(requireContext(), R.anim.item_fade_up_500).also {
-            binding.todoCategoryWithTaskSize.startAnimation(it)
-        }
-
-        AnimationUtils.loadAnimation(requireContext(), R.anim.item_fade_up).also {
-            binding.todoCategoryTitle.startAnimation(it)
-        }
-
         return view
     }
 

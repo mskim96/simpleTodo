@@ -1,20 +1,19 @@
-package com.msk.simpletodo.presentation.view.auth
+package com.msk.simpletodo.presentation.view.auth.signUp
 
 import android.content.Context
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.view.animation.AnimationUtils
 import android.view.inputmethod.InputMethodManager
 import androidx.core.widget.doAfterTextChanged
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
-import com.msk.simpletodo.R
 import com.msk.simpletodo.databinding.FragmentSignUpEmailBinding
 import com.msk.simpletodo.presentation.util.SignUpUser
 import com.msk.simpletodo.presentation.util.validate
+import com.msk.simpletodo.presentation.view.auth.AuthActivity
 import com.msk.simpletodo.presentation.viewModel.auth.AuthViewModel
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
@@ -27,11 +26,6 @@ class SignUpEmailFragment : Fragment() {
 
     // init viewModel
     private val sharedViewModel by lazy { ViewModelProvider(requireActivity())[AuthViewModel::class.java] }
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        (activity as AuthActivity).activityFullScreen(1)
-    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?,
@@ -92,17 +86,6 @@ class SignUpEmailFragment : Fragment() {
             val email = signUpEmail.text?.trim().toString()
             sharedViewModel.putUserEmail(SignUpUser.Email, email)
             (activity as AuthActivity).navFragment(SignUpPwFragment())
-        }
-
-        /**
-         * Animation
-         */
-        AnimationUtils.loadAnimation(requireContext(), R.anim.text_animation_500).also {
-            binding.signUpEmailTitle.startAnimation(it)
-        }
-
-        AnimationUtils.loadAnimation(requireContext(), R.anim.item_fade_up_700).also {
-            signUpEmailCompleteButton.startAnimation(it)
         }
 
         return binding.root

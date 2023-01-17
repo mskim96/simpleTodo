@@ -4,19 +4,20 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".presentation.view.auth.SignUpEmailFragment">
+    tools:context=".presentation.view.auth.signUp.SignUpEmailFragment">
 
     <TextView
         android:id="@+id/signUpEmailTitle"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="64dp"
-        android:text="What's your Email ?"
+        android:layout_marginTop="48dp"
+        android:fontFamily="serif"
+        android:text="What's your Email?"
         android:textColor="@color/font_case"
-        android:textSize="36sp"
+        android:textSize="28sp"
         app:layout_constraintEnd_toStartOf="@+id/guidelineRight"
         app:layout_constraintStart_toStartOf="@+id/guidelineLeft"
-        app:layout_constraintTop_toTopOf="@+id/guidelineTop" />
+        app:layout_constraintTop_toTopOf="parent" />
 
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/signUpEmailLayout"
@@ -60,13 +61,17 @@
         tools:ignore="SpeakableTextPresentCheck" />
 
 
-    <Button
-        android:background="@drawable/default_button_sub"
+    <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/signUpEmailCompleteButton"
-        android:textColor="@color/background_white"
         android:layout_width="match_parent"
-        android:layout_height="80dp"
-        android:text="next"
+        android:layout_height="64dp"
+        android:background="@drawable/default_button_sub"
+        android:backgroundTint="@color/default_blue"
+        android:fontFamily="sans-serif"
+        android:text="Next"
+        android:textAllCaps="false"
+        android:textColor="@color/background_white"
+        android:textSize="18sp"
         android:visibility="gone"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@+id/guidelineRight"
@@ -87,12 +92,5 @@
         android:layout_height="wrap_content"
         android:orientation="vertical"
         app:layout_constraintGuide_end="24dp" />
-
-    <androidx.constraintlayout.widget.Guideline
-        android:id="@+id/guidelineTop"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        app:layout_constraintGuide_begin="56dp" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

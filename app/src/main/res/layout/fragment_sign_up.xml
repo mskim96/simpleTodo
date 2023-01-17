@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white"
+    tools:context=".presentation.view.auth.signUp.SignUpFragment">
+
+    <TextView
+        android:id="@+id/textView21"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="32dp"
+        android:fontFamily="serif"
+        android:text="Join SimpleTodo."
+        android:textColor="@color/font_header"
+        android:textSize="28sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/navSignUpGoogleButton"
+        android:layout_width="match_parent"
+        android:layout_height="64dp"
+        android:layout_marginHorizontal="36dp"
+        android:layout_marginTop="32dp"
+        android:background="@drawable/current_button_default"
+        android:drawableStart="@drawable/oauth_google"
+        android:fontFamily="sans-serif"
+        android:paddingLeft="80dp"
+        android:paddingRight="80dp"
+        android:text="Start with Google"
+        android:textAlignment="center"
+        android:textAllCaps="false"
+        android:textColor="@color/font_default"
+        android:textSize="16sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView21" />
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/navSignUpButton"
+        android:layout_width="match_parent"
+        android:layout_height="64dp"
+        android:layout_marginHorizontal="36dp"
+        android:layout_marginTop="24dp"
+        android:background="@drawable/current_button_default"
+        android:drawableStart="@drawable/current_mail"
+        android:drawableTint="@color/font_default"
+        android:fontFamily="sans-serif"
+        android:paddingLeft="80dp"
+        android:paddingRight="80dp"
+        android:text="Start with email"
+        android:textAllCaps="false"
+        android:textColor="@color/font_default"
+        android:textSize="16sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.333"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/navSignUpGoogleButton" />
+
+    <TextView
+        android:id="@+id/textView22"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="24dp"
+        android:fontFamily="sans-serif"
+        android:text="You already have Account?"
+        android:textAlignment="center"
+        android:textSize="16sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.364"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/navSignUpButton"
+        app:layout_constraintVertical_bias="0.001" />
+
+    <TextView
+        android:id="@+id/signInNavButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:fontFamily="sans-serif-medium"
+        android:text="Sign in."
+        android:textColor="@color/default_blue"
+        android:textSize="16sp"
+        app:layout_constraintBottom_toBottomOf="@+id/textView22"
+        app:layout_constraintStart_toEndOf="@+id/textView22"
+        app:layout_constraintTop_toTopOf="@+id/textView22" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="32dp"
+        android:lineHeight="18dp"
+        android:paddingHorizontal="36dp"
+        android:text="By signing up you agree to our Terms of Service and acknowledge that our Privacy Policy applies to you."
+        android:textAlignment="center"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toStartOf="parent" />
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

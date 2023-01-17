@@ -1,5 +1,8 @@
 package com.msk.simpletodo.presentation.hilt
 
+import com.google.firebase.firestore.FirebaseFirestore
+import com.google.firebase.firestore.ktx.firestore
+import com.google.firebase.ktx.Firebase
 import com.msk.simpletodo.data.api.MovieApiInterface
 import com.msk.simpletodo.data.api.MovieApiClient
 import com.msk.simpletodo.data.datasource.movie.*
@@ -19,6 +22,10 @@ object MovieNetworkModule {
 
     @Singleton
     @Provides
+    fun fireStore() = Firebase.firestore
+
+    @Singleton
+    @Provides
     fun provideMovieApiInterface(retrofit: Retrofit): MovieApiInterface {
         return retrofit.create(MovieApiInterface::class.java)
     }
@@ -34,8 +41,11 @@ object MovieNetworkModule {
 
     @Singleton
     @Provides
-    fun provideMovieRemoteDatasource(movieApiInterface: MovieApiInterface): MovieRemoteDatasource {
-        return MovieRemoteDatasourceImpl(movieApiInterface)
+    fun provideMovieRemoteDatasource(
+        movieApiInterface: MovieApiInterface,
+        fireStore: FirebaseFirestore
+    ): MovieRemoteDatasource {
+        return MovieRemoteDatasourceImpl(movieApiInterface, fireStore)
     }
 
     @Singleton

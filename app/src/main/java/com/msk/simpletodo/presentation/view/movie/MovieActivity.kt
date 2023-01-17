@@ -28,7 +28,6 @@ class MovieActivity : AppCompatActivity() {
             WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS
         )
 
-
         supportFragmentManager.commit {
             replace<MovieMainFragment>(R.id.movieMainFrame)
             setReorderingAllowed(true)

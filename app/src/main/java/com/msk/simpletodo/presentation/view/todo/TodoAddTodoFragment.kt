@@ -111,10 +111,6 @@ class TodoAddTodoFragment : Fragment() {
             (activity as TodoActivity).completeFragment(this)
         }
 
-        AnimationUtils.loadAnimation(requireContext(), R.anim.item_fade_up_700).also {
-            binding.addTodoButton.startAnimation(it)
-        }
-
         return binding.root
     }
 

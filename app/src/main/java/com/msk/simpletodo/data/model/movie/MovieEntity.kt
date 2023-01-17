@@ -8,25 +8,25 @@ import com.google.gson.annotations.SerializedName
 data class MovieEntity(
     @PrimaryKey
     @SerializedName("id")
-    val id: Int,
+    val id: Int = 0,
 
     @SerializedName("title")
-    val title: String,
+    val title: String = "",
 
     @SerializedName("year")
-    val year: Int,
+    val year: Int = 0,
 
     @SerializedName("rating")
-    val rating: Float,
+    val rating: Float = 0.0f,
 
     @SerializedName("genres")
-    val genres: List<String>,
+    val genres: List<String> = listOf(),
 
     @SerializedName("summary")
-    val description: String,
+    val description: String = "",
 
     @SerializedName("large_cover_image")
-    val coverImg: String,
+    val coverImg: String = "",
 
     val requestDate: Long = System.currentTimeMillis()
 )

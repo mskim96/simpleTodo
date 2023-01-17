@@ -32,11 +32,6 @@ class SignInFragment : Fragment() {
 
     private val sharedViewModel by lazy { ViewModelProvider(requireActivity())[AuthViewModel::class.java] }
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        (activity as AuthActivity).activityFullScreen(1)
-    }
-
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
     ): View? {
@@ -101,19 +96,6 @@ class SignInFragment : Fragment() {
             val password = signInPassword.text.toString().trim()
             signIn(email, password)
         }
-
-
-        /**
-         * Animation
-         */
-        AnimationUtils.loadAnimation(requireContext(), R.anim.text_animation_500).also {
-            binding.signInTitle.startAnimation(it)
-        }
-
-        AnimationUtils.loadAnimation(requireContext(), R.anim.item_fade_up_700).also {
-            signInCompleteButton.startAnimation(it)
-        }
-
 
         return binding.root
     }

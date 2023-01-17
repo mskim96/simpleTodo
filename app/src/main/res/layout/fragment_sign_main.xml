@@ -4,101 +4,67 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/background_silver"
     tools:context=".presentation.view.auth.SignMainFragment">
 
-
-    <TextView
-        android:id="@+id/signMainTitle"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="56dp"
-        android:gravity="center"
-        android:text="@string/signMainTitle"
-        android:textColor="@color/font_header"
-        android:textSize="48sp"
-        app:layout_constraintEnd_toStartOf="@+id/guidelineRight"
-        app:layout_constraintHorizontal_bias="0.493"
-        app:layout_constraintStart_toStartOf="@+id/guidelineLeft"
-        app:layout_constraintTop_toTopOf="@+id/guidelineTop"
-        app:layout_constraintWidth_percent="0.7" />
-
-
-    <TextView
-        android:id="@+id/signMainAppName"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:gravity="center"
-        android:text="Simple Todo."
-        android:textColor="@color/font_header"
-        android:textSize="48sp"
-        app:layout_constraintEnd_toStartOf="@+id/guidelineRight"
-        app:layout_constraintStart_toStartOf="@+id/guidelineLeft"
-        app:layout_constraintTop_toBottomOf="@+id/signMainTitle" />
-
-    <ImageView
-        android:id="@+id/imageView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+    <androidx.viewpager2.widget.ViewPager2
+        android:id="@+id/signMainViewPager"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
         android:layout_marginTop="48dp"
-        android:src="@drawable/auth_main_logo"
+        android:orientation="horizontal"
+        android:overScrollMode="never"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@+id/guidelineRight"
+        app:layout_constraintHeight_percent="0.6"
         app:layout_constraintStart_toStartOf="@+id/guidelineLeft"
-        app:layout_constraintTop_toBottomOf="@+id/signMainAppName" />
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.0" />
 
-    <TextView
-        android:id="@+id/textView7"
-        android:layout_width="wrap_content"
+    <com.google.android.material.tabs.TabLayout
+        android:id="@+id/viewPagerIndicator"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="32dp"
-        android:text="@string/signMainSubtitle"
-        android:textColor="@color/font_default"
-        android:textSize="16sp"
-        app:layout_constraintBottom_toTopOf="@+id/navSignUpButton"
         app:layout_constraintEnd_toStartOf="@+id/guidelineRight"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="@+id/guidelineLeft"
-        app:layout_constraintTop_toBottomOf="@+id/imageView"
-        app:layout_constraintVertical_bias="1.0" />
+        app:layout_constraintTop_toBottomOf="@+id/signMainViewPager"
+        app:tabBackground="@drawable/indicator_selector"
+        app:tabGravity="center"
+        app:tabIndicator="@null"
+        app:tabIndicatorHeight="0dp"
+        app:tabRippleColor="@null" />
 
     <androidx.appcompat.widget.AppCompatButton
-        android:id="@+id/navSignInButton"
+        android:id="@+id/navSignButton"
         android:layout_width="0dp"
         android:layout_height="64dp"
+        android:layout_marginHorizontal="12dp"
         android:layout_marginBottom="32dp"
-        android:background="@drawable/default_button_sub"
-        android:text="Login"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="@+id/guidelineLeft"
-        app:layout_constraintTop_toBottomOf="@+id/textView7"
-        app:layout_constraintVertical_bias="1.0"
-        app:layout_constraintWidth_percent="0.45" />
-
-    <androidx.appcompat.widget.AppCompatButton
-        android:id="@+id/navSignUpButton"
-        android:layout_width="0dp"
-        android:layout_height="64dp"
-        android:layout_marginBottom="32dp"
-        android:background="@drawable/default_button_sub"
-        android:backgroundTint="@color/font_default"
-        android:text="Sign up"
+        android:background="@drawable/current_button_default"
+        android:backgroundTint="@color/default_blue"
+        android:fontFamily="sans-serif-medium"
+        android:text="Get Started"
+        android:textAllCaps="false"
         android:textColor="@color/white"
+        android:textSize="18sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@+id/guidelineRight"
-        app:layout_constraintWidth_percent="0.45" />
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="@+id/guidelineLeft" />
 
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/guidelineLeft"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        app:layout_constraintGuide_begin="16dp" />
+        app:layout_constraintGuide_begin="24dp" />
 
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/guidelineRight"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        app:layout_constraintGuide_end="16dp" />
+        app:layout_constraintGuide_end="24dp" />
 
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/guidelineTop"

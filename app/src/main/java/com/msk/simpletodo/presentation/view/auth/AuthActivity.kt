@@ -3,14 +3,12 @@ package com.msk.simpletodo.presentation.view.auth
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
-import android.view.WindowManager
 import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.commit
 import androidx.fragment.app.replace
-import com.google.android.gms.auth.api.identity.BeginSignInRequest
 import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount
 import com.google.android.gms.auth.api.signin.GoogleSignInClient
@@ -21,6 +19,7 @@ import com.google.firebase.auth.ktx.auth
 import com.google.firebase.ktx.Firebase
 import com.msk.simpletodo.R
 import com.msk.simpletodo.databinding.ActivityAuthBinding
+import com.msk.simpletodo.presentation.view.auth.signUp.*
 import com.msk.simpletodo.presentation.view.todo.TodoActivity
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -78,7 +77,6 @@ class AuthActivity : AppCompatActivity() {
      * username -> back button -> sign in
      */
 
-
     fun googleSignIn() {
         val signInIntent = googleSignInClient?.signInIntent
         getResult.launch(signInIntent)
@@ -121,6 +119,12 @@ class AuthActivity : AppCompatActivity() {
         when (fragmentName) {
             is SignUpEmailFragment -> {
                 supportFragmentManager.commit {
+                    setCustomAnimations(
+                        R.anim.enter_from_bottom,
+                        R.anim.exit_from_top,
+                        R.anim.exit_from_bottom,
+                        R.anim.enter_from_top,
+                    )
                     replace<SignUpEmailFragment>(R.id.authMainFrame)
                     setReorderingAllowed(true)
                     addToBackStack(null)
@@ -145,46 +149,48 @@ class AuthActivity : AppCompatActivity() {
                 }
             }
 
+            is SignUpFragment -> {
+                supportFragmentManager.commit {
+                    setCustomAnimations(
+                        R.anim.enter_from_bottom,
+                        R.anim.exit_from_top,
+                        R.anim.exit_from_bottom,
+                        R.anim.enter_from_top,
+                    )
+                    replace<SignUpFragment>(R.id.authMainFrame)
+                    setReorderingAllowed(true)
+                    addToBackStack(null)
+                }
+            }
+
+            is SignUpMainFragment -> {
+                supportFragmentManager.commit {
+                    setCustomAnimations(
+                        R.anim.enter_from_bottom,
+                        R.anim.exit_from_top,
+                        R.anim.exit_from_bottom,
+                        R.anim.enter_from_top,
+                    )
+                    replace<SignUpMainFragment>(R.id.authMainFrame)
+                    setReorderingAllowed(true)
+                    addToBackStack(null)
+                }
+            }
+
             is SignInFragment -> {
                 supportFragmentManager.commit {
+                    setCustomAnimations(
+                        R.anim.enter_from_bottom,
+                        R.anim.exit_from_top,
+                        R.anim.exit_from_bottom,
+                        R.anim.enter_from_top,
+                    )
                     replace<SignInFragment>(R.id.authMainFrame)
                     setReorderingAllowed(true)
                     addToBackStack(null)
                 }
             }
         }
-    }
-
-    fun activityFullScreen(i: Int) {
-        val window = window
-        when (i) {
-            0 -> {
-                window.setFlags(
-                    // activity full screen
-                    WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS,
-                    WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS,
-                )
-            }
-            1 -> {
-                window.clearFlags(
-                    WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS,
-                )
-            }
-        }
-    }
-
-    fun signUpBottomSheet() {
-        val bottomSheet = SignUpBottomSheet()
-        bottomSheet.show(supportFragmentManager, bottomSheet.tag)
-    }
-
-    fun bottomSheetBH(fragment: Fragment) {
-        supportFragmentManager.beginTransaction()
-            .remove(fragment)
-            .commit()
-        fragment.onDestroy()
-        fragment.onDetach()
-
     }
 
     override fun onDestroy() {

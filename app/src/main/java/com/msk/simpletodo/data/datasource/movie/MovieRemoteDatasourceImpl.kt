@@ -1,11 +1,10 @@
 package com.msk.simpletodo.data.datasource.movie
 
-import android.util.Log
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.ktx.toObjects
 import com.msk.simpletodo.data.api.MovieApiInterface
 import com.msk.simpletodo.data.model.movie.MovieEntity
-import com.msk.simpletodo.presentation.viewModel.auth.toSuspendable
+import com.msk.simpletodo.presentation.util.toSuspendable
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow

@@ -14,6 +14,14 @@
       },
       "oauth_client": [
         {
+          "client_id": "1039287833889-am175bnfj6aatd8nargmsds66a53prot.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.msk.simpletodo",
+            "certificate_hash": "4b28d827871e24df4e63a89f558f7f6bf164e499"
+          }
+        },
+        {
           "client_id": "1039287833889-q6hi2thn0lqf27e5j9bjdhbu82ptqnog.apps.googleusercontent.com",
           "client_type": 3
         }

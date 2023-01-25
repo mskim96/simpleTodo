@@ -6,36 +6,12 @@
     android:layout_height="match_parent"
     tools:context=".presentation.view.auth.AuthActivity">
 
-    <ImageView
-        android:layout_width="32dp"
-        android:layout_height="32dp"
-        android:layout_marginEnd="4dp"
-        android:src="@drawable/app_logo"
-        app:layout_constraintBottom_toBottomOf="@+id/textView20"
-        app:layout_constraintEnd_toStartOf="@+id/textView20"
-        app:layout_constraintTop_toTopOf="@+id/textView20" />
-
-
-    <TextView
-        android:id="@+id/textView20"
-        android:layout_width="wrap_content"
-        android:layout_height="48dp"
-        android:layout_marginStart="32dp"
-        android:layout_marginTop="32dp"
-        android:fontFamily="sans-serif-black"
-        android:text="SimpleTodo"
-        android:textColor="@color/font_header"
-        android:textSize="32sp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
     <FrameLayout
         android:id="@+id/authMainFrame"
         android:layout_width="match_parent"
-        android:layout_height="0dp"
+        android:layout_height="match_parent"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView20" />
+        app:layout_constraintTop_toBottomOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

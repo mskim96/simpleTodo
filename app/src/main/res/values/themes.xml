@@ -12,17 +12,13 @@
         <!-- Status bar color. -->
         <item name="android:statusBarColor">@color/white</item>
         <item name="android:windowLightStatusBar">true</item>
+        <item name="android:windowAnimationStyle">@style/GoogleLoginAnimation</item>
 
-        <item name="android:windowSplashScreenAnimatedIcon" tools:targetApi="s">
-            @drawable/app_logo
-        </item>
-        <item name="android:windowSplashScreenAnimationDuration" tools:targetApi="s">3000</item>
-    </style>
-
-    <!-- For Input label -->
-    <style name="holderSizeStyle" parent="TextAppearance.AppCompat">
-        <item name="android:textSize">14sp</item>
-        <item name="android:layout_marginTop">4sp</item>
+        <item name="android:textViewStyle">@style/customTextViewFontStyle</item>
+        <item name="android:buttonStyle">@style/customButtonFontStyle</item>
+        <item name="android:editTextStyle">@style/customEditTextFontStyle</item>
+        <item name="android:radioButtonStyle">@style/customRadioButtonFontStyle</item>
+        <item name="android:checkboxStyle">@style/customCheckboxFontStyle</item>
     </style>
 
     <style name="CustomNavTextStyle" parent="Widget.AppCompat.TextView">
@@ -31,6 +27,24 @@
         <item name="android:layout_marginTop">32dp</item>
         <item name="android:gravity">center</item>
         <item name="android:layout_gravity">center</item>
+    </style>
+
+    <style name="GoogleLoginAnimation" parent="@android:style/Animation.Activity">
+        <item name="android:activityOpenEnterAnimation">@anim/fade_in</item>
+        <item name="android:activityOpenExitAnimation">@anim/fade_out</item>
+        <item name="android:activityCloseEnterAnimation">@anim/fade_in</item>
+        <item name="android:activityCloseExitAnimation">@anim/fade_out</item>
+    </style>
+
+    <style name="OnBoarding" parent="Theme.SimpleTodo">
+        <item name="android:windowAnimationStyle">@style/OnBoardingAnimation</item>
+    </style>
+
+    <style name="OnBoardingAnimation">
+        <item name="android:activityOpenEnterAnimation">@anim/enter_from_bottom</item>
+        <item name="android:activityOpenExitAnimation">@anim/exit_from_top</item>
+        <item name="android:activityCloseEnterAnimation">@anim/exit_from_bottom</item>
+        <item name="android:activityCloseExitAnimation">@anim/enter_from_top</item>
     </style>
 
     <style name="bottomNavigationStyle" parent="Widget.MaterialComponents.BottomNavigationView.Colored">

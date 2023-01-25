@@ -1,12 +1,16 @@
 package com.msk.simpletodo.presentation.view.movie
 
+import android.net.Uri
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import android.view.WindowManager
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.commit
 import androidx.fragment.app.replace
+import com.google.firebase.dynamiclinks.ktx.dynamicLinks
+import com.google.firebase.ktx.Firebase
 import com.msk.simpletodo.R
 import com.msk.simpletodo.databinding.ActivityMovieBinding
 import dagger.hilt.android.AndroidEntryPoint
@@ -54,6 +58,15 @@ class MovieActivity : AppCompatActivity() {
                 else -> false
             }
         }
+        Firebase.dynamicLinks
+            .getDynamicLink(intent)
+            .addOnSuccessListener(this) { pendingDynamicLinkData ->
+                var deeplink: Uri? = null
+                if (pendingDynamicLinkData != null) {
+                    deeplink = pendingDynamicLinkData.link
+                }
+                Log.d("TAG", "onCreate: $deeplink")
+            }
     }
 
     fun hideBottomNavigation() {

@@ -13,7 +13,7 @@
             android:id="@+id/textView9"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:background="@drawable/default_button_oauth"
+            android:background="@drawable/movie_button_genre"
             android:backgroundTint="#3A68F8"
             android:padding="8dp"
             android:text="1234"

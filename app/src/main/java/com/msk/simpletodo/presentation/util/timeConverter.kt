@@ -19,14 +19,3 @@ fun convertTimestampToHour(): Int {
     val sdf = SimpleDateFormat("kk", Locale.JAPAN)
     return sdf.format(today).toInt()
 }
-
-fun convertTimestampToDOW(time: Long?): String {
-    val sdf = SimpleDateFormat("EE", Locale("en", "ja"))
-    if (time == null) {
-        val today = System.currentTimeMillis()
-        return sdf.format(today)
-    } else {
-        val today = time
-        return sdf.format(today)
-    }
-}

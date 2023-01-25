@@ -13,5 +13,8 @@ data class UserEntity(
     val email: String,
 
     @ColumnInfo(name = "user_username")
-    val username: String,
+    val username: String? = null,
+
+    @ColumnInfo(name = "user_onBoarding")
+    val userOnBoarding: Boolean = false
 )

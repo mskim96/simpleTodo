@@ -3,7 +3,7 @@ package com.msk.simpletodo.presentation.view.auth.onboarding
 import androidx.fragment.app.Fragment
 import androidx.viewpager2.adapter.FragmentStateAdapter
 
-class BoardingAdapter(fragment: Fragment) : FragmentStateAdapter(fragment) {
+class BoardingAdapter(activity: OnBoardingActivity) : FragmentStateAdapter(activity) {
 
     private var fragments: List<Fragment> = listOf()
 

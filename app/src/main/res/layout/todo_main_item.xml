@@ -6,9 +6,6 @@
 
     <data>
 
-        <variable
-            name="todoCategoryItem"
-            type="com.msk.simpletodo.data.model.todo.CategoryWithTodo" />
     </data>
 
 
@@ -31,7 +28,6 @@
                 android:id="@+id/todoMainIcon"
                 android:layout_width="24dp"
                 android:layout_height="24dp"
-                android:transitionName="@{@string/categoryIconTransition(String.valueOf(todoCategoryItem.todoCategory.tid))}"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 
@@ -40,7 +36,6 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="8dp"
-                android:text="@{@string/categoryHaveTask(todoCategoryItem.todo.size())}"
                 android:textSize="16dp"
                 app:layout_constraintBottom_toTopOf="@+id/todoType"
                 app:layout_constraintStart_toStartOf="@+id/todoType" />
@@ -51,10 +46,8 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="4dp"
                 android:layout_marginBottom="16dp"
-                android:text="@{todoCategoryItem.todoCategory.category}"
                 android:textColor="@color/font_case"
                 android:textSize="28dp"
-                android:transitionName="@{@string/categoryNameTransition(String.valueOf(todoCategoryItem.todoCategory.category))}"
                 app:layout_constraintBottom_toTopOf="@+id/progressBar"
                 app:layout_constraintStart_toStartOf="parent" />
 

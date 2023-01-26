@@ -1,17 +1,17 @@
 package com.msk.simpletodo.domain.repository
 
-import com.msk.simpletodo.data.model.todo.CategoryWithTodo
 import com.msk.simpletodo.data.model.todo.TodoEntity
-import kotlinx.coroutines.flow.Flow
 
 interface TodoRepository {
-    suspend fun createTodo(content: String, categoryType: Long)
+    suspend fun createTodo(
+        title: String,
+        description: String,
+        date: String,
+        time: String,
+        category: Int
+    )
 
     suspend fun deleteTodo(todo: TodoEntity)
 
     suspend fun checkTodo(todo: TodoEntity)
-
-    fun getTodoWithCategoryId(id: Long): Flow<CategoryWithTodo>
-
-    fun getCategoryWithTodo(): Flow<List<CategoryWithTodo>>
 }

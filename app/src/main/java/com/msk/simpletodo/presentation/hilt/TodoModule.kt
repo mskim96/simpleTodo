@@ -3,7 +3,6 @@ package com.msk.simpletodo.presentation.hilt
 import com.msk.simpletodo.data.database.AppDatabase
 import com.msk.simpletodo.data.datasource.todo.TodoDatasource
 import com.msk.simpletodo.data.datasource.todo.TodoDatasourceImpl
-import com.msk.simpletodo.data.model.todo.TodoCategoryDao
 import com.msk.simpletodo.data.model.todo.TodoDao
 import com.msk.simpletodo.data.repository.TodoRepositoryImpl
 import com.msk.simpletodo.domain.repository.TodoRepository
@@ -25,14 +24,8 @@ object TodoModule {
 
     @Singleton
     @Provides
-    fun todoCategoryDao(appDatabase: AppDatabase): TodoCategoryDao {
-        return appDatabase.todoCategoryDao()
-    }
-
-    @Singleton
-    @Provides
-    fun provideTodoDatasource(todoDao: TodoDao, todoCategoryDao: TodoCategoryDao): TodoDatasource {
-        return TodoDatasourceImpl(todoDao, todoCategoryDao)
+    fun provideTodoDatasource(todoDao: TodoDao): TodoDatasource {
+        return TodoDatasourceImpl(todoDao)
     }
 
     @Singleton

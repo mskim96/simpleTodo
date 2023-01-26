@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/todo_nav_graph"
+    app:startDestination="@id/taskMainFragment">
+    <fragment
+        android:id="@+id/taskMainFragment"
+        android:name="com.msk.simpletodo.presentation.view.todo.TaskMainFragment"
+        android:label="TaskMainFragment"
+        tools:layout="@layout/fragment_task_main">
+        <action
+            android:id="@+id/action_taskMainFragment_to_createTaskFragment"
+            app:destination="@id/createTaskFragment"
+            app:enterAnim="@anim/enter_from_bottom"
+            app:exitAnim="@anim/exit_from_top"
+            app:popEnterAnim="@anim/exit_from_bottom"
+            app:popExitAnim="@anim/enter_from_top" />
+    </fragment>
+    <fragment
+        android:id="@+id/createTaskFragment"
+        android:name="com.msk.simpletodo.presentation.view.todo.TaskCreateFragment"
+        android:label="CreateTaskFragment"
+        tools:layout="@layout/fragment_task_create">
+        <action
+            android:id="@+id/action_createTaskFragment_to_taskMainFragment"
+            app:destination="@id/taskMainFragment"
+            app:enterAnim="@anim/fade_in"
+            app:exitAnim="@anim/fade_out"
+            app:popEnterAnim="@anim/fade_in"
+            app:popExitAnim="@anim/fade_out" />
+    </fragment>
+</navigation>
+
+

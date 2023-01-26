@@ -10,17 +10,23 @@ data class TodoEntity(
     val tid: Long = 0,
 
     @ColumnInfo(name = "todo_title")
-    val content: String,
+    val title: String,
 
-    @ColumnInfo(name = "todo_createdAt")
+    @ColumnInfo(name = "todo_description")
+    val description: String,
+
+    @ColumnInfo(name = "todo_created")
     val createdAt: Long = System.currentTimeMillis(),
 
-    @ColumnInfo(name = "todo_updatedAt")
-    val updatedAt: Long = createdAt,
+    @ColumnInfo(name = "todo_tag")
+    val category: String,
+
+    @ColumnInfo(name = "todo_date")
+    val date: String,
+
+    @ColumnInfo(name = "todo_time")
+    val time: String,
 
     @ColumnInfo(name = "todo_done")
     val done: Boolean = false,
-
-    @ColumnInfo(name = "fk_category", index = true)
-    val fkCategory: Long
 )

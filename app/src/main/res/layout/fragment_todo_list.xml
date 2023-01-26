@@ -5,14 +5,6 @@
 
     <data>
 
-        <variable
-            name="todoCategory"
-            type="com.msk.simpletodo.data.model.todo.CategoryWithTodo" />
-
-        <variable
-            name="adapter"
-            type="com.msk.simpletodo.presentation.viewModel.todo.TodoListAdapter" />
-
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -36,7 +28,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="64dp"
-            android:src="@drawable/todo_user_icon"
+            android:src="@drawable/todo_user_icon_selected"
             android:transitionName="icon 1"
             app:layout_constraintStart_toStartOf="@+id/guidelineLeft"
             app:layout_constraintTop_toTopOf="@+id/guidelineTop" />
@@ -46,7 +38,6 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="24dp"
-            android:text="@{@string/categoryHaveTask(todoCategory.todo.size())}"
             android:textColor="@color/font_default"
             android:textSize="16sp"
             app:layout_constraintStart_toStartOf="@+id/todoCategoryTitle"
@@ -58,7 +49,6 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
-            android:text="@{todoCategory.todoCategory.category}"
             android:textColor="@color/font_default"
             android:textSize="36sp"
             app:layout_constraintEnd_toStartOf="@+id/guidelineTop"
@@ -81,7 +71,6 @@
             android:layout_width="0dp"
             android:layout_height="0dp"
             android:layout_marginTop="8dp"
-            android:adapter="@{adapter}"
             android:clipToPadding="false"
             android:orientation="vertical"
             android:paddingBottom="64dp"

@@ -38,7 +38,6 @@ class AuthActivity : AppCompatActivity() {
 
     // when username exist on datastore, nav TodoActivity
     override fun onStart() {
-        auth.signOut()
         super.onStart()
         val currentUser = auth.currentUser
         if (currentUser != null) navTodoActivity()

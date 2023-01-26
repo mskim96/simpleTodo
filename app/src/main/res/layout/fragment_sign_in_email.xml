@@ -82,7 +82,7 @@
         app:layout_constraintStart_toStartOf="@+id/guidelineLeft"
         app:layout_constraintTop_toBottomOf="@+id/signInPasswordLabel"
         app:layout_constraintWidth_percent="0.65"
-        app:passwordToggleDrawable="@drawable/password_selector"
+        app:passwordToggleDrawable="@drawable/auth_password_selector"
         app:passwordToggleEnabled="true">
 
         <androidx.appcompat.widget.AppCompatEditText
@@ -92,6 +92,8 @@
             android:background="@color/white"
             android:inputType="textPassword"
             android:maxLines="1"
+            android:paddingStart="0dp"
+            android:paddingEnd="0dp"
             android:textColorHint="@color/font_default"
             android:textSize="14sp"
             app:layout_constraintEnd_toEndOf="parent"
@@ -127,6 +129,8 @@
             android:layout_height="wrap_content"
             android:background="@color/white"
             android:maxLines="1"
+            android:paddingStart="0dp"
+            android:paddingEnd="0dp"
             android:textColorHint="@color/font_default"
             android:textSize="14sp"
             app:layout_constraintEnd_toEndOf="parent"

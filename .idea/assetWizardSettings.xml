@@ -35,8 +35,8 @@
                           <map>
                             <entry key="assetSourceType" value="FILE" />
                             <entry key="color" value="ffffff" />
-                            <entry key="outputName" value="auth_mock" />
-                            <entry key="sourceFile" value="$PROJECT_DIR$/app/src/main/res/drawable/mobile-mockup-1674617290562.svg" />
+                            <entry key="outputName" value="todo_progress_dot_icon" />
+                            <entry key="sourceFile" value="$PROJECT_DIR$/app/src/main/res/drawable/circle.svg" />
                           </map>
                         </option>
                       </PersistentState>

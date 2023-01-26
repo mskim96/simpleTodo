@@ -23,7 +23,7 @@ class SignUpSendEmailFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
     ): View? {
         _binding = FragmentSignUpSendEmailBinding.inflate(inflater, container, false)
-        var userEmailAddress = binding.userEmailAddress.text
+        var userEmailAddress: String?
 
         // back button event
         binding.backButton.setOnClickListener {
@@ -33,9 +33,10 @@ class SignUpSendEmailFragment : Fragment() {
         viewLifecycleOwner.lifecycleScope.launchWhenCreated {
             authViewModel.signResult.collectLatest { state ->
                 userEmailAddress = when (state) {
-                    is UiEvent.Success -> state.data.toString()
+                    is UiEvent.Success -> state.data
                     is UiEvent.Failed -> null
                 }
+                binding.signUpEmailTitle.text = userEmailAddress
             }
         }
 

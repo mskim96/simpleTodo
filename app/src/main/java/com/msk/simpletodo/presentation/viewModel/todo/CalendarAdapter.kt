@@ -15,12 +15,19 @@ class CalendarAdapter(val context: Context, private val onClick: (Int) -> Unit) 
     RecyclerView.Adapter<CalendarAdapter.CalendarViewHolder>() {
 
     private var dataSet = arrayListOf<CalendarDate>()
-    private var selectedPosition = LocalDate.now().dayOfMonth
+    private var selectedPosition = LocalDate.now().dayOfMonth - 1
 
 
     inner class CalendarViewHolder(val binding: TodoCalendarItemBinding) :
         ViewHolder(binding.root) {
         fun bind(data: CalendarDate) {
+            if (selectedPosition == adapterPosition) {
+                dataSet[adapterPosition].isSelected = true
+                binding.setChecked()
+            } else {
+                dataSet[adapterPosition].isSelected = false
+                binding.setUnChecked()
+            }
             binding.apply {
                 calendarDate.text = data.date
                 calendarDay.text = data.day
@@ -30,13 +37,6 @@ class CalendarAdapter(val context: Context, private val onClick: (Int) -> Unit) 
                     selectedPosition = adapterPosition
                     onClick(adapterPosition + 1)
                 }
-            }
-            if (selectedPosition == adapterPosition) {
-                dataSet[adapterPosition].isSelected = true
-                binding.setChecked()
-            } else {
-                dataSet[adapterPosition].isSelected = false
-                binding.setUnChecked()
             }
         }
     }
@@ -67,10 +67,8 @@ class CalendarAdapter(val context: Context, private val onClick: (Int) -> Unit) 
             ContextCompat.getDrawable(context, R.drawable.todo_calendar_main)
     }
 
-
     private fun TodoCalendarItemBinding.setUnChecked() {
         calendarDate.setTextColor(ContextCompat.getColor(context, R.color.placeholder))
         calendarItemLayout.background = null
     }
-
 }

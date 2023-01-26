@@ -29,4 +29,11 @@
     <color name="form_correct">#009000</color>
     <color name="placeholder">#C4C4C4</color>
 
+    <!--Progress-->
+    <color name="pending_layout">#D3E5EF</color>
+    <color name="pending_dot">#2D6387</color>
+    <color name="done_layout">#DCEDDC</color>
+    <color name="done_dot">#35694F</color>
+
+
 </resources>

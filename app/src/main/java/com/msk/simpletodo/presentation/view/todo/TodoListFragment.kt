@@ -5,7 +5,6 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.view.animation.AnimationUtils
 import androidx.annotation.RequiresApi
 import androidx.core.content.ContextCompat
 import androidx.lifecycle.ViewModelProvider
@@ -14,11 +13,9 @@ import androidx.recyclerview.widget.DividerItemDecoration
 import com.msk.simpletodo.R
 import com.msk.simpletodo.data.model.todo.TodoEntity
 import com.msk.simpletodo.databinding.FragmentTodoListBinding
-import com.msk.simpletodo.presentation.util.getDrawableId
 import com.msk.simpletodo.presentation.view.base.BaseFragment
 import com.msk.simpletodo.presentation.viewModel.todo.TodoListAdapter
 import com.msk.simpletodo.presentation.viewModel.todo.TodoViewModel
-import kotlinx.coroutines.flow.collectLatest
 
 class TodoListFragment : BaseFragment<FragmentTodoListBinding>(R.layout.fragment_todo_list) {
 
@@ -39,24 +36,23 @@ class TodoListFragment : BaseFragment<FragmentTodoListBinding>(R.layout.fragment
         lifecycleScope.launchWhenStarted {
             // call categoryWithId function with args position
             todoViewModel.getTodoByCategoryId((position!!.toLong() + 1L))
-            todoViewModel.todoWithCategoryById.collectLatest { data ->
-                data?.let {
-                    val id = // set drawableIcon, adapter, result
-                        getDrawableId(requireContext(), data.todoCategory.categoryIcon)
-                    binding.todoCategoryIcon.setImageResource(id)
-                    binding.todoCategory = data
-                    todoListAdapter.setItem(data.todo.reversed())
-
-                    val done = it.todo.filter { it.done }.size // for progress bar
-                    val progressPt = ((done.toDouble() / it.todo.size.toDouble()) * 10).toInt()
-                    binding.progressPercent.text = "${progressPt * 10}%"
-                    binding.progressBar.setProgress(progressPt, true)
-                }
-            }
+//            todoViewModel.todoWithCategoryById.collectLatest { data ->
+//                data?.let {
+//                    val id = // set drawableIcon, adapter, result
+//                        getDrawableId(requireContext(), data.todoCategory.categoryIcon)
+//                    binding.todoCategoryIcon.setImageResource(id)
+//                    binding.todoCategory = data
+//                    todoListAdapter.setItem(data.todo.reversed())
+//
+//                    val done = it.todo.filter { it.done }.size // for progress bar
+//                    val progressPt = ((done.toDouble() / it.todo.size.toDouble()) * 10).toInt()
+//                    binding.progressPercent.text = "${progressPt * 10}%"
+//                    binding.progressBar.setProgress(progressPt, true)
+//                }
+//            }
         }
 
         bind {
-            binding.adapter = todoListAdapter
             binding.todoDateOfWeekRecycler.addItemDecoration(
                 DividerItemDecoration(
                     requireContext(),
@@ -64,13 +60,6 @@ class TodoListFragment : BaseFragment<FragmentTodoListBinding>(R.layout.fragment
                 )
             )
 
-            // UI Click listener
-            backButton.setOnClickListener { // Nav back fragment
-                (activity as TodoActivity).completeFragment(this@TodoListFragment)
-            }
-            navAddTodoButton.setOnClickListener { // nav CreateTodo Button
-                (activity as TodoActivity).setFragmentAddToDo(position!!)
-            }
             navAddTodoButton.setColorFilter(ContextCompat.getColor(requireContext(), R.color.white))
 
             // inside recycler item Event listener

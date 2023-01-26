@@ -33,7 +33,7 @@ class TodoListAdapter :
         ViewHolder(binding.root) {
         fun bind(todoItem: TodoEntity) {
             binding.apply {
-                todoContent.text = todoItem.content
+                todoContent.text = todoItem.description
                 checkBox.isChecked = todoItem.done
 
                 // after, change Binding Adapter

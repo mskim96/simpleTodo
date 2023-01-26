@@ -19,3 +19,7 @@ fun convertTimestampToHour(): Int {
     val sdf = SimpleDateFormat("kk", Locale.JAPAN)
     return sdf.format(today).toInt()
 }
+
+fun String.dateTimeTrim(): String {
+    return this.replace(" ", "")
+}

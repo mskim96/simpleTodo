@@ -5,7 +5,5 @@ import com.msk.simpletodo.domain.repository.TodoRepository
 import javax.inject.Inject
 
 class TodoCheckUseCase @Inject constructor(private val repository: TodoRepository) {
-    suspend fun execute(todo: TodoEntity) {
-        return repository.checkTodo(todo)
-    }
+    suspend operator fun invoke(todo: TodoEntity) = repository.checkTodo(todo)
 }

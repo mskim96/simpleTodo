@@ -62,13 +62,13 @@ class TodoListFragment : BaseFragment<FragmentTodoListBinding>(R.layout.fragment
 
             navAddTodoButton.setColorFilter(ContextCompat.getColor(requireContext(), R.color.white))
 
-            // inside recycler item Event listener
-            todoListAdapter.setOnPassStateInterface(object : TodoListAdapter.OnPassStateInterface {
-                override fun passValue(todo: TodoEntity) = deleteTodo(todo)
-
-                override fun checkValue(todo: TodoEntity, checked: Boolean) =
-                    checkTodo(todo.copy(done = checked))
-            })
+//             inside recycler item Event listener
+//            todoListAdapter.setOnPassStateInterface(object : TodoListAdapter.OnPassStateInterface {
+//                override fun passValue(todo: TodoEntity) = deleteTodo(todo)
+//
+//                override fun checkValue(todo: TodoEntity, checked: Boolean) =
+//                    checkTodo(todo.copy(done = checked))
+//            })
         }
 
         return view

@@ -1,9 +1,12 @@
 package com.msk.simpletodo.data.model.todo
 
+import android.os.Parcelable
 import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
+import kotlinx.parcelize.Parcelize
 
+@Parcelize
 @Entity(tableName = "todo_table")
 data class TodoEntity(
     @PrimaryKey(autoGenerate = true)
@@ -29,4 +32,4 @@ data class TodoEntity(
 
     @ColumnInfo(name = "todo_done")
     val done: Boolean = false,
-)
+): Parcelable

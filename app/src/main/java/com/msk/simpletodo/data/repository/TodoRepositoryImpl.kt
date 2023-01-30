@@ -3,6 +3,8 @@ package com.msk.simpletodo.data.repository
 import com.msk.simpletodo.data.datasource.todo.TodoDatasource
 import com.msk.simpletodo.data.model.todo.TodoEntity
 import com.msk.simpletodo.domain.repository.TodoRepository
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.flow
 import javax.inject.Inject
 
 class TodoRepositoryImpl @Inject constructor(private val todoDatasource: TodoDatasource) :
@@ -36,7 +38,17 @@ class TodoRepositoryImpl @Inject constructor(private val todoDatasource: TodoDat
         return todoDatasource.deleteTodo(todo)
     }
 
+    override suspend fun editTodo(todo: TodoEntity) {
+        return todoDatasource.editTodo(todo)
+    }
+
     override suspend fun checkTodo(todo: TodoEntity) {
         return todoDatasource.checkTodo(todo)
+    }
+
+    override suspend fun getTaskByDate(date: String): Flow<List<TodoEntity>> = flow {
+        val tasks = todoDatasource.getTaskByDate(date)
+        val taskSort = tasks.sortedWith(compareBy { it.time })
+        emit(taskSort)
     }
 }

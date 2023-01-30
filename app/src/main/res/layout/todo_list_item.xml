@@ -4,45 +4,120 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
 
-    <androidx.constraintlayout.widget.ConstraintLayout
+    <androidx.cardview.widget.CardView
         android:layout_width="match_parent"
-        android:layout_height="200dp"
-        android:paddingVertical="12dp">
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="2dp"
+        app:cardElevation="3dp">
 
-        <CheckBox
-            android:id="@+id/checkBox"
-            android:layout_width="48dp"
-            android:layout_height="48dp"
-            android:layout_marginTop="76dp"
-            android:buttonTint="@color/font_default"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintWidth_percent="0.8" />
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
 
-        <TextView
-            android:id="@+id/todoContent"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:textSize="16sp"
-            app:layout_constraintBottom_toBottomOf="@+id/checkBox"
-            app:layout_constraintEnd_toStartOf="@+id/todoDeleteButton"
-            app:layout_constraintHorizontal_bias="0.0"
-            app:layout_constraintStart_toEndOf="@+id/checkBox"
-            app:layout_constraintTop_toTopOf="@+id/checkBox"
-            app:layout_constraintVertical_bias="0.384" />
-
-        <ImageButton
-            android:id="@+id/todoDeleteButton"
-            android:layout_width="48dp"
-            android:layout_height="48dp"
-            android:animateLayoutChanges="true"
-            android:background="@color/white"
-            android:src="@drawable/todo_delete_icon"
-            app:layout_constraintBottom_toBottomOf="@+id/checkBox"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="@+id/checkBox" />
+            <!--        android:button="@drawable/todo_checkbox_icon_selector"-->
 
 
-    </androidx.constraintlayout.widget.ConstraintLayout>
+            <CheckBox
+                android:id="@+id/checkBox"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:button="@drawable/todo_checkbox_icon_selector"
+                android:buttonTint="@color/default_blue"
+                android:gravity="center"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toStartOf="@+id/view4"
+                app:layout_constraintHorizontal_bias="1.0"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/todoItemTime"
+                app:layout_constraintVertical_bias="1.0" />
 
+            <View
+                android:id="@+id/view4"
+                android:layout_width="1dp"
+                android:layout_height="0dp"
+                android:background="@color/placeholder"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.187"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintVertical_bias="0.0" />
+
+            <TextView
+                android:id="@+id/todoItemCategory"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="16dp"
+                android:text="Category"
+                android:textSize="16sp"
+                app:layout_constraintStart_toEndOf="@+id/view4"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/todoItemTitle"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:ellipsize="end"
+                android:maxLines="1"
+                android:text="Todo Title"
+                android:textColor="@color/font_header"
+                android:textSize="22sp"
+                android:textStyle="bold"
+                app:layout_constraintStart_toStartOf="@+id/todoItemCategory"
+                app:layout_constraintTop_toBottomOf="@+id/todoItemCategory"
+                app:layout_constraintWidth_percent="0.6" />
+
+            <TextView
+                android:id="@+id/todoItemDescription"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:layout_marginBottom="24dp"
+                android:maxLines="1"
+                android:ellipsize="end"
+                android:text="haskdjfhasdkfjhaskdfjahs"
+                android:textSize="14sp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="@+id/todoItemTitle"
+                app:layout_constraintTop_toBottomOf="@+id/todoItemTitle"
+                app:layout_constraintVertical_bias="0.0"
+                app:layout_constraintWidth_percent="0.5" />
+
+            <TextView
+                android:id="@+id/todoItemTime"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:text="17:12"
+                android:textSize="16sp"
+                app:layout_constraintEnd_toStartOf="@+id/view4"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <ImageButton
+                android:id="@+id/taskEditButton"
+                android:layout_width="48dp"
+                android:layout_height="48dp"
+                android:animateLayoutChanges="true"
+                android:background="@color/white"
+                android:src="@drawable/todo_edit_icon"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="@+id/todoItemCategory" />
+
+            <ImageButton
+                android:id="@+id/taskDeleteButton"
+                android:layout_width="48dp"
+                android:layout_height="48dp"
+                android:layout_marginTop="8dp"
+                android:animateLayoutChanges="true"
+                android:background="@color/white"
+                android:src="@drawable/todo_delete_icon"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/taskEditButton" />
+
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </androidx.cardview.widget.CardView>
 </layout>

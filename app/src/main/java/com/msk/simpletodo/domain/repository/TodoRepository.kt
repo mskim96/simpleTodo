@@ -1,6 +1,7 @@
 package com.msk.simpletodo.domain.repository
 
 import com.msk.simpletodo.data.model.todo.TodoEntity
+import kotlinx.coroutines.flow.Flow
 
 interface TodoRepository {
     suspend fun createTodo(
@@ -13,5 +14,9 @@ interface TodoRepository {
 
     suspend fun deleteTodo(todo: TodoEntity)
 
+    suspend fun editTodo(todo: TodoEntity)
+
     suspend fun checkTodo(todo: TodoEntity)
+
+    suspend fun getTaskByDate(date: String): Flow<List<TodoEntity>>
 }

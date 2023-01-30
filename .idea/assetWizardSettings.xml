@@ -35,8 +35,8 @@
                           <map>
                             <entry key="assetSourceType" value="FILE" />
                             <entry key="color" value="ffffff" />
-                            <entry key="outputName" value="todo_progress_dot_icon" />
-                            <entry key="sourceFile" value="$PROJECT_DIR$/app/src/main/res/drawable/circle.svg" />
+                            <entry key="outputName" value="todo_empty_icon" />
+                            <entry key="sourceFile" value="$PROJECT_DIR$/app/src/main/res/drawable/frown.svg" />
                           </map>
                         </option>
                       </PersistentState>

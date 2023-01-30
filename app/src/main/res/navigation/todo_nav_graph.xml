@@ -9,6 +9,9 @@
         android:name="com.msk.simpletodo.presentation.view.todo.TaskMainFragment"
         android:label="TaskMainFragment"
         tools:layout="@layout/fragment_task_main">
+        <argument
+            android:name="item"
+            app:argType="com.msk.simpletodo.data.model.todo.TodoEntity" />
         <action
             android:id="@+id/action_taskMainFragment_to_createTaskFragment"
             app:destination="@id/createTaskFragment"
@@ -16,6 +19,18 @@
             app:exitAnim="@anim/exit_from_top"
             app:popEnterAnim="@anim/exit_from_bottom"
             app:popExitAnim="@anim/enter_from_top" />
+        <action
+            android:id="@+id/action_taskMainFragment_to_taskEditFragment"
+            app:destination="@id/taskEditFragment"
+            app:enterAnim="@anim/enter_from_bottom"
+            app:exitAnim="@anim/exit_from_top"
+            app:popEnterAnim="@anim/exit_from_bottom"
+            app:popExitAnim="@anim/enter_from_top">
+            <argument
+                android:name="item"
+                app:argType="com.msk.simpletodo.data.model.todo.TodoEntity" />
+        </action>
+
     </fragment>
     <fragment
         android:id="@+id/createTaskFragment"
@@ -24,6 +39,19 @@
         tools:layout="@layout/fragment_task_create">
         <action
             android:id="@+id/action_createTaskFragment_to_taskMainFragment"
+            app:destination="@id/taskMainFragment"
+            app:enterAnim="@anim/fade_in"
+            app:exitAnim="@anim/fade_out"
+            app:popEnterAnim="@anim/fade_in"
+            app:popExitAnim="@anim/fade_out" />
+    </fragment>
+    <fragment
+        android:id="@+id/taskEditFragment"
+        android:name="com.msk.simpletodo.presentation.view.todo.TaskEditFragment"
+        android:label="TaskEditFragment"
+        tools:layout="@layout/fragment_task_edit">
+        <action
+            android:id="@+id/action_taskEditFragment_to_taskMainFragment"
             app:destination="@id/taskMainFragment"
             app:enterAnim="@anim/fade_in"
             app:exitAnim="@anim/fade_out"

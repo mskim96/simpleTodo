@@ -5,7 +5,7 @@ import com.msk.simpletodo.domain.repository.TodoRepository
 import javax.inject.Inject
 
 class TodoDeleteUseCase @Inject constructor(private val repository: TodoRepository) {
-    suspend fun execute(todo: TodoEntity) {
+    suspend operator fun invoke(todo: TodoEntity) {
         return repository.deleteTodo(todo)
     }
 }

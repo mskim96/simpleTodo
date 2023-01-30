@@ -2,8 +2,6 @@ package com.msk.simpletodo.data.datasource.todo
 
 import com.msk.simpletodo.data.model.todo.TodoDao
 import com.msk.simpletodo.data.model.todo.TodoEntity
-import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.flow
 import javax.inject.Inject
 
 class TodoDatasourceImpl @Inject constructor(
@@ -17,7 +15,15 @@ class TodoDatasourceImpl @Inject constructor(
         return todoDao.deleteTodo(todo)
     }
 
+    override suspend fun editTodo(todo: TodoEntity) {
+        return todoDao.editTodo(todo)
+    }
+
     override suspend fun checkTodo(todo: TodoEntity) {
         return todoDao.checkTodo(todo)
+    }
+
+    override suspend fun getTaskByDate(date: String): List<TodoEntity> {
+        return todoDao.getTaskByDate("%${date}%")
     }
 }

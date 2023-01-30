@@ -15,6 +15,12 @@ interface TodoDao {
     @Update
     suspend fun checkTodo(todoEntity: TodoEntity)
 
+    @Update
+    suspend fun editTodo(todoEntity: TodoEntity)
+
     @Delete
     suspend fun deleteTodo(todoEntity: TodoEntity)
+
+    @Query("SELECT * FROM todo_table WHERE todo_date Like :date")
+    suspend fun getTaskByDate(date: String): List<TodoEntity>
 }

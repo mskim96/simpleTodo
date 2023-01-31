@@ -158,6 +158,7 @@
         android:layout_marginBottom="32dp"
         android:lineHeight="18dp"
         android:paddingHorizontal="36dp"
+        android:textSize="14sp"
         android:text="By signing up you agree to our Terms of Service and acknowledge that our Privacy Policy applies to you."
         android:textAlignment="center"
         app:layout_constraintBottom_toBottomOf="parent"

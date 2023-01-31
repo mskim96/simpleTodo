@@ -7,7 +7,7 @@
     <fragment
         android:id="@+id/taskMainFragment"
         android:name="com.msk.simpletodo.presentation.view.todo.TaskMainFragment"
-        android:label="TaskMainFragment"
+        android:label="Tasks"
         tools:layout="@layout/fragment_task_main">
         <argument
             android:name="item"
@@ -30,12 +30,21 @@
                 android:name="item"
                 app:argType="com.msk.simpletodo.data.model.todo.TodoEntity" />
         </action>
+        <action
+            android:id="@+id/action_taskMainFragment_to_movieActivity"
+            app:destination="@id/movieActivity" />
+        <action
+            android:id="@+id/action_taskMainFragment_to_taskCalendarFragment"
+            app:destination="@id/taskCalendarFragment" />
+        <action
+            android:id="@+id/action_taskMainFragment_to_taskAuthFragment"
+            app:destination="@id/taskAuthFragment" />
 
     </fragment>
     <fragment
         android:id="@+id/createTaskFragment"
         android:name="com.msk.simpletodo.presentation.view.todo.TaskCreateFragment"
-        android:label="CreateTaskFragment"
+        android:label="Add Task"
         tools:layout="@layout/fragment_task_create">
         <action
             android:id="@+id/action_createTaskFragment_to_taskMainFragment"
@@ -48,7 +57,7 @@
     <fragment
         android:id="@+id/taskEditFragment"
         android:name="com.msk.simpletodo.presentation.view.todo.TaskEditFragment"
-        android:label="TaskEditFragment"
+        android:label="Edit Task"
         tools:layout="@layout/fragment_task_edit">
         <action
             android:id="@+id/action_taskEditFragment_to_taskMainFragment"
@@ -58,6 +67,32 @@
             app:popEnterAnim="@anim/fade_in"
             app:popExitAnim="@anim/fade_out" />
     </fragment>
+    <fragment
+        android:id="@+id/taskCalendarFragment"
+        android:name="com.msk.simpletodo.presentation.view.todo.TaskCalendarFragment"
+        android:label="Calendar"
+        tools:layout="@layout/fragment_task_calendar">
+        <argument
+            android:name="todoItem"
+            app:argType="com.msk.simpletodo.data.model.todo.TodoEntity" />
+        <action
+            android:id="@+id/action_taskCalendarFragment_to_taskMainFragment"
+            app:destination="@id/taskMainFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/taskAuthFragment"
+        android:name="com.msk.simpletodo.presentation.view.todo.TaskAuthFragment"
+        android:label="Information"
+        tools:layout="@layout/fragment_task_auth">
+        <action
+            android:id="@+id/action_taskAuthFragment_to_taskMainFragment"
+            app:destination="@id/taskMainFragment" />
+    </fragment>
+    <activity
+        android:id="@+id/movieActivity"
+        android:name="com.msk.simpletodo.presentation.view.movie.MovieActivity"
+        android:label="MovieActivity"
+        tools:layout="@layout/fragment_movie_main" />
 </navigation>
 
 

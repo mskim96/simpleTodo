@@ -76,10 +76,6 @@ class TaskCreateFragment : Fragment() {
                 ).show()
             }
 
-            backButton.setOnClickListener {
-                requireActivity().onBackPressedDispatcher.onBackPressed()
-            }
-
             taskTimeSelect.setOnClickListener {
                 val timeSetListener =
                     TimePickerDialog.OnTimeSetListener { view, hourOfDay, minute ->

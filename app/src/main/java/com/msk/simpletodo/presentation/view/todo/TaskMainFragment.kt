@@ -41,7 +41,6 @@ class TaskMainFragment : BaseFragment<FragmentTaskMainBinding>(R.layout.fragment
 
         val cal = Calendar.getInstance()
         val today = SimpleDateFormat("yyyy/MM/dd", Locale("en", "ja")).format(cal.time)
-        val todayOther = SimpleDateFormat("dd, MMM, yyyy", Locale("en", "ja")).format(cal.time)
 
         lifecycleScope.launchWhenStarted {
             todoViewModel.getTaskByDate(today)
@@ -49,6 +48,7 @@ class TaskMainFragment : BaseFragment<FragmentTaskMainBinding>(R.layout.fragment
                 todoMainAdapter.setItem(it)
             }
         }
+
         // calendar recycler view setup
         calendarAdapter.setItem(CalendarDate.setDate())
         val snapHelper = LinearSnapHelper()
@@ -84,7 +84,6 @@ class TaskMainFragment : BaseFragment<FragmentTaskMainBinding>(R.layout.fragment
 
         bind {
             // binding default information
-            taskMainToday.text = todayOther
             todoDateRecycler.adapter = calendarAdapter
             todoTaskRecycler.adapter = todoMainAdapter
             // binding vm, ad

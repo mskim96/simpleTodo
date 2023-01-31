@@ -3,7 +3,6 @@ package com.msk.simpletodo.presentation.view.todo
 import android.app.DatePickerDialog
 import android.app.TimePickerDialog
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -14,7 +13,6 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import com.msk.simpletodo.R
-import com.msk.simpletodo.data.model.todo.TodoEntity
 import com.msk.simpletodo.databinding.FragmentTaskEditBinding
 import com.msk.simpletodo.presentation.util.PopUpAction
 import com.msk.simpletodo.presentation.util.dateTimeTrim
@@ -112,10 +110,6 @@ class TaskEditFragment : Fragment() {
                 this@TaskEditFragment.findNavController()
                     .navigate(R.id.action_taskEditFragment_to_taskMainFragment)
                 popUpAction.emptySnackBar(it, "Edit Complete!")
-            }
-
-            backButton.setOnClickListener {
-                requireActivity().onBackPressedDispatcher.onBackPressed()
             }
         }
 

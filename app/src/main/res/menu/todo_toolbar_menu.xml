@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:id="@+id/backButton"
+        android:icon="@drawable/current_back_icon"
+        android:title="@null" />
+    <item
+        android:id="@+id/navView"
+        android:icon="@drawable/todo_menu_icon"
+        android:title="@null" />
+</menu>

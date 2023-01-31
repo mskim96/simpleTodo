@@ -2,8 +2,15 @@ package com.msk.simpletodo.presentation.view.todo
 
 import android.os.Bundle
 import android.view.View
+import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
+import androidx.navigation.fragment.NavHostFragment
+import androidx.navigation.ui.AppBarConfiguration
+import androidx.navigation.ui.setupWithNavController
+import com.google.firebase.auth.ktx.auth
+import com.google.firebase.ktx.Firebase
+import com.msk.simpletodo.R
 import com.msk.simpletodo.databinding.ActivityTodoBinding
 import com.msk.simpletodo.presentation.viewModel.auth.AuthViewModel
 import dagger.hilt.android.AndroidEntryPoint
@@ -14,32 +21,34 @@ class TodoActivity() : AppCompatActivity() {
     private var _binding: ActivityTodoBinding? = null
     private val binding get() = _binding!!
     private val authViewModel by lazy { ViewModelProvider(this)[AuthViewModel::class.java] }
+    private val auth by lazy { Firebase.auth }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         _binding = ActivityTodoBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-//        val headerView = navigationView.getHeaderView(0)
-//        val header = headerView.findViewById<ImageView>(R.id.navClearButton)
-//        header.setOnClickListener { closeNav() }
-//        navigationView.setNavigationItemSelectedListener {
-//            when (it.itemId) {
-//                R.id.menu_movie -> {
-//                    val intent = Intent(this@TodoActivity, MovieActivity::class.java)
-//                    startActivity(intent)
-//                    this.finish()
-//                }
-//                R.id.menu_signOut -> {
-//                    val intent = Intent(this@TodoActivity, AuthActivity::class.java)
-//                    startActivity(intent)
-//                    authViewModel.signOutAccount()
-//                    this.finish()
-//                }
-//            }
-//            true
-//        }
+        val drawerLayout = binding.mainDrawerLayout
+        val navigationView = binding.navView
+        val bottomNavigation = binding.todoBottomNavigation
+        val getNavigationView = navigationView.getHeaderView(0)
+        getNavigationView.findViewById<TextView>(R.id.navHeaderUsername).text =
+            auth.currentUser?.email
+        val navHostFragment =
+            supportFragmentManager.findFragmentById(R.id.nav_host_fragment) as NavHostFragment
+        val navController = navHostFragment.navController
+        val appBarConfiguration = AppBarConfiguration(
+            setOf(
+                R.id.taskMainFragment,
+                R.id.taskCalendarFragment,
+                R.id.taskAuthFragment
+            ), drawerLayout
+        )
+        navigationView.setupWithNavController(navController)
+        bottomNavigation.setupWithNavController(navController)
+        binding.toolbar.setupWithNavController(navController, appBarConfiguration)
     }
+
 
     fun hideBottomNavigation() {
         binding.todoBottomNavigation.visibility = View.GONE

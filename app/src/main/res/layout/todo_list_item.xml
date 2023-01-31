@@ -22,7 +22,7 @@
                 android:layout_width="0dp"
                 android:layout_height="0dp"
                 android:button="@drawable/todo_checkbox_icon_selector"
-                android:buttonTint="@color/default_blue"
+                android:buttonTint="@color/font_default"
                 android:gravity="center"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toStartOf="@+id/view4"
@@ -50,7 +50,7 @@
                 android:layout_marginStart="16dp"
                 android:layout_marginTop="16dp"
                 android:text="Category"
-                android:textSize="16sp"
+                android:textSize="14sp"
                 app:layout_constraintStart_toEndOf="@+id/view4"
                 app:layout_constraintTop_toTopOf="parent" />
 

@@ -7,6 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
+import androidx.navigation.fragment.findNavController
 import com.msk.simpletodo.R
 import com.msk.simpletodo.databinding.FragmentMovieMainBinding
 import com.msk.simpletodo.domain.model.Movie
@@ -15,9 +16,10 @@ import com.msk.simpletodo.presentation.view.base.BaseFragment
 import com.msk.simpletodo.presentation.view.base.UiState
 import com.msk.simpletodo.presentation.viewModel.movie.MovieViewModel
 import com.msk.simpletodo.presentation.viewModel.movie.adapter.MovieMainAdapter
+import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collectLatest
 
-
+@AndroidEntryPoint
 class MovieMainFragment : BaseFragment<FragmentMovieMainBinding>(R.layout.fragment_movie_main) {
 
     private val movieViewModel by lazy { ViewModelProvider(requireActivity())[MovieViewModel::class.java] }
@@ -47,23 +49,13 @@ class MovieMainFragment : BaseFragment<FragmentMovieMainBinding>(R.layout.fragme
             binding.movieMainRecycler.adapter = movieAdapter
         }
 
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-            binding.movieMainScrollView.setOnScrollChangeListener { _, _, scrollY, _, oldScrollY ->
-
-                if (scrollY > 1100) {
-                    binding.movieMainHeader.setBackgroundColor(resources.getColor(R.color.black))
-                }
-                if (oldScrollY > scrollY && scrollY < 1100) {
-                    binding.movieMainHeader.setBackgroundColor(resources.getColor(com.google.android.material.R.color.mtrl_btn_transparent_bg_color))
-                }
-            }
-        }
         return view
     }
 
     private fun adapterOnClick(movie: Movie) {
         movieViewModel.sendMovieDataForDetail(movie)
-        (activity as MovieActivity).navDetailFragment()
+        val action = MovieMainFragmentDirections.actionMovieMainFragmentToMovieDetailFragment()
+        this@MovieMainFragment.findNavController().navigate(action)
     }
 }
 

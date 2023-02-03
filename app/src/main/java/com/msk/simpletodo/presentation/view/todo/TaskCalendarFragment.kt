@@ -4,10 +4,16 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.TextView
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
+import androidx.navigation.ui.AppBarConfiguration
+import androidx.navigation.ui.setupWithNavController
+import com.google.firebase.auth.ktx.auth
+import com.google.firebase.ktx.Firebase
+import com.msk.simpletodo.R
 import com.msk.simpletodo.data.model.todo.TodoEntity
 import com.msk.simpletodo.databinding.FragmentTaskCalendarBinding
 import com.msk.simpletodo.presentation.util.PopUpAction
@@ -25,11 +31,28 @@ class TaskCalendarFragment : Fragment() {
 
     private val todoViewModel by lazy { ViewModelProvider(requireActivity())[TodoViewModel::class.java] }
     private val todoMainAdapter by lazy { TodoListAdapter() }
+    private val auth by lazy { Firebase.auth }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
     ): View? {
         _binding = FragmentTaskCalendarBinding.inflate(inflater, container, false)
+
+        val navigationView = binding.navView
+        val getNavigationView = navigationView.getHeaderView(0)
+        getNavigationView.findViewById<TextView>(R.id.navHeaderUsername).text =
+            auth.currentUser?.email
+        val drawerLayout = binding.mainDrawerLayout
+        val navController = findNavController()
+        val appBarConfiguration = AppBarConfiguration(
+            setOf(
+                R.id.taskMainFragment,
+                R.id.taskCalendarFragment,
+                R.id.taskAuthFragment
+            ), drawerLayout
+        )
+        binding.toolbar.setupWithNavController(navController, appBarConfiguration)
+        navigationView.setupWithNavController(navController)
 
         lifecycleScope.launchWhenCreated {
             val format = DecimalFormat("00")

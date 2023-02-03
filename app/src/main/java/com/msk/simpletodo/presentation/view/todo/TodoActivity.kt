@@ -29,11 +29,8 @@ class TodoActivity() : AppCompatActivity() {
         setContentView(binding.root)
 
         val drawerLayout = binding.mainDrawerLayout
-        val navigationView = binding.navView
         val bottomNavigation = binding.todoBottomNavigation
-        val getNavigationView = navigationView.getHeaderView(0)
-        getNavigationView.findViewById<TextView>(R.id.navHeaderUsername).text =
-            auth.currentUser?.email
+
         val navHostFragment =
             supportFragmentManager.findFragmentById(R.id.nav_host_fragment) as NavHostFragment
         val navController = navHostFragment.navController
@@ -44,9 +41,7 @@ class TodoActivity() : AppCompatActivity() {
                 R.id.taskAuthFragment
             ), drawerLayout
         )
-        navigationView.setupWithNavController(navController)
         bottomNavigation.setupWithNavController(navController)
-        binding.toolbar.setupWithNavController(navController, appBarConfiguration)
     }
 
 

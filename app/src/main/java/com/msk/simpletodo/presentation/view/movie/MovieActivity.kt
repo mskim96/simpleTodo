@@ -4,9 +4,11 @@ import android.os.Bundle
 import android.view.View
 import android.view.WindowManager
 import androidx.appcompat.app.AppCompatActivity
-import androidx.fragment.app.Fragment
 import androidx.fragment.app.commit
 import androidx.fragment.app.replace
+import androidx.navigation.fragment.NavHostFragment
+import androidx.navigation.ui.AppBarConfiguration
+import androidx.navigation.ui.setupWithNavController
 import com.msk.simpletodo.R
 import com.msk.simpletodo.databinding.ActivityMovieBinding
 import dagger.hilt.android.AndroidEntryPoint
@@ -28,32 +30,23 @@ class MovieActivity : AppCompatActivity() {
             WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS
         )
 
-        supportFragmentManager.commit {
-            replace<MovieMainFragment>(R.id.movieMainFrame)
-            setReorderingAllowed(true)
-        }
-
-        binding.movieBottomNavigation.setOnItemSelectedListener {
-            when (it.itemId) {
-                R.id.movie_home -> {
-                    navBottomNavFragment(MovieMainFragment())
-                    true
-                }
-                R.id.movie_search -> {
-                    navBottomNavFragment(MovieSearchFragment())
-                    true
-                }
-                R.id.movie_favorite -> {
-                    navBottomNavFragment(MovieLikeFragment())
-                    true
-                }
-                R.id.movie_setting -> {
-                    navBottomNavFragment(MovieSettingFragment())
-                    true
-                }
-                else -> false
-            }
-        }
+        val drawerLayout = binding.mainDrawerLayout
+        val navigationView = binding.navView
+        val bottomNavigation = binding.movieBottomNavigation
+//        val getNavigationView = navigationView.getHeaderView(0)
+        val navHostFragment =
+            supportFragmentManager.findFragmentById(R.id.nav_host_fragment) as NavHostFragment
+        val navController = navHostFragment.navController
+        val appBarConfiguration = AppBarConfiguration(
+            setOf(
+                R.id.movieMainFragment,
+                R.id.movieSearchFragment,
+                R.id.movieLikeFragment,
+            ), drawerLayout
+        )
+        navigationView.setupWithNavController(navController)
+        bottomNavigation.setupWithNavController(navController)
+        binding.toolbar.setupWithNavController(navController, appBarConfiguration)
     }
 
     fun hideBottomNavigation() {
@@ -64,38 +57,9 @@ class MovieActivity : AppCompatActivity() {
         binding.movieBottomNavigation.visibility = View.VISIBLE
     }
 
-    fun navBottomNavFragment(fragmentName: Fragment) {
-        when (fragmentName) {
-            is MovieMainFragment -> supportFragmentManager.commit {
-                replace<MovieMainFragment>(R.id.movieMainFrame)
-                setReorderingAllowed(true)
-            }
-
-            is MovieSearchFragment -> supportFragmentManager.commit {
-                replace<MovieSearchFragment>(R.id.movieMainFrame)
-                setReorderingAllowed(true)
-            }
-
-            is MovieLikeFragment -> supportFragmentManager.commit {
-                replace<MovieLikeFragment>(R.id.movieMainFrame)
-                setReorderingAllowed(true)
-            }
-
-            is MovieSettingFragment -> supportFragmentManager.commit {
-                replace<MovieSettingFragment>(R.id.movieMainFrame)
-                setReorderingAllowed(true)
-            }
-        }
-
-    }
-
     // TODO: Set Main Fragment replace and nav Function
     fun navDetailFragment() {
-        supportFragmentManager.commit {
-            replace<MovieDetailFragment>(R.id.movieMainFrame)
-            setReorderingAllowed(true)
-            addToBackStack(null)
-        }
+
     }
 
     fun navDetailInnerFragment(position: Int) {
@@ -112,14 +76,6 @@ class MovieActivity : AppCompatActivity() {
                     setReorderingAllowed(true)
                 }
             }
-        }
-    }
-
-
-    fun navBackButton() {
-        supportFragmentManager.commit {
-            replace<MovieMainFragment>(R.id.movieMainFrame)
-            setReorderingAllowed(true)
         }
     }
 

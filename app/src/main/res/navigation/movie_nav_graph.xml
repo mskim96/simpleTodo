@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/movie_nav_graph"
+    app:startDestination="@id/movieMainFragment">
+
+    <fragment
+        android:label="Movie Home"
+        android:id="@+id/movieMainFragment"
+        android:name="com.msk.simpletodo.presentation.view.movie.MovieMainFragment"
+        tools:layout="@layout/fragment_movie_main">
+        <action
+            android:id="@+id/action_movieMainFragment_to_movieDetailFragment"
+            app:destination="@id/movieDetailFragment"
+            app:enterAnim="@anim/enter_from_bottom"
+            app:exitAnim="@anim/exit_from_top"
+            app:popEnterAnim="@anim/exit_from_bottom"
+            app:popExitAnim="@anim/enter_from_top" />
+        <action
+            android:id="@+id/action_movieMainFragment_to_todoActivity"
+            app:destination="@id/todoActivity" />
+    </fragment>
+    <fragment
+        android:id="@+id/movieDetailFragment"
+        android:name="com.msk.simpletodo.presentation.view.movie.MovieDetailFragment"
+        tools:layout="@layout/fragment_movie_detail">
+        <action
+            android:id="@+id/action_movieDetailFragment_to_movieMainFragment"
+            app:destination="@id/movieMainFragment" />
+        <action
+            android:id="@+id/action_movieDetailFragment_to_movieSearchFragment"
+            app:destination="@id/movieSearchFragment"
+            app:enterAnim="@anim/fade_in"
+            app:exitAnim="@anim/fade_out"
+            app:popEnterAnim="@anim/fade_in"
+            app:popExitAnim="@anim/fade_out" />
+        <action
+            android:id="@+id/action_movieDetailFragment_to_movieLikeFragment"
+            app:destination="@id/movieLikeFragment"
+            app:enterAnim="@anim/fade_in"
+            app:exitAnim="@anim/fade_out"
+            app:popEnterAnim="@anim/fade_in"
+            app:popExitAnim="@anim/fade_out" />
+    </fragment>
+    <fragment
+        android:label="Search Movie"
+        android:id="@+id/movieSearchFragment"
+        android:name="com.msk.simpletodo.presentation.view.movie.MovieSearchFragment"
+        tools:layout="@layout/fragment_movie_search">
+        <action
+            android:id="@+id/action_movieSearchFragment_to_movieDetailFragment"
+            app:destination="@id/movieDetailFragment"
+            app:enterAnim="@anim/enter_from_bottom"
+            app:exitAnim="@anim/exit_from_top"
+            app:popEnterAnim="@anim/exit_from_bottom"
+            app:popExitAnim="@anim/enter_from_top" />
+    </fragment>
+    <fragment
+        android:label="Like Movie"
+        android:id="@+id/movieLikeFragment"
+        android:name="com.msk.simpletodo.presentation.view.movie.MovieLikeFragment"
+        tools:layout="@layout/fragment_movie_like">
+        <action
+            android:id="@+id/action_movieLikeFragment_to_movieDetailFragment"
+            app:destination="@id/movieDetailFragment"
+            app:enterAnim="@anim/enter_from_bottom"
+            app:exitAnim="@anim/exit_from_top"
+            app:popEnterAnim="@anim/exit_from_bottom"
+            app:popExitAnim="@anim/enter_from_top" />
+    </fragment>
+    <activity
+        android:id="@+id/todoActivity"
+        android:name="com.msk.simpletodo.presentation.view.todo.TodoActivity"
+        android:label="TodoActivity" />
+</navigation>

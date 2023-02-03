@@ -1,9 +1,12 @@
 package com.msk.simpletodo.data.model.movie
 
+import android.os.Parcelable
 import androidx.room.Entity
 import androidx.room.PrimaryKey
 import com.google.gson.annotations.SerializedName
+import kotlinx.parcelize.Parcelize
 
+@Parcelize
 @Entity(tableName = "movie_table")
 data class MovieEntity(
     @PrimaryKey
@@ -29,4 +32,4 @@ data class MovieEntity(
     val coverImg: String = "",
 
     val requestDate: Long = System.currentTimeMillis()
-)
+):Parcelable

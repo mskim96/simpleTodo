@@ -4,7 +4,6 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.core.view.doOnPreDraw
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
 import com.bumptech.glide.Glide
@@ -38,41 +37,36 @@ class MovieDetailFragment :
         (activity as MovieActivity).navDetailInnerFragment(0)
 
         lifecycleScope.launchWhenStarted {
-            movieViewModel.getMoviesByLike(uid = auth.uid.toString())
             movieViewModel.movieDetailData.collectLatest { movie ->
+                movieViewModel.getMoviesByLike(uid = auth.uid.toString())
                 Glide.with(binding.root).load(movie?.coverImg).into(binding.movieThumbnail)
                 binding.genreRecyclerView.adapter = MovieGenreAdapter(movie!!)
                 binding.movie = movie
-                movieViewModel.movieLikeData.map {
-                    it.filter { it.id == movie.id }
+                movieViewModel.movieLikeData.map { movies ->
+                    movies.filter { it.id == movie.id }
                 }.collectLatest {
                     toggleButtonImage(it)
                 }
             }
         }
 
-        binding.movieLikeButton.setOnClickListener {
-
-        }
-
-        binding.tabs.addOnTabSelectedListener(object : TabLayout.OnTabSelectedListener {
-            override fun onTabSelected(tab: TabLayout.Tab?) {
-                when (tab?.position) {
-                    0 -> (activity as MovieActivity).navDetailInnerFragment(0)
-                    1 -> (activity as MovieActivity).navDetailInnerFragment(1)
+        binding.tabs.addOnTabSelectedListener(
+            object : TabLayout.OnTabSelectedListener {
+                override fun onTabSelected(tab: TabLayout.Tab?) {
+                    when (tab?.position) {
+                        0 -> (activity as MovieActivity).navDetailInnerFragment(0)
+                        1 -> (activity as MovieActivity).navDetailInnerFragment(1)
+                    }
                 }
-            }
 
-            override fun onTabUnselected(tab: TabLayout.Tab?) {
+                override fun onTabUnselected(tab: TabLayout.Tab?) {
 
-            }
+                }
 
-            override fun onTabReselected(tab: TabLayout.Tab?) {
+                override fun onTabReselected(tab: TabLayout.Tab?) {
 
-            }
-        })
-
-        (view?.parent as? ViewGroup)?.doOnPreDraw { startPostponedEnterTransition() }
+                }
+            })
         return view
     }
 

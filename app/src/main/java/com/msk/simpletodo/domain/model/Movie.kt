@@ -1,5 +1,9 @@
 package com.msk.simpletodo.domain.model
 
+import android.os.Parcelable
+import kotlinx.parcelize.Parcelize
+
+@Parcelize
 data class Movie(
     val id: Int,
     val title: String,
@@ -8,4 +12,4 @@ data class Movie(
     val genres: List<String>,
     val description: String,
     val coverImg: String,
-)
+) : Parcelable

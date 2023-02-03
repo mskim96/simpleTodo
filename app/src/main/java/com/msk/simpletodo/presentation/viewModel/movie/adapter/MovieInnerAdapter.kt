@@ -7,7 +7,10 @@ import com.bumptech.glide.Glide
 import com.msk.simpletodo.databinding.MovieItemMovieBinding
 import com.msk.simpletodo.domain.model.Movie
 
-class MovieInnerAdapter(private val movieList: List<Movie>, private val onClick: (Movie) -> Unit) :
+class MovieInnerAdapter(
+    private val movieList: List<Movie>,
+    private val onClick: (Movie) -> Unit
+) :
     RecyclerView.Adapter<MovieInnerAdapter.MovieInnerViewHolder>() {
 
     inner class MovieInnerViewHolder(val binding: MovieItemMovieBinding) :

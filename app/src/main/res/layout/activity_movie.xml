@@ -4,36 +4,86 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
 
-    <androidx.constraintlayout.widget.ConstraintLayout
+    <androidx.drawerlayout.widget.DrawerLayout
+        android:id="@+id/mainDrawerLayout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@color/movie_background"
-        android:fitsSystemWindows="true"
-        tools:context=".presentation.view.movie.MovieActivity">
+        android:fitsSystemWindows="true">
 
-        <FrameLayout
-            android:id="@+id/movieMainFrame"
+        <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            app:layout_constraintEnd_toEndOf="parent"
+            android:background="@color/movie_background"
+            tools:context=".presentation.view.movie.MovieActivity">
+
+            <androidx.coordinatorlayout.widget.CoordinatorLayout
+                android:id="@+id/coordinatorLayout"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                app:layout_constraintTop_toTopOf="parent">
+
+                <com.google.android.material.appbar.AppBarLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" />
+
+                <androidx.appcompat.widget.Toolbar
+                    app:titleTextColor="@color/white"
+                    app:subtitleTextColor="@color/white"
+                    android:id="@+id/toolbar"
+                    android:layout_width="match_parent"
+                    android:layout_height="?attr/actionBarSize"
+                    android:background="@color/black"
+                    android:paddingLeft="18dp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+            </androidx.coordinatorlayout.widget.CoordinatorLayout>
+
+            <androidx.fragment.app.FragmentContainerView
+                android:id="@+id/nav_host_fragment"
+                android:name="androidx.navigation.fragment.NavHostFragment"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_marginTop="?attr/actionBarSize"
+                app:defaultNavHost="true"
+                app:layout_constraintBottom_toTopOf="@+id/movieBottomNavigation"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:navGraph="@navigation/movie_nav_graph"
+                tools:layout="@layout/fragment_movie_main" />
+
+            <com.google.android.material.bottomnavigation.BottomNavigationView
+                android:id="@+id/movieBottomNavigation"
+                style="@style/bottomNavigationStyle"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/black"
+                android:padding="8dp"
+                app:itemPaddingBottom="16dp"
+                app:itemRippleColor="@null"
+                app:labelVisibilityMode="unlabeled"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:menu="@menu/movie_bottom_nav" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <com.google.android.material.navigation.NavigationView
+            app:subheaderColor="@color/white"
+            app:itemTextColor="@color/white"
+            app:itemIconTint="@color/white"
+            android:backgroundTint="@color/movie_background"
+            android:id="@+id/nav_view"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_gravity="start"
+            android:layout_marginStart="24dp"
+            android:fitsSystemWindows="true"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
-
-        <com.google.android.material.bottomnavigation.BottomNavigationView
-            android:id="@+id/movieBottomNavigation"
-            style="@style/bottomNavigationStyle"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="@color/black"
-            android:padding="8dp"
-            app:itemPaddingBottom="8dp"
-            app:itemRippleColor="@null"
-            app:labelVisibilityMode="unlabeled"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:menu="@menu/movie_bottom_nav" />
-
-    </androidx.constraintlayout.widget.ConstraintLayout>
-
+            app:layout_constraintTop_toTopOf="parent"
+            app:menu="@menu/movie_nav_menu_list" />
+    </androidx.drawerlayout.widget.DrawerLayout>
 </layout>

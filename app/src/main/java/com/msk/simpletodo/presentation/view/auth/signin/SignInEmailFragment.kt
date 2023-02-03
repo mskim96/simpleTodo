@@ -9,12 +9,12 @@ import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
+import androidx.navigation.fragment.findNavController
 import com.msk.simpletodo.databinding.FragmentSignInEmailBinding
 import com.msk.simpletodo.domain.model.UiEvent
 import com.msk.simpletodo.presentation.util.KeyboardAction
 import com.msk.simpletodo.presentation.util.PopUpAction
 import com.msk.simpletodo.presentation.view.auth.AuthActivity
-import com.msk.simpletodo.presentation.view.auth.signup.SignUpSendEmailFragment
 import com.msk.simpletodo.presentation.view.util.hideTextView
 import com.msk.simpletodo.presentation.view.util.showTextView
 import com.msk.simpletodo.presentation.viewModel.auth.AuthViewModel
@@ -33,11 +33,8 @@ class SignInEmailFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
     ): View? {
         _binding = FragmentSignInEmailBinding.inflate(inflater, container, false)
-
+        val view = binding.root
         with(binding) {
-            /**
-             * Related View
-             */
             // show and hide animation when click username editText
             signInPassword.setOnFocusChangeListener { _, hasFocus ->
                 showTextView(signInEmailTitle)
@@ -63,13 +60,17 @@ class SignInEmailFragment : Fragment() {
                 keyBoardAction.hideKeyboard()
             }
 
-            viewLifecycleOwner.lifecycleScope.launchWhenStarted {
-                repeatOnLifecycle(Lifecycle.State.CREATED) {
+            viewLifecycleOwner.lifecycleScope.launchWhenResumed {
+                repeatOnLifecycle(Lifecycle.State.RESUMED) {
                     authViewModel.signResult.collectLatest { state ->
                         when (state) {
-                            is UiEvent.Success -> navTodoActivity()
+                            is UiEvent.Success -> {
+                                val action =
+                                    SignInEmailFragmentDirections.actionSignInEmailFragmentToTodoActivity()
+                                this@SignInEmailFragment.findNavController().navigate(action)
+                            }
                             is UiEvent.Failed -> popupAction.emptySnackBar(
-                                binding.root,
+                                view,
                                 state.message
                             )
                         }
@@ -77,15 +78,11 @@ class SignInEmailFragment : Fragment() {
                 }
             }
         }
-        return binding.root
+        return view
     }
 
-    fun navTodoActivity() {
-        (activity as AuthActivity).navTodoActivity()
-    }
-
-    override fun onDestroy() {
-        super.onDestroy()
+    override fun onDestroyView() {
+        super.onDestroyView()
         _binding = null
     }
 }

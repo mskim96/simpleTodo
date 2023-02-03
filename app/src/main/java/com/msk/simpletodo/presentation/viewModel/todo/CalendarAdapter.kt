@@ -1,6 +1,7 @@
 package com.msk.simpletodo.presentation.viewModel.todo
 
 import android.content.Context
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.core.content.ContextCompat
@@ -15,12 +16,12 @@ class CalendarAdapter(val context: Context, private val onClick: (Int) -> Unit) 
     RecyclerView.Adapter<CalendarAdapter.CalendarViewHolder>() {
 
     private var dataSet = arrayListOf<CalendarDate>()
-    private var selectedPosition = LocalDate.now().dayOfMonth - 1
-
+    var selectedPosition = LocalDate.now().dayOfMonth - 1
 
     inner class CalendarViewHolder(val binding: TodoCalendarItemBinding) :
         ViewHolder(binding.root) {
         fun bind(data: CalendarDate) {
+            Log.d("TAG", "bind: $selectedPosition")
             if (selectedPosition == adapterPosition) {
                 dataSet[adapterPosition].isSelected = true
                 binding.setChecked()

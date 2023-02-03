@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/auth_nav_graph"
+    app:startDestination="@id/signUpFragment">
+
+    <fragment
+        android:id="@+id/signUpFragment"
+        android:name="com.msk.simpletodo.presentation.view.auth.signup.SignUpFragment"
+        android:label="fragment_sign_up"
+        tools:layout="@layout/fragment_sign_up">
+        <action
+            android:id="@+id/action_signUpFragment_to_signUpEmailFragment"
+            app:destination="@id/signUpEmailFragment"
+            app:enterAnim="@anim/enter_from_left"
+            app:exitAnim="@anim/exit_from_right"
+            app:popEnterAnim="@anim/exit_from_left"
+            app:popExitAnim="@anim/enter_from_right" />
+        <action
+            android:id="@+id/action_signUpFragment_to_signInFragment"
+            app:destination="@id/signInFragment" />
+        <action
+            android:id="@+id/action_signUpFragment_to_todoActivity"
+            app:destination="@id/todoActivity" />
+    </fragment>
+    <fragment
+        android:id="@+id/signUpEmailFragment"
+        android:name="com.msk.simpletodo.presentation.view.auth.signup.SignUpEmailFragment"
+        android:label="fragment_sign_up_email"
+        tools:layout="@layout/fragment_sign_up_email">
+        <action
+            android:id="@+id/action_signUpEmailFragment_to_signUpSendEmailFragment"
+            app:destination="@id/signUpSendEmailFragment"
+            app:enterAnim="@anim/enter_from_bottom"
+            app:exitAnim="@anim/exit_from_top"
+            app:popEnterAnim="@anim/exit_from_bottom"
+            app:popExitAnim="@anim/enter_from_top" />
+    </fragment>
+    <fragment
+        android:id="@+id/signInFragment"
+        android:name="com.msk.simpletodo.presentation.view.auth.signin.SignInFragment"
+        android:label="fragment_sign_in"
+        tools:layout="@layout/fragment_sign_in">
+        <action
+            android:id="@+id/action_signInFragment_to_signInEmailFragment"
+            app:destination="@id/signInEmailFragment"
+            app:enterAnim="@anim/enter_from_left"
+            app:exitAnim="@anim/exit_from_right"
+            app:popEnterAnim="@anim/exit_from_left"
+            app:popExitAnim="@anim/enter_from_right" />
+        <action
+            android:id="@+id/action_signInFragment_to_signUpFragment"
+            app:destination="@id/signUpFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/signInEmailFragment"
+        android:name="com.msk.simpletodo.presentation.view.auth.signin.SignInEmailFragment"
+        android:label="fragment_sign_in_email"
+        tools:layout="@layout/fragment_sign_in_email" >
+        <action
+            android:id="@+id/action_signInEmailFragment_to_todoActivity"
+            app:destination="@id/todoActivity" />
+    </fragment>
+    <fragment
+        android:id="@+id/signUpSendEmailFragment"
+        android:name="com.msk.simpletodo.presentation.view.auth.signup.SignUpSendEmailFragment"
+        android:label="fragment_sign_up_send_email"
+        tools:layout="@layout/fragment_sign_up_send_email" >
+        <action
+            android:id="@+id/action_signUpSendEmailFragment_to_todoActivity"
+            app:destination="@id/todoActivity" />
+    </fragment>
+    <activity
+        android:id="@+id/todoActivity"
+        tools:layout="@layout/fragment_task_main"
+        android:name="com.msk.simpletodo.presentation.view.todo.TodoActivity"
+        android:label="TodoActivity" />
+</navigation>

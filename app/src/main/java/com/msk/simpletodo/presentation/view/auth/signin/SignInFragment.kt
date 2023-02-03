@@ -5,9 +5,9 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.navigation.fragment.findNavController
 import com.msk.simpletodo.databinding.FragmentSignInBinding
 import com.msk.simpletodo.presentation.view.auth.AuthActivity
-import com.msk.simpletodo.presentation.view.auth.signup.SignUpFragment
 
 class SignInFragment : Fragment() {
 
@@ -18,24 +18,26 @@ class SignInFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
     ): View? {
         _binding = FragmentSignInBinding.inflate(inflater, container, false)
+        val view = binding.root
 
-        binding.navSignInGoogleButton.setOnClickListener {
-            (activity as AuthActivity).googleSignIn()
+        with(binding) {
+            navSignInGoogleButton.setOnClickListener {
+                (activity as AuthActivity).googleSignIn()
+            }
+            navSignInButton.setOnClickListener {
+                val action = SignInFragmentDirections.actionSignInFragmentToSignInEmailFragment()
+                this@SignInFragment.findNavController().navigate(action)
+            }
+            signInNavButton.setOnClickListener {
+                val action = SignInFragmentDirections.actionSignInFragmentToSignUpFragment()
+                this@SignInFragment.findNavController().navigate(action)
+            }
         }
-
-        binding.navSignInButton.setOnClickListener {
-            (activity as AuthActivity).navFragment(SignInEmailFragment())
-        }
-
-        binding.signInNavButton.setOnClickListener {
-            (activity as AuthActivity).navFragment(SignUpFragment())
-        }
-        return binding.root
+        return view
     }
 
-    override fun onDestroy() {
-        super.onDestroy()
+    override fun onDestroyView() {
+        super.onDestroyView()
         _binding = null
     }
-
 }

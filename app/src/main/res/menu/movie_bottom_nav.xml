@@ -1,15 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
     <item
-        android:id="@+id/movie_home"
+        android:id="@+id/movieMainFragment"
         android:icon="@drawable/movie_home_icon"
         android:title="Home" />
     <item
-        android:id="@+id/movie_search"
+        android:id="@+id/movieSearchFragment"
         android:icon="@drawable/todo_search_icon"
         android:title="Search" />
     <item
-        android:id="@+id/movie_favorite"
+        android:id="@+id/movieLikeFragment"
         android:icon="@drawable/movie_like_icon"
         android:title="Favorite" />
     <item

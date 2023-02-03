@@ -1,6 +1,5 @@
 package com.msk.simpletodo.presentation.viewModel.movie
 
-import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.msk.simpletodo.data.mapper.wrapper
@@ -12,15 +11,10 @@ import com.msk.simpletodo.domain.usecase.movie.SaveMovieUseCase
 import com.msk.simpletodo.presentation.view.base.UiState
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.channels.BufferOverflow
 import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
-// 내일 해야되는 것
-// 1. 좋아요 기능 구현하기
-// 2. 스플래시 스크린 기능 만들기
-// 3. 투두리스트 디자인 작업 진행+
 
 @HiltViewModel
 class MovieViewModel @Inject constructor(

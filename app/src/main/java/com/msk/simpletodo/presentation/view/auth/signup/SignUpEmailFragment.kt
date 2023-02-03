@@ -34,11 +34,9 @@ class SignUpEmailFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?,
     ): View {
         _binding = FragmentSignUpEmailBinding.inflate(inflater, container, false)
-
+        val view = binding.root
         with(binding) {
-            /**
-             * Related View
-             */
+
             // show and hide animation when click username editText
             signUpPassword.setOnFocusChangeListener { _, hasFocus ->
                 showTextView(signUpEmailTitle)
@@ -65,25 +63,21 @@ class SignUpEmailFragment : Fragment() {
             }
         }
 
-        viewLifecycleOwner.lifecycleScope.launchWhenStarted {
-            repeatOnLifecycle(Lifecycle.State.CREATED) {
+        viewLifecycleOwner.lifecycleScope.launchWhenResumed {
+            repeatOnLifecycle(Lifecycle.State.RESUMED) {
                 authViewModel.signResult.collectLatest { state ->
                     when (state) {
-                        is UiEvent.Success -> navFragment()
+                        is UiEvent.Success -> "" // TODO: OnBoarding Fragment
                         is UiEvent.Failed -> popupAction.emptySnackBar(binding.root, state.message)
                     }
                 }
             }
         }
-        return binding.root
+        return view
     }
 
-    override fun onDestroy() {
-        super.onDestroy()
+    override fun onDestroyView() {
+        super.onDestroyView()
         _binding = null
-    }
-
-    private fun navFragment() {
-        (activity as AuthActivity).navFragment(SignUpSendEmailFragment())
     }
 }

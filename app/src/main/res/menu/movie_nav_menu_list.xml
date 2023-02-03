@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item android:title="Tasks">
+        <menu>
+            <group
+                android:id="@+id/task_menu"
+                android:checkableBehavior="single">
+                <item
+                    android:id="@+id/movieMainFragment"
+                    android:icon="@drawable/movie_home_icon"
+                    android:title="Home" />
+                <item
+                    android:id="@+id/movieSearchFragment"
+                    android:icon="@drawable/todo_search_icon"
+                    android:title="Search" />
+                <item
+                    android:id="@+id/movieLikeFragment"
+                    android:icon="@drawable/movie_like_icon"
+                    android:title="Like" />
+
+                <item
+                    android:id="@+id/movie_setting"
+                    android:icon="@drawable/movie_settings_icon"
+                    android:title="Setting" />
+            </group>
+        </menu>
+    </item>
+
+    <item android:title="Other">
+        <menu>
+            <group
+                android:id="@+id/task_movie"
+                android:checkableBehavior="single">
+                <item
+                    android:id="@+id/todoActivity"
+                    android:icon="@drawable/current_app_icon"
+                    android:title="Todo" />
+                <item
+                    android:id="@+id/menu_signOut"
+                    android:icon="@drawable/current_signout_icon"
+                    android:title="Sign Out" />
+            </group>
+        </menu>
+    </item>
+
+</menu>

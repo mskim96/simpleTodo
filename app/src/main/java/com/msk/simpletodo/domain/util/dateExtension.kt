@@ -1,6 +1,7 @@
 package com.msk.simpletodo.domain.util
 
 import java.time.LocalDate
+import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter
 import java.time.temporal.TemporalAdjusters
 
@@ -15,4 +16,9 @@ fun LocalDate.getLastDayOfMonth(): String {
 
 fun LocalDate.getLastDayOfMonthInt(): Int {
     return this.getLastDayOfMonth().toInt()
+}
+
+fun LocalDateTime.getTimeByString(): String {
+    val dtf = DateTimeFormatter.ofPattern("HH : mm")
+    return dtf.format(this)
 }

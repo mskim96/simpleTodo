@@ -36,12 +36,12 @@
                     app:layout_scrollFlags="scroll|exitUntilCollapsed|snap|enterAlways">
 
                     <DatePicker
-                        android:theme="@style/calendarTheme"
                         android:id="@+id/calendar"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center"
                         android:layout_marginTop="?attr/actionBarSize"
+                        android:theme="@style/calendarTheme"
                         app:layout_collapseMode="pin" />
 
                     <androidx.appcompat.widget.Toolbar
@@ -60,9 +60,9 @@
                             <androidx.appcompat.widget.LinearLayoutCompat
                                 android:id="@+id/backsupport"
                                 android:layout_width="0dp"
+                                android:layout_height="wrap_content"
                                 android:background="?attr/selectableItemBackground"
                                 android:clickable="true"
-                                android:layout_height="wrap_content"
                                 app:layout_constraintBottom_toBottomOf="parent"
                                 app:layout_constraintEnd_toStartOf="@+id/navTodayButton"
                                 app:layout_constraintStart_toStartOf="parent"
@@ -82,11 +82,11 @@
                                     app:layout_constraintTop_toTopOf="parent" />
 
                                 <ImageView
-                                    android:layout_marginTop="12dp"
                                     android:id="@+id/arrowImageView"
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
                                     android:layout_marginStart="8dp"
+                                    android:layout_marginTop="12dp"
                                     android:src="@drawable/todo_chevron_down_icon"
                                     app:layout_constraintBottom_toBottomOf="parent"
                                     app:layout_constraintLeft_toRightOf="@+id/monthname"
@@ -118,9 +118,8 @@
                 <androidx.recyclerview.widget.RecyclerView
                     android:id="@+id/todoDateRecycler"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
+                    android:layout_height="match_parent"
                     android:clipToPadding="false"
-                    android:elevation="15dp"
                     android:orientation="horizontal"
                     android:overScrollMode="never"
                     android:paddingStart="8dp"
@@ -154,6 +153,7 @@
                         android:id="@+id/todoTaskRecycler"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        android:layout_marginTop="16dp"
                         android:clipToPadding="false"
                         android:nestedScrollingEnabled="false"
                         android:orientation="vertical"

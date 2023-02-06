@@ -21,7 +21,6 @@ class CalendarAdapter(val context: Context, private val onClick: (Int) -> Unit) 
     inner class CalendarViewHolder(val binding: TodoCalendarItemBinding) :
         ViewHolder(binding.root) {
         fun bind(data: CalendarDate) {
-            Log.d("TAG", "bind: $selectedPosition")
             if (selectedPosition == adapterPosition) {
                 dataSet[adapterPosition].isSelected = true
                 binding.setChecked()

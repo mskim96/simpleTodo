@@ -32,4 +32,7 @@ data class TodoEntity(
 
     @ColumnInfo(name = "todo_done")
     val done: Boolean = false,
-): Parcelable
+
+    @ColumnInfo(name = "todo_notification")
+    val notification: Boolean = false,
+) : Parcelable

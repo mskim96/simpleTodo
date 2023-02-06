@@ -34,13 +34,6 @@ class TodoActivity() : AppCompatActivity() {
         val navHostFragment =
             supportFragmentManager.findFragmentById(R.id.nav_host_fragment) as NavHostFragment
         val navController = navHostFragment.navController
-        val appBarConfiguration = AppBarConfiguration(
-            setOf(
-                R.id.taskMainFragment,
-                R.id.taskCalendarFragment,
-                R.id.taskAuthFragment
-            ), drawerLayout
-        )
         bottomNavigation.setupWithNavController(navController)
     }
 

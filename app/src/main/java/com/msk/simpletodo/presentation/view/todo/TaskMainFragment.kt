@@ -69,9 +69,9 @@ class TaskMainFragment : BaseFragment<FragmentTaskMainBinding>(R.layout.fragment
         binding.appbar.addOnOffsetChangedListener(object : AppBarStateChangeListener() {
             override fun onStateChanged(appBarLayout: AppBarLayout?, state: State?) {
                 if (state == State.EXPANDED) {
-                    binding.arrowImageView.animate().rotation(0f).setDuration(150).withLayer()
-                } else {
                     binding.arrowImageView.animate().rotation(-180f).setDuration(150).withLayer()
+                } else {
+                    binding.arrowImageView.animate().rotation(0f).setDuration(150).withLayer()
                 }
                 binding.backsupport.setOnClickListener {
                     if (state == State.EXPANDED) {

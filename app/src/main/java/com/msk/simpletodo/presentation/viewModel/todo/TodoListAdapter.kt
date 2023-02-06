@@ -45,16 +45,16 @@ class TodoListAdapter :
         fun bind(todoItem: TodoEntity) {
             binding.apply {
                 todoItemTitle.text = todoItem.title
-                todoItemDescription.text = todoItem.description
+//                todoItemDescription.text = todoItem.description
                 todoItemCategory.text = todoItem.category
                 todoItemTime.text = todoItem.time
                 checkBox.isChecked = todoItem.done
-                taskDeleteButton.setOnClickListener {
-                    deleteClickListener.onClick(todoItem)
-                }
-                taskEditButton.setOnClickListener {
-                    editClickListener.onClick(todoItem)
-                }
+//                taskDeleteButton.setOnClickListener {
+//                    deleteClickListener.onClick(todoItem)
+//                }
+//                taskEditButton.setOnClickListener {
+//                    editClickListener.onClick(todoItem)
+//                }
 
                 checkBox.setOnClickListener {
                     if (!checkBox.isChecked) checkClickListener.onClick(todoItem.copy(done = false))

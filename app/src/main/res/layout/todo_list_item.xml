@@ -4,120 +4,74 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
 
-    <androidx.cardview.widget.CardView
+
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="2dp"
-        app:cardElevation="3dp">
+        android:layout_height="wrap_content">
 
-        <androidx.constraintlayout.widget.ConstraintLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+        <CheckBox
+            android:id="@+id/checkBox"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_marginEnd="24dp"
+            android:button="@drawable/todo_checkbox_icon_selector"
+            android:buttonTint="@color/font_default"
+            android:gravity="center"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/todoItemTitle"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/todoItemTime"
+            app:layout_constraintVertical_bias="1.0" />
 
-            <!--        android:button="@drawable/todo_checkbox_icon_selector"-->
+        <TextView
+            android:id="@+id/todoItemCategory"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="24dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginBottom="32dp"
+            android:text="Category"
+            android:textSize="14sp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="@+id/todoItemTitle"
+            app:layout_constraintTop_toBottomOf="@+id/todoItemTitle" />
 
+        <TextView
+            android:id="@+id/todoItemTitle"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:drawableStart="@drawable/todo_progress_dot_icon"
+            android:drawablePadding="8dp"
+            android:ellipsize="end"
+            android:maxLines="1"
+            android:text="Todo Title"
+            android:textColor="@color/font_header"
+            android:textSize="18sp"
+            android:textStyle="bold"
+            app:layout_constraintBottom_toTopOf="@+id/checkBox"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/todoItemTime"
+            app:layout_constraintTop_toTopOf="@+id/todoItemTime"
+            app:layout_constraintWidth_percent="0.6" />
 
-            <CheckBox
-                android:id="@+id/checkBox"
-                android:layout_width="0dp"
-                android:layout_height="0dp"
-                android:button="@drawable/todo_checkbox_icon_selector"
-                android:buttonTint="@color/font_default"
-                android:gravity="center"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toStartOf="@+id/view4"
-                app:layout_constraintHorizontal_bias="1.0"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/todoItemTime"
-                app:layout_constraintVertical_bias="1.0" />
+        <TextView
+            android:id="@+id/todoItemTime"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="24dp"
+            android:layout_marginTop="16dp"
+            android:text="17:12"
+            android:textSize="16sp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
-            <View
-                android:id="@+id/view4"
-                android:layout_width="1dp"
-                android:layout_height="0dp"
-                android:background="@color/placeholder"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.187"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintVertical_bias="0.0" />
+        <View
+            android:layout_width="0dp"
+            android:layout_height="1dp"
+            android:background="@color/placeholder"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="@+id/todoItemTitle" />
 
-            <TextView
-                android:id="@+id/todoItemCategory"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="16dp"
-                android:layout_marginTop="16dp"
-                android:text="Category"
-                android:textSize="14sp"
-                app:layout_constraintStart_toEndOf="@+id/view4"
-                app:layout_constraintTop_toTopOf="parent" />
-
-            <TextView
-                android:id="@+id/todoItemTitle"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="8dp"
-                android:ellipsize="end"
-                android:maxLines="1"
-                android:text="Todo Title"
-                android:textColor="@color/font_header"
-                android:textSize="22sp"
-                android:textStyle="bold"
-                app:layout_constraintStart_toStartOf="@+id/todoItemCategory"
-                app:layout_constraintTop_toBottomOf="@+id/todoItemCategory"
-                app:layout_constraintWidth_percent="0.6" />
-
-            <TextView
-                android:id="@+id/todoItemDescription"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="8dp"
-                android:layout_marginBottom="24dp"
-                android:maxLines="1"
-                android:ellipsize="end"
-                android:text="haskdjfhasdkfjhaskdfjahs"
-                android:textSize="14sp"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintStart_toStartOf="@+id/todoItemTitle"
-                app:layout_constraintTop_toBottomOf="@+id/todoItemTitle"
-                app:layout_constraintVertical_bias="0.0"
-                app:layout_constraintWidth_percent="0.5" />
-
-            <TextView
-                android:id="@+id/todoItemTime"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="16dp"
-                android:text="17:12"
-                android:textSize="16sp"
-                app:layout_constraintEnd_toStartOf="@+id/view4"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
-
-            <ImageButton
-                android:id="@+id/taskEditButton"
-                android:layout_width="48dp"
-                android:layout_height="48dp"
-                android:animateLayoutChanges="true"
-                android:background="@color/white"
-                android:src="@drawable/todo_edit_icon"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toTopOf="@+id/todoItemCategory" />
-
-            <ImageButton
-                android:id="@+id/taskDeleteButton"
-                android:layout_width="48dp"
-                android:layout_height="48dp"
-                android:layout_marginTop="8dp"
-                android:animateLayoutChanges="true"
-                android:background="@color/white"
-                android:src="@drawable/todo_delete_icon"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/taskEditButton" />
-
-
-        </androidx.constraintlayout.widget.ConstraintLayout>
-    </androidx.cardview.widget.CardView>
+    </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

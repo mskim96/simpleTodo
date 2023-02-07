@@ -49,12 +49,12 @@ class TodoListAdapter :
                 todoItemCategory.text = todoItem.category
                 todoItemTime.text = todoItem.time
                 checkBox.isChecked = todoItem.done
-//                taskDeleteButton.setOnClickListener {
-//                    deleteClickListener.onClick(todoItem)
-//                }
-//                taskEditButton.setOnClickListener {
-//                    editClickListener.onClick(todoItem)
-//                }
+                taskDeleteButton.setOnClickListener {
+                    deleteClickListener.onClick(todoItem)
+                }
+                taskEditButton.setOnClickListener {
+                    editClickListener.onClick(todoItem)
+                }
 
                 checkBox.setOnClickListener {
                     if (!checkBox.isChecked) checkClickListener.onClick(todoItem.copy(done = false))
@@ -65,9 +65,8 @@ class TodoListAdapter :
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): TodoListViewHolder {
-        return TodoListViewHolder(
-            TodoListItemBinding.inflate(LayoutInflater.from(parent.context), parent, false)
-        )
+        val inflater = LayoutInflater.from(parent.context)
+        return TodoListViewHolder(TodoListItemBinding.inflate(inflater, parent, false))
     }
 
     override fun onBindViewHolder(holder: TodoListViewHolder, position: Int) {

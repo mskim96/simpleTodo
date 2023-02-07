@@ -1,6 +1,8 @@
 package com.msk.simpletodo.presentation.view.todo
 
+import android.annotation.SuppressLint
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -10,6 +12,7 @@ import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.setupWithNavController
+import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearSnapHelper
 import com.google.android.material.appbar.AppBarLayout
 import com.google.firebase.auth.ktx.auth
@@ -23,6 +26,7 @@ import com.msk.simpletodo.domain.util.getFullDateByString
 import com.msk.simpletodo.presentation.util.PopUpAction
 import com.msk.simpletodo.presentation.view.base.BaseFragment
 import com.msk.simpletodo.presentation.viewModel.todo.CalendarAdapter
+import com.msk.simpletodo.presentation.viewModel.todo.SwipeHelperCallback
 import com.msk.simpletodo.presentation.viewModel.todo.TodoListAdapter
 import com.msk.simpletodo.presentation.viewModel.todo.TodoViewModel
 import kotlinx.coroutines.flow.collectLatest
@@ -43,6 +47,7 @@ class TaskMainFragment : BaseFragment<FragmentTaskMainBinding>(R.layout.fragment
     private val popUpAction: PopUpAction by lazy { PopUpAction() }
     private val taskDate by lazy { TaskDate() }
 
+    @SuppressLint("ClickableViewAccessibility")
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
     ): View? {
@@ -123,6 +128,7 @@ class TaskMainFragment : BaseFragment<FragmentTaskMainBinding>(R.layout.fragment
         calendarAdapter.setItem(CalendarDate.setDate(taskDate))
         val snapHelper = LinearSnapHelper()
         snapHelper.attachToRecyclerView(binding.todoDateRecycler)
+
         binding.todoDateRecycler.setHasFixedSize(true)
         binding.todoDateRecycler.scrollToPosition(LocalDate.now().dayOfMonth - 1)
 
@@ -131,10 +137,21 @@ class TaskMainFragment : BaseFragment<FragmentTaskMainBinding>(R.layout.fragment
                 .navigate(R.id.action_taskMainFragment_to_createTaskFragment)
         }
 
+
+        val swipeHelperCallback = SwipeHelperCallback()
+        val itemTouchHelper = ItemTouchHelper(swipeHelperCallback)
+        itemTouchHelper.attachToRecyclerView(binding.todoTaskRecycler)
+        binding.todoTaskRecycler.setOnTouchListener { _, motionEvent ->
+            Log.d("TAG", "onCreateView: $motionEvent")
+            swipeHelperCallback.removePreviousClamp(binding.todoTaskRecycler)
+            false
+        }
+
         todoMainAdapter.setDeleteClickListener(object : TodoListAdapter.OnDeleteClickListener {
             override fun onClick(todoItem: TodoEntity) {
                 todoViewModel.deleteTodo(todoItem)
                 popUpAction.emptySnackBar(binding.navTodoAddButton, "Delete Complete")
+                swipeHelperCallback.removePreviousClamp(binding.todoTaskRecycler)
             }
         })
 
@@ -174,4 +191,5 @@ class TaskMainFragment : BaseFragment<FragmentTaskMainBinding>(R.layout.fragment
         val date = getDate(position)
         todoViewModel.getTaskByDate(date)
     }
+
 }

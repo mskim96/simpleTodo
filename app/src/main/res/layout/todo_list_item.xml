@@ -4,74 +4,117 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
 
-
-    <androidx.constraintlayout.widget.ConstraintLayout
+    <FrameLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
-        <CheckBox
-            android:id="@+id/checkBox"
-            android:layout_width="0dp"
-            android:layout_height="0dp"
-            android:layout_marginEnd="24dp"
-            android:button="@drawable/todo_checkbox_icon_selector"
-            android:buttonTint="@color/font_default"
-            android:gravity="center"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toStartOf="@+id/todoItemTitle"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/todoItemTime"
-            app:layout_constraintVertical_bias="1.0" />
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
 
-        <TextView
-            android:id="@+id/todoItemCategory"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="24dp"
-            android:layout_marginTop="8dp"
-            android:layout_marginBottom="32dp"
-            android:text="Category"
-            android:textSize="14sp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintStart_toStartOf="@+id/todoItemTitle"
-            app:layout_constraintTop_toBottomOf="@+id/todoItemTitle" />
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/taskEditButton"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:background="@color/placeholder"
+                android:drawableStart="@drawable/todo_edit_icon"
+                android:drawableTint="@color/white"
+                android:enabled="false"
+                android:minWidth="48dp"
+                android:paddingHorizontal="24dp"
+                android:src="@drawable/todo_edit_icon"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toStartOf="@+id/taskDeleteButton"
+                app:layout_constraintTop_toTopOf="parent"
+                app:tint="@color/white" />
 
-        <TextView
-            android:id="@+id/todoItemTitle"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:drawableStart="@drawable/todo_progress_dot_icon"
-            android:drawablePadding="8dp"
-            android:ellipsize="end"
-            android:maxLines="1"
-            android:text="Todo Title"
-            android:textColor="@color/font_header"
-            android:textSize="18sp"
-            android:textStyle="bold"
-            app:layout_constraintBottom_toTopOf="@+id/checkBox"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toEndOf="@+id/todoItemTime"
-            app:layout_constraintTop_toTopOf="@+id/todoItemTime"
-            app:layout_constraintWidth_percent="0.6" />
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/taskDeleteButton"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:background="#ff5d75"
+                android:drawableStart="@drawable/todo_delete_icon"
+                android:drawableTint="@color/white"
+                android:enabled="false"
+                android:minWidth="48dp"
+                android:paddingHorizontal="24dp"
+                android:src="@drawable/todo_delete_icon"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
 
-        <TextView
-            android:id="@+id/todoItemTime"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="24dp"
-            android:layout_marginTop="16dp"
-            android:text="17:12"
-            android:textSize="16sp"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
 
-        <View
-            android:layout_width="0dp"
-            android:layout_height="1dp"
-            android:background="@color/placeholder"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="@+id/todoItemTitle" />
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:background="@color/white"
+            android:id="@+id/swipe_view"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
 
-    </androidx.constraintlayout.widget.ConstraintLayout>
+            <CheckBox
+                android:id="@+id/checkBox"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:layout_marginEnd="24dp"
+                android:button="@drawable/todo_checkbox_icon_selector"
+                android:buttonTint="@color/font_default"
+                android:gravity="center"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toStartOf="@+id/todoItemTitle"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/todoItemTime"
+                app:layout_constraintVertical_bias="1.0" />
+
+            <TextView
+                android:id="@+id/todoItemCategory"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="24dp"
+                android:layout_marginTop="8dp"
+                android:layout_marginBottom="32dp"
+                android:text="Category"
+                android:textSize="14sp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="@+id/todoItemTitle"
+                app:layout_constraintTop_toBottomOf="@+id/todoItemTitle" />
+
+            <TextView
+                android:id="@+id/todoItemTitle"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:drawableStart="@drawable/todo_progress_dot_icon"
+                android:drawablePadding="8dp"
+                android:ellipsize="end"
+                android:maxLines="1"
+                android:text="Todo Title"
+                android:textColor="@color/font_header"
+                android:textSize="18sp"
+                android:textStyle="bold"
+                app:layout_constraintBottom_toTopOf="@+id/checkBox"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/todoItemTime"
+                app:layout_constraintTop_toTopOf="@+id/todoItemTime"
+                app:layout_constraintWidth_percent="0.6" />
+
+            <TextView
+                android:id="@+id/todoItemTime"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="24dp"
+                android:layout_marginTop="16dp"
+                android:text="17:12"
+                android:textSize="16sp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <View
+                android:layout_width="0dp"
+                android:layout_height="1dp"
+                android:background="@color/placeholder"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="@+id/todoItemTitle" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </FrameLayout>
 </layout>

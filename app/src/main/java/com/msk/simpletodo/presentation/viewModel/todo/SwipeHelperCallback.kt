@@ -73,6 +73,8 @@ class SwipeHelperCallback :
 
             currentDx = x
             getDefaultUIUtil().onDraw(c, recyclerView, view, x, dY, actionState, isCurrentlyActive)
+            view.animate().translationX(x).setDuration(200).withStartAction {
+            }.start()
         }
     }
 
@@ -81,7 +83,7 @@ class SwipeHelperCallback :
     }
 
     override fun getSwipeEscapeVelocity(defaultValue: Float): Float {
-        return defaultValue * 10
+        return defaultValue * 20
     }
 
     override fun getSwipeThreshold(viewHolder: RecyclerView.ViewHolder): Float {
@@ -92,14 +94,14 @@ class SwipeHelperCallback :
             )
         val editButton =
             viewHolder.binding.taskEditButton
-        if (currentDx <= -clamp / 3.5) {
+        if (currentDx <= -clamp) {
             deleteButton.isEnabled = true
             editButton.isEnabled = true
         } else {
             deleteButton.isEnabled = false
             editButton.isEnabled = false
         }
-        setTag(viewHolder, !isClamped && currentDx <= -clamp / 3.5)
+        setTag(viewHolder, !isClamped && currentDx <= -clamp)
         return 2f
     }
 
@@ -132,14 +134,24 @@ class SwipeHelperCallback :
         } else {
             dX
         }
-
+        Log.d("TAG", "clampViewPositionHorizontal: ${min(max(maxSwipe, x), right)}")
         return min(max(maxSwipe, x), right)
     }
 
     fun removePreviousClamp(recyclerView: RecyclerView) {
         previousPosition?.let {
             val viewHolder = recyclerView.findViewHolderForAdapterPosition(it) ?: return
-            getView(viewHolder).translationX = 0f
+            getView(viewHolder).animate().translationX(0f).setDuration(200).withEndAction {
+                val deleteButton =
+                    (viewHolder as TodoListAdapter.TodoListViewHolder).itemView.findViewById<AppCompatButton>(
+                        R.id.taskDeleteButton
+                    )
+                val editButton =
+                    viewHolder.binding.taskEditButton
+                deleteButton.isEnabled = false
+                editButton.isEnabled = false
+            }.start()
+
             setTag(viewHolder, false)
             previousPosition = null
         }

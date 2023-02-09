@@ -8,9 +8,6 @@
         android:id="@+id/taskMainFragment"
         android:name="com.msk.simpletodo.presentation.view.todo.TaskMainFragment"
         tools:layout="@layout/fragment_task_main">
-        <argument
-            android:name="item"
-            app:argType="com.msk.simpletodo.data.model.todo.TodoEntity" />
         <action
             android:id="@+id/action_taskMainFragment_to_createTaskFragment"
             app:destination="@id/createTaskFragment"
@@ -24,11 +21,7 @@
             app:enterAnim="@anim/enter_from_bottom"
             app:exitAnim="@anim/exit_from_top"
             app:popEnterAnim="@anim/exit_from_bottom"
-            app:popExitAnim="@anim/enter_from_top">
-            <argument
-                android:name="item"
-                app:argType="com.msk.simpletodo.data.model.todo.TodoEntity" />
-        </action>
+            app:popExitAnim="@anim/enter_from_top" />
         <action
             android:id="@+id/action_taskMainFragment_to_movieActivity"
             app:destination="@id/movieActivity" />
@@ -69,7 +62,7 @@
     <fragment
         android:id="@+id/taskCalendarFragment"
         android:name="com.msk.simpletodo.presentation.view.todo.TaskCalendarFragment"
-        android:label="Calendar"
+        android:label="Search Task"
         tools:layout="@layout/fragment_task_calendar">
         <argument
             android:name="todoItem"
@@ -77,6 +70,13 @@
         <action
             android:id="@+id/action_taskCalendarFragment_to_taskMainFragment"
             app:destination="@id/taskMainFragment" />
+        <action
+            android:id="@+id/action_taskCalendarFragment_to_taskEditFragment"
+            app:destination="@id/taskEditFragment"
+            app:enterAnim="@anim/enter_from_bottom"
+            app:exitAnim="@anim/exit_from_top"
+            app:popEnterAnim="@anim/exit_from_bottom"
+            app:popExitAnim="@anim/enter_from_top" />
     </fragment>
     <fragment
         android:id="@+id/taskAuthFragment"

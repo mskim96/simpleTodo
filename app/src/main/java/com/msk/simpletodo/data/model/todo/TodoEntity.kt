@@ -21,6 +21,9 @@ data class TodoEntity(
     @ColumnInfo(name = "todo_created")
     val createdAt: Long = System.currentTimeMillis(),
 
+    @ColumnInfo(name = "todo_updated")
+    val updatedAt: Long = createdAt,
+
     @ColumnInfo(name = "todo_tag")
     val category: String,
 

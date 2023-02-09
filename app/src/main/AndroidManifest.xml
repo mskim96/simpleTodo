@@ -4,6 +4,10 @@
 
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.VIBRATE" />
+    <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
+    <uses-permission android:name="android.permission.SCHEDULE_EXACT_ALARM" />
+    <uses-permission android:name="android.permission.POST_NOTIFICATIONS" />
 
     <application
         android:name=".presentation.di.MainApplication"
@@ -17,6 +21,20 @@
         android:theme="@style/Theme.SimpleTodo"
         android:usesCleartextTraffic="true"
         tools:targetApi="31">
+        <receiver
+            android:name=".service.NotificationReceiver"
+            android:enabled="true"
+            android:exported="true" />
+
+        <service
+            android:name=".service.NotificationService"
+            android:enabled="true"
+            android:exported="false">
+            <intent-filter>
+                <action android:name="com.google.firebase.MESSAGING_EVENT" />
+            </intent-filter>
+        </service>
+
         <activity
             android:name=".presentation.view.auth.onboarding.OnBoardingActivity"
             android:exported="true"
@@ -34,6 +52,7 @@
                     android:host="stdo.page.link"
                     android:scheme="https" />
             </intent-filter>
+
             <meta-data
                 android:name="android.app.lib_name"
                 android:value="" />
@@ -47,6 +66,7 @@
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
+
             <meta-data
                 android:name="android.app.lib_name"
                 android:value="" />
@@ -56,6 +76,12 @@
             android:exported="true"
             android:windowSoftInputMode="adjustResize">
 
+            <!-- <meta-data -->
+            <!-- android:name="firebase_messaging_auto_init_enabled" -->
+            <!-- android:value="false" /> -->
+            <!-- <meta-data -->
+            <!-- android:name="firebase_analytics_collection_enabled" -->
+            <!-- android:value="false" /> -->
             <meta-data
                 android:name="android.app.lib_name"
                 android:value="" />

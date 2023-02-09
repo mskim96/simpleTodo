@@ -1,7 +1,6 @@
 package com.msk.simpletodo.presentation.viewModel.todo
 
 import android.graphics.Canvas
-import android.util.Log
 import android.view.View
 import androidx.appcompat.widget.AppCompatButton
 import androidx.recyclerview.widget.ItemTouchHelper
@@ -134,7 +133,6 @@ class SwipeHelperCallback :
         } else {
             dX
         }
-        Log.d("TAG", "clampViewPositionHorizontal: ${min(max(maxSwipe, x), right)}")
         return min(max(maxSwipe, x), right)
     }
 

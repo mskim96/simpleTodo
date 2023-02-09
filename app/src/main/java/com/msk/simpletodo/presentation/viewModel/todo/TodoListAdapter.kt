@@ -1,9 +1,13 @@
 package com.msk.simpletodo.presentation.viewModel.todo
 
+import android.graphics.Color
+import android.graphics.drawable.Drawable
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.RecyclerView.ViewHolder
+import com.msk.simpletodo.R
 import com.msk.simpletodo.data.model.todo.TodoEntity
 import com.msk.simpletodo.databinding.TodoListItemBinding
 
@@ -47,13 +51,17 @@ class TodoListAdapter :
                 todoItemTitle.text = todoItem.title
 //                todoItemDescription.text = todoItem.description
                 todoItemCategory.text = todoItem.category
-                todoItemTime.text = todoItem.time
                 checkBox.isChecked = todoItem.done
                 taskDeleteButton.setOnClickListener {
                     deleteClickListener.onClick(todoItem)
                 }
                 taskEditButton.setOnClickListener {
                     editClickListener.onClick(todoItem)
+                }
+                if (todoItem.notification) {
+                    todoItemTitle.setCompoundDrawablesWithIntrinsicBounds(R.drawable.todo_progress_dot_icon, 0,0,0)
+                } else {
+                    todoItemTitle.setCompoundDrawablesWithIntrinsicBounds(R.drawable.todo_progress2_dot_icon, 0,0,0)
                 }
 
                 checkBox.setOnClickListener {

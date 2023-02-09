@@ -9,14 +9,19 @@ interface TodoRepository {
         description: String,
         date: String,
         time: String,
-        category: Int
-    )
+        category: Int,
+        notification: Boolean
+    ): Long
 
-    suspend fun deleteTodo(todo: TodoEntity)
+    suspend fun deleteTodo(todo: TodoEntity): Int
 
-    suspend fun editTodo(todo: TodoEntity)
+    suspend fun editTodo(todo: TodoEntity): Int
 
     suspend fun checkTodo(todo: TodoEntity)
 
     suspend fun getTaskByDate(date: String): Flow<List<TodoEntity>>
+
+    fun getTaskByQuery(query: String): Flow<List<TodoEntity>>
+
+    fun getTaskByRecent(): Flow<List<TodoEntity>>
 }

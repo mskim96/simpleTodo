@@ -2,6 +2,7 @@ package com.msk.simpletodo.presentation.view.todo
 
 import android.app.TimePickerDialog
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -22,6 +23,7 @@ import com.msk.simpletodo.presentation.util.KeyboardAction
 import com.msk.simpletodo.presentation.util.PopUpAction
 import com.msk.simpletodo.presentation.util.dateTimeTrim
 import com.msk.simpletodo.presentation.viewModel.todo.TodoViewModel
+import com.msk.simpletodo.service.NotificationFunction
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.delay
 import java.text.DecimalFormat
@@ -42,6 +44,7 @@ class TaskCreateFragment : Fragment() {
     private val todoViewModel by lazy { ViewModelProvider(requireActivity())[TodoViewModel::class.java] }
     private val cal by lazy { Calendar.getInstance() }
     private val taskDate by lazy { TaskDate() }
+    private val notificationFunction by lazy { NotificationFunction(requireContext()) }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
@@ -134,7 +137,18 @@ class TaskCreateFragment : Fragment() {
                 val time = taskTimeSelect.text.toString().dateTimeTrim()
                 val category = taskCategorySpinner.selectedItemPosition
                 val description = taskDescription.text.toString()
-                todoViewModel.createTodo(title, description, date, time, category)
+                val notify = switch1.isChecked
+                todoViewModel.createTodo(
+                    title,
+                    description,
+                    date,
+                    time,
+                    category,
+                    notification = notify
+                )
+                if (notify) {
+                    setNotification(System.currentTimeMillis().toInt(), title, "$date ${time}:00")
+                }
                 this@TaskCreateFragment.findNavController()
                     .navigate(R.id.action_createTaskFragment_to_taskMainFragment)
                 popUpAction.emptySnackBar(it, "Complete!")
@@ -143,8 +157,12 @@ class TaskCreateFragment : Fragment() {
         return binding.root
     }
 
-    override fun onDestroy() {
-        super.onDestroy()
+    fun setNotification(alarmCode: Int, content: String, time: String) {
+        notificationFunction.callNotification(alarmCode, content, time)
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
         _binding = null
     }
 }

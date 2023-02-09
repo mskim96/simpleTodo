@@ -9,6 +9,7 @@ class TodoCreateUseCase @Inject constructor(private val repository: TodoReposito
         description: String,
         date: String,
         time: String,
-        category: Int
-    ) = repository.createTodo(content, description, date, time, category)
+        category: Int,
+        notification: Boolean
+    ) = repository.createTodo(content, description, date, time, category, notification)
 }

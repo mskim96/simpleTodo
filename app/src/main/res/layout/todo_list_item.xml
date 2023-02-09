@@ -46,10 +46,10 @@
         </androidx.constraintlayout.widget.ConstraintLayout>
 
         <androidx.constraintlayout.widget.ConstraintLayout
-            android:background="@color/white"
             android:id="@+id/swipe_view"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:background="@color/white">
 
             <CheckBox
                 android:id="@+id/checkBox"
@@ -82,7 +82,6 @@
                 android:id="@+id/todoItemTitle"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:drawableStart="@drawable/todo_progress_dot_icon"
                 android:drawablePadding="8dp"
                 android:ellipsize="end"
                 android:maxLines="1"

@@ -17,7 +17,7 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:startIconDrawable="@drawable/todo_search_icon"
+            app:startIconDrawable="@drawable/todo_search_icon_unselected"
             app:startIconTint="@color/placeholder">
 
             <com.google.android.material.textfield.TextInputEditText
@@ -72,13 +72,13 @@
             app:layout_constraintVertical_bias="0.0">
 
             <androidx.recyclerview.widget.RecyclerView
-                android:clipToPadding="true"
                 android:id="@+id/movieSearchRecycler"
                 android:layout_width="match_parent"
-                android:paddingBottom="100dp"
                 android:layout_height="match_parent"
                 android:layout_marginHorizontal="8dp"
+                android:clipToPadding="true"
                 android:overScrollMode="never"
+                android:paddingBottom="100dp"
                 app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"

@@ -29,6 +29,7 @@ import com.msk.simpletodo.presentation.viewModel.todo.CalendarAdapter
 import com.msk.simpletodo.presentation.viewModel.todo.SwipeHelperCallback
 import com.msk.simpletodo.presentation.viewModel.todo.TodoListAdapter
 import com.msk.simpletodo.presentation.viewModel.todo.TodoViewModel
+import com.msk.simpletodo.service.NotificationFunction
 import kotlinx.coroutines.flow.collectLatest
 import java.text.SimpleDateFormat
 import java.time.LocalDate
@@ -47,10 +48,13 @@ class TaskMainFragment : BaseFragment<FragmentTaskMainBinding>(R.layout.fragment
     private val popUpAction: PopUpAction by lazy { PopUpAction() }
     private val taskDate by lazy { TaskDate() }
 
+    private val notificationFunction by lazy { NotificationFunction(requireContext()) }
+
     @SuppressLint("ClickableViewAccessibility")
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
     ): View? {
+
         val view = super.onCreateView(inflater, container, savedInstanceState)
         (activity as TodoActivity).setBottomNavigation()
 
@@ -124,6 +128,7 @@ class TaskMainFragment : BaseFragment<FragmentTaskMainBinding>(R.layout.fragment
             }
         }
 
+
         // calendar recycler view setup
         calendarAdapter.setItem(CalendarDate.setDate(taskDate))
         val snapHelper = LinearSnapHelper()
@@ -142,7 +147,6 @@ class TaskMainFragment : BaseFragment<FragmentTaskMainBinding>(R.layout.fragment
         val itemTouchHelper = ItemTouchHelper(swipeHelperCallback)
         itemTouchHelper.attachToRecyclerView(binding.todoTaskRecycler)
         binding.todoTaskRecycler.setOnTouchListener { _, motionEvent ->
-            Log.d("TAG", "onCreateView: $motionEvent")
             swipeHelperCallback.removePreviousClamp(binding.todoTaskRecycler)
             false
         }
@@ -150,6 +154,7 @@ class TaskMainFragment : BaseFragment<FragmentTaskMainBinding>(R.layout.fragment
         todoMainAdapter.setDeleteClickListener(object : TodoListAdapter.OnDeleteClickListener {
             override fun onClick(todoItem: TodoEntity) {
                 todoViewModel.deleteTodo(todoItem)
+                if (todoItem.notification) deleteNotification(todoItem.createdAt.toInt())
                 popUpAction.emptySnackBar(binding.navTodoAddButton, "Delete Complete")
                 swipeHelperCallback.removePreviousClamp(binding.todoTaskRecycler)
             }
@@ -157,8 +162,9 @@ class TaskMainFragment : BaseFragment<FragmentTaskMainBinding>(R.layout.fragment
 
         todoMainAdapter.setEditClickListener(object : TodoListAdapter.OnEditClickListener {
             override fun onClick(todoItem: TodoEntity) {
+                todoViewModel.emitTask(todoItem)
                 val action =
-                    TaskMainFragmentDirections.actionTaskMainFragmentToTaskEditFragment(todoItem)
+                    TaskMainFragmentDirections.actionTaskMainFragmentToTaskEditFragment()
                 this@TaskMainFragment.findNavController().navigate(action)
             }
         })
@@ -192,4 +198,7 @@ class TaskMainFragment : BaseFragment<FragmentTaskMainBinding>(R.layout.fragment
         todoViewModel.getTaskByDate(date)
     }
 
+    fun deleteNotification(alarmCode: Int) {
+        notificationFunction.cancelAlarm(alarmCode)
+    }
 }

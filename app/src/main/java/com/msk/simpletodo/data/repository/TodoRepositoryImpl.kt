@@ -15,8 +15,9 @@ class TodoRepositoryImpl @Inject constructor(private val todoDatasource: TodoDat
         description: String,
         date: String,
         time: String,
-        category: Int
-    ) {
+        category: Int,
+        notification: Boolean
+    ): Long {
         val categoryString = when (category) {
             0 -> "Personal"
             1 -> "Work"
@@ -29,16 +30,17 @@ class TodoRepositoryImpl @Inject constructor(private val todoDatasource: TodoDat
             description = description,
             date = date,
             time = time,
-            category = categoryString
+            category = categoryString,
+            notification = notification
         )
         return todoDatasource.createTodo(todo)
     }
 
-    override suspend fun deleteTodo(todo: TodoEntity) {
+    override suspend fun deleteTodo(todo: TodoEntity): Int {
         return todoDatasource.deleteTodo(todo)
     }
 
-    override suspend fun editTodo(todo: TodoEntity) {
+    override suspend fun editTodo(todo: TodoEntity): Int {
         return todoDatasource.editTodo(todo)
     }
 
@@ -51,4 +53,13 @@ class TodoRepositoryImpl @Inject constructor(private val todoDatasource: TodoDat
         val taskSort = tasks.sortedWith(compareBy { it.time })
         emit(taskSort)
     }
+
+    override fun getTaskByQuery(query: String): Flow<List<TodoEntity>> =
+        todoDatasource.getTaskByQuery(query)
+
+
+    override fun getTaskByRecent(): Flow<List<TodoEntity>> {
+        return todoDatasource.getTaskByRecent()
+    }
+
 }

@@ -16,4 +16,7 @@
     <string name="categoryNameTransition">name %s</string>
 
     <string name="web_client_id">1039287833889-q6hi2thn0lqf27e5j9bjdhbu82ptqnog.apps.googleusercontent.com</string>
+
+    <string name="notify_token" translatable="false">%s</string>
+    <string name="notify_message">$s</string>
 </resources>

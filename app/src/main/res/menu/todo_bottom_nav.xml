@@ -8,8 +8,8 @@
     </item>
     <item
         android:id="@+id/taskCalendarFragment"
-        android:icon="@drawable/todo_calendar_selector"
-        android:title="Calendar" />
+        android:icon="@drawable/todo_search_icon_selector"
+        android:title="Search" />
     <item
         android:id="@+id/taskAuthFragment"
         android:icon="@drawable/todo_user_icon_selector"

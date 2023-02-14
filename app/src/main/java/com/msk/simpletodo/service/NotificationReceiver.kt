@@ -6,6 +6,7 @@ import android.app.PendingIntent
 import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
+import android.util.Log
 import androidx.core.app.NotificationCompat
 import com.msk.simpletodo.R
 import com.msk.simpletodo.presentation.view.todo.TodoActivity
@@ -23,7 +24,7 @@ class NotificationReceiver : BroadcastReceiver() {
     override fun onReceive(context: Context, intent: Intent) {
         manager = context?.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
         val notificationChannel =
-            NotificationChannel(CHANNEL_ID, CHANNEL_NAME, NotificationManager.IMPORTANCE_DEFAULT)
+            NotificationChannel(CHANNEL_ID, CHANNEL_NAME, NotificationManager.IMPORTANCE_HIGH)
         notificationChannel.enableLights(true)
         notificationChannel.enableVibration(true)
         manager.createNotificationChannel(

@@ -293,7 +293,7 @@
                         <option name="myPosition">
                           <Point>
                             <option name="x" value="442" />
-                            <option name="y" value="1080" />
+                            <option name="y" value="724" />
                           </Point>
                         </option>
                       </LayoutPositions>
@@ -305,7 +305,7 @@
                         <option name="myPosition">
                           <Point>
                             <option name="x" value="442" />
-                            <option name="y" value="724" />
+                            <option name="y" value="12" />
                           </Point>
                         </option>
                         <option name="myPositions">
@@ -326,7 +326,7 @@
                         <option name="myPosition">
                           <Point>
                             <option name="x" value="12" />
-                            <option name="y" value="941" />
+                            <option name="y" value="90" />
                           </Point>
                         </option>
                         <option name="myPositions">
@@ -352,7 +352,7 @@
                         <option name="myPosition">
                           <Point>
                             <option name="x" value="442" />
-                            <option name="y" value="12" />
+                            <option name="y" value="1436" />
                           </Point>
                         </option>
                         <option name="myPositions">
@@ -373,7 +373,7 @@
                         <option name="myPosition">
                           <Point>
                             <option name="x" value="227" />
-                            <option name="y" value="983" />
+                            <option name="y" value="68" />
                           </Point>
                         </option>
                         <option name="myPositions">
@@ -403,7 +403,24 @@
                                 <LayoutPositions />
                               </value>
                             </entry>
+                            <entry key="action_taskMainFragment_to_taskSettingFragment2">
+                              <value>
+                                <LayoutPositions />
+                              </value>
+                            </entry>
                           </map>
+                        </option>
+                      </LayoutPositions>
+                    </value>
+                  </entry>
+                  <entry key="taskSettingFragment2">
+                    <value>
+                      <LayoutPositions>
+                        <option name="myPosition">
+                          <Point>
+                            <option name="x" value="442" />
+                            <option name="y" value="1080" />
+                          </Point>
                         </option>
                       </LayoutPositions>
                     </value>

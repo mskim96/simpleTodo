@@ -1,9 +1,11 @@
 package com.msk.simpletodo.presentation.view.auth
 
+import android.content.Intent
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import com.msk.simpletodo.databinding.ActivityAuthBinding
 import com.msk.simpletodo.presentation.view.auth.oauth.LoginWithGoogle
+import com.msk.simpletodo.service.NotificationService
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -17,6 +19,8 @@ class AuthActivity : AppCompatActivity() {
     override fun onStart() {
         super.onStart()
         loginWithGoogle.googleSignInResult()
+        val intent = Intent(this, NotificationService::class.java)
+        startService(intent)
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {

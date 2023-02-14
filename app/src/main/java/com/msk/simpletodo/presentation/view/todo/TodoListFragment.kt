@@ -22,7 +22,6 @@ class TodoListFragment : BaseFragment<FragmentTodoListBinding>(R.layout.fragment
     private val todoViewModel: TodoViewModel by lazy { ViewModelProvider(requireActivity())[TodoViewModel::class.java] }
     private val todoListAdapter: TodoListAdapter by lazy { TodoListAdapter() }
 
-    @RequiresApi(Build.VERSION_CODES.N)
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?,
     ): View? {

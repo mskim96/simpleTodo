@@ -31,6 +31,9 @@
         <action
             android:id="@+id/action_taskMainFragment_to_taskAuthFragment"
             app:destination="@id/taskAuthFragment" />
+        <action
+            android:id="@+id/action_taskMainFragment_to_taskSettingFragment2"
+            app:destination="@id/taskSettingFragment2" />
 
     </fragment>
     <fragment
@@ -92,6 +95,11 @@
         android:name="com.msk.simpletodo.presentation.view.movie.MovieActivity"
         android:label="MovieActivity"
         tools:layout="@layout/fragment_movie_main" />
+    <fragment
+        android:id="@+id/taskSettingFragment2"
+        android:name="com.msk.simpletodo.presentation.view.todo.TaskSettingFragment"
+        android:label="Setting"
+        tools:layout="@layout/fragment_task_setting" />
 </navigation>
 
 

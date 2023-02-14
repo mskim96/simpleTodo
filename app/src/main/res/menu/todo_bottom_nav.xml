@@ -11,7 +11,7 @@
         android:icon="@drawable/todo_search_icon_selector"
         android:title="Search" />
     <item
-        android:id="@+id/taskAuthFragment"
+        android:id="@+id/taskSettingFragment2"
         android:icon="@drawable/todo_user_icon_selector"
         android:title="information" />
 </menu>

@@ -55,13 +55,25 @@ class TodoListAdapter :
                 taskDeleteButton.setOnClickListener {
                     deleteClickListener.onClick(todoItem)
                 }
+                todoItemTime.text = todoItem.time
+                description.text = todoItem.description
                 taskEditButton.setOnClickListener {
                     editClickListener.onClick(todoItem)
                 }
                 if (todoItem.notification) {
-                    todoItemTitle.setCompoundDrawablesWithIntrinsicBounds(R.drawable.todo_progress_dot_icon, 0,0,0)
+                    todoItemTitle.setCompoundDrawablesWithIntrinsicBounds(
+                        R.drawable.todo_progress_dot_icon,
+                        0,
+                        0,
+                        0
+                    )
                 } else {
-                    todoItemTitle.setCompoundDrawablesWithIntrinsicBounds(R.drawable.todo_progress2_dot_icon, 0,0,0)
+                    todoItemTitle.setCompoundDrawablesWithIntrinsicBounds(
+                        R.drawable.todo_progress2_dot_icon,
+                        0,
+                        0,
+                        0
+                    )
                 }
 
                 checkBox.setOnClickListener {

@@ -90,12 +90,11 @@ class TodoViewModel @Inject constructor(
     ) =
         viewModelScope.launch(Dispatchers.IO) {
             // [createTodo] does not update mutableStateFlow because it is not a logic to update that screen
-            val create = todoCreateUseCase.execute(content, description, date, time, category, notification)
+            todoCreateUseCase.execute(content, description, date, time, category, notification)
         }
 
     fun deleteTodo(todo: TodoEntity) = viewModelScope.launch(Dispatchers.IO) {
         val delete = todoDeleteUseCase(todo)
-        Log.d("TAG", "deleteTodo: $delete")
         _taskState.update { it - todo }
     }
 

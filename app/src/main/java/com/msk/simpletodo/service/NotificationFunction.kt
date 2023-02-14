@@ -35,6 +35,7 @@ class NotificationFunction(private val context: Context) {
 
         val calendar = Calendar.getInstance()
         calendar.time = datetime
+        Log.d("TAG", "callNotification: ${calendar.time}")
 
         // calendar timeandMillis 에다가 시간 넣을 것임.
         alarmManager.setExactAndAllowWhileIdle(

@@ -7,7 +7,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
-import androidx.lifecycle.ViewModelProvider
+import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.ui.AppBarConfiguration
@@ -18,33 +18,40 @@ import com.google.android.material.appbar.AppBarLayout
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.ktx.Firebase
 import com.msk.simpletodo.R
-import com.msk.simpletodo.data.model.todo.TodoEntity
+import com.msk.simpletodo.data.model.task.TaskEntity
 import com.msk.simpletodo.databinding.FragmentTaskMainBinding
 import com.msk.simpletodo.domain.model.CalendarDate
 import com.msk.simpletodo.domain.model.TaskDate
+import com.msk.simpletodo.domain.util.formatQuery
 import com.msk.simpletodo.domain.util.getFullDateByString
 import com.msk.simpletodo.presentation.util.PopUpAction
 import com.msk.simpletodo.presentation.view.base.BaseFragment
 import com.msk.simpletodo.presentation.viewModel.todo.CalendarAdapter
 import com.msk.simpletodo.presentation.viewModel.todo.SwipeHelperCallback
 import com.msk.simpletodo.presentation.viewModel.todo.TodoListAdapter
-import com.msk.simpletodo.presentation.viewModel.todo.TodoViewModel
+import com.msk.simpletodo.presentation.viewModel.todo.TaskViewModel
 import com.msk.simpletodo.service.NotificationFunction
 import kotlinx.coroutines.flow.collectLatest
 import java.text.SimpleDateFormat
 import java.time.LocalDate
+import java.time.LocalDateTime
 import java.util.*
-
 
 class TaskMainFragment : BaseFragment<FragmentTaskMainBinding>(R.layout.fragment_task_main) {
 
-    private val todoViewModel: TodoViewModel by lazy { ViewModelProvider(requireActivity())[TodoViewModel::class.java] }
+    private val taskViewModel: TaskViewModel by activityViewModels()
+
     private val calendarAdapter by lazy {
         CalendarAdapter(requireContext()) { p -> getTaskByDate(p) }
     }
     private val todoMainAdapter by lazy { TodoListAdapter() }
-    private val auth by lazy { Firebase.auth }
 
+    private val auth by lazy { Firebase.auth }
+    private val today = LocalDateTime.now()
+
+    /**
+     * TODO modify this classes
+     */
     private val popUpAction: PopUpAction by lazy { PopUpAction() }
     private val taskDate by lazy { TaskDate() }
 
@@ -56,6 +63,8 @@ class TaskMainFragment : BaseFragment<FragmentTaskMainBinding>(R.layout.fragment
     ): View? {
 
         val view = super.onCreateView(inflater, container, savedInstanceState)
+
+        binding.monthname.text = today.formatQuery("MMMM")
         (activity as TodoActivity).setBottomNavigation()
 
         val navigationView = binding.navView
@@ -92,8 +101,6 @@ class TaskMainFragment : BaseFragment<FragmentTaskMainBinding>(R.layout.fragment
             }
         })
 
-        binding.monthname.text = TaskDate().currentDate.month.toString()
-
         val dateChangeListener: (view: View, year: Int, monthOfYear: Int, dayOfMonth: Int) -> Unit =
             { _, year, monthOfYear, dayOfMonth ->
                 val newDate =
@@ -102,7 +109,7 @@ class TaskMainFragment : BaseFragment<FragmentTaskMainBinding>(R.layout.fragment
                 calendarAdapter.setItem(CalendarDate.setDate(newDate))
                 binding.todoDateRecycler.smoothScrollToPosition(newDate.currentDate.dayOfMonth - 1)
                 calendarAdapter.selectedPosition = newDate.currentDate.dayOfMonth - 1
-                todoViewModel.getTaskByDate(newDate.currentDate.getFullDateByString())
+                taskViewModel.getTaskByDate(newDate.currentDate.getFullDateByString())
             }
 
         binding.calendar.setOnDateChangedListener(dateChangeListener)
@@ -112,7 +119,7 @@ class TaskMainFragment : BaseFragment<FragmentTaskMainBinding>(R.layout.fragment
             calendarAdapter.setItem(CalendarDate.setDate(taskDate))
             binding.todoDateRecycler.smoothScrollToPosition(taskDate.currentDate.dayOfMonth - 1)
             calendarAdapter.selectedPosition = taskDate.currentDate.dayOfMonth - 1
-            todoViewModel.getTaskByDate(taskDate.currentDate.getFullDateByString())
+            taskViewModel.getTaskByDate(taskDate.currentDate.getFullDateByString())
             binding.calendar.init(
                 taskDate.currentDate.year,
                 taskDate.currentDate.monthValue,
@@ -122,8 +129,8 @@ class TaskMainFragment : BaseFragment<FragmentTaskMainBinding>(R.layout.fragment
         }
 
         lifecycleScope.launchWhenStarted {
-            todoViewModel.getTaskByDate(taskDate.currentDate.getFullDateByString())
-            todoViewModel.taskState.collectLatest {
+            taskViewModel.getTaskByDate(taskDate.currentDate.getFullDateByString())
+            taskViewModel.taskState.collectLatest {
                 todoMainAdapter.setItem(it)
             }
         }
@@ -146,14 +153,17 @@ class TaskMainFragment : BaseFragment<FragmentTaskMainBinding>(R.layout.fragment
         val swipeHelperCallback = SwipeHelperCallback()
         val itemTouchHelper = ItemTouchHelper(swipeHelperCallback)
         itemTouchHelper.attachToRecyclerView(binding.todoTaskRecycler)
-        binding.todoTaskRecycler.setOnTouchListener { _, motionEvent ->
+        binding.todoTaskRecycler.setOnTouchListener { _, _ ->
             swipeHelperCallback.removePreviousClamp(binding.todoTaskRecycler)
             false
         }
 
+        /**
+         * Recycler view click listener
+         */
         todoMainAdapter.setDeleteClickListener(object : TodoListAdapter.OnDeleteClickListener {
-            override fun onClick(todoItem: TodoEntity) {
-                todoViewModel.deleteTodo(todoItem)
+            override fun onClick(todoItem: TaskEntity) {
+                taskViewModel.deleteTodo(todoItem)
                 if (todoItem.notification) deleteNotification(todoItem.createdAt.toInt())
                 popUpAction.emptySnackBar(binding.navTodoAddButton, "Delete Complete")
                 swipeHelperCallback.removePreviousClamp(binding.todoTaskRecycler)
@@ -161,8 +171,8 @@ class TaskMainFragment : BaseFragment<FragmentTaskMainBinding>(R.layout.fragment
         })
 
         todoMainAdapter.setEditClickListener(object : TodoListAdapter.OnEditClickListener {
-            override fun onClick(todoItem: TodoEntity) {
-                todoViewModel.emitTask(todoItem)
+            override fun onClick(todoItem: TaskEntity) {
+                taskViewModel.emitTask(todoItem)
                 val action =
                     TaskMainFragmentDirections.actionTaskMainFragmentToTaskEditFragment()
                 this@TaskMainFragment.findNavController().navigate(action)
@@ -170,8 +180,8 @@ class TaskMainFragment : BaseFragment<FragmentTaskMainBinding>(R.layout.fragment
         })
 
         todoMainAdapter.setCheckClickListener(object : TodoListAdapter.OnCheckClickListener {
-            override fun onClick(todoItem: TodoEntity) {
-                todoViewModel.checkTodo(todoItem)
+            override fun onClick(todoItem: TaskEntity) {
+                taskViewModel.checkTodo(todoItem)
             }
         })
 
@@ -180,7 +190,7 @@ class TaskMainFragment : BaseFragment<FragmentTaskMainBinding>(R.layout.fragment
             todoDateRecycler.adapter = calendarAdapter
             todoTaskRecycler.adapter = todoMainAdapter
             // binding vm, ad
-            vm = todoViewModel
+            vm = taskViewModel
         }
         return view
     }
@@ -190,15 +200,22 @@ class TaskMainFragment : BaseFragment<FragmentTaskMainBinding>(R.layout.fragment
         val today = cal.get(Calendar.DAY_OF_MONTH)
         var amount = current - today
         cal.add(Calendar.DATE, amount)
+        Log.d(TAG, "today: $today")
+        Log.d(TAG, "amount: $amount")
+        Log.d(TAG, "getDate: ${cal.add(Calendar.DATE, amount)}")
         return SimpleDateFormat("yyyy/MM/dd", Locale("en", "ja")).format(cal.time)
     }
 
     fun getTaskByDate(position: Int) {
         val date = getDate(position)
-        todoViewModel.getTaskByDate(date)
+        taskViewModel.getTaskByDate(date)
     }
 
     fun deleteNotification(alarmCode: Int) {
         notificationFunction.cancelAlarm(alarmCode)
+    }
+
+    companion object {
+        const val TAG = "TaskMainFragment"
     }
 }

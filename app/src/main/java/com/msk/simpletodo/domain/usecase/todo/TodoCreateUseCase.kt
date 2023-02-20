@@ -1,9 +1,9 @@
 package com.msk.simpletodo.domain.usecase.todo
 
-import com.msk.simpletodo.domain.repository.TodoRepository
+import com.msk.simpletodo.domain.repository.TaskRepository
 import javax.inject.Inject
 
-class TodoCreateUseCase @Inject constructor(private val repository: TodoRepository) {
+class TodoCreateUseCase @Inject constructor(private val repository: TaskRepository) {
     suspend fun execute(
         content: String,
         description: String,
@@ -11,5 +11,5 @@ class TodoCreateUseCase @Inject constructor(private val repository: TodoReposito
         time: String,
         category: Int,
         notification: Boolean
-    ) = repository.createTodo(content, description, date, time, category, notification)
+    ) = repository.getTaskByRecent()
 }

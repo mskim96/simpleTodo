@@ -15,14 +15,14 @@ import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.setupWithNavController
 import com.google.android.material.appbar.AppBarLayout
 import com.msk.simpletodo.R
-import com.msk.simpletodo.data.model.todo.TodoEntity
+import com.msk.simpletodo.data.model.task.TaskEntity
 import com.msk.simpletodo.databinding.FragmentTaskEditBinding
 import com.msk.simpletodo.domain.model.TaskDate
 import com.msk.simpletodo.domain.util.getFullDateByString
 import com.msk.simpletodo.presentation.util.KeyboardAction
 import com.msk.simpletodo.presentation.util.PopUpAction
 import com.msk.simpletodo.presentation.util.dateTimeTrim
-import com.msk.simpletodo.presentation.viewModel.todo.TodoViewModel
+import com.msk.simpletodo.presentation.viewModel.todo.TaskViewModel
 import com.msk.simpletodo.service.NotificationFunction
 import kotlinx.coroutines.flow.collectLatest
 import java.text.DecimalFormat
@@ -37,11 +37,11 @@ class TaskEditFragment : Fragment() {
 
     private lateinit var keyBoardAction: KeyboardAction
     private val cal by lazy { Calendar.getInstance() }
-    private val todoViewModel by lazy { ViewModelProvider(requireActivity())[TodoViewModel::class.java] }
+    private val taskViewModel by lazy { ViewModelProvider(requireActivity())[TaskViewModel::class.java] }
     private val popUpAction: PopUpAction by lazy { PopUpAction() }
 
     private val taskDate by lazy { TaskDate() }
-    private lateinit var todoEntity: TodoEntity
+    private lateinit var taskEntity: TaskEntity
 
     private val notificationFunction by lazy { NotificationFunction(requireContext()) }
 
@@ -53,13 +53,13 @@ class TaskEditFragment : Fragment() {
         val categoryList = resources.getStringArray(R.array.category_array)
 
         lifecycleScope.launchWhenStarted {
-            todoViewModel.taskDetail.collectLatest {
-                todoEntity = it
+            taskViewModel.taskDetail.collectLatest {
+                taskEntity = it
                 with(binding) {
                     taskTitle.setText(it.title, TextView.BufferType.EDITABLE)
                     taskDescription.setText(it.description, TextView.BufferType.EDITABLE)
-                    taskDateSelect.text = it.date
-                    taskTimeSelect.text = it.time
+//                    taskDateSelect.text = it.date
+//                    taskTimeSelect.text = it.time
                     taskCategorySpinner.setSelection(categoryList.indexOf(it.category))
                     switch1.isChecked = it.notification
                 }
@@ -152,21 +152,21 @@ class TaskEditFragment : Fragment() {
                     else -> throw IllegalArgumentException("Can't have category")
                 }
                 val notify = switch1.isChecked
-                val editTodoEntity = todoEntity.copy(
+                val editTodoEntity = taskEntity.copy(
                     title = title,
                     description = description,
-                    date = date,
-                    time = time,
+//                    date = date,
+//                    time = time,
                     category = categoryString,
                     updatedAt = System.currentTimeMillis(),
                     notification = notify
                 )
                 if (notify) {
-                    setNotification(todoEntity.createdAt.toInt(), title, "$date ${time}:00")
+                    setNotification(taskEntity.createdAt.toInt(), title, "$date ${time}:00")
                 } else {
-                    deleteNotification(todoEntity.createdAt.toInt())
+                    deleteNotification(taskEntity.createdAt.toInt())
                 }
-                todoViewModel.editTodo(editTodoEntity)
+                taskViewModel.editTodo(editTodoEntity)
                 this@TaskEditFragment.findNavController()
                     .navigate(R.id.action_taskEditFragment_to_taskMainFragment)
                 popUpAction.emptySnackBar(it, "Edit Complete!")

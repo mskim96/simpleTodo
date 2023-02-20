@@ -1,25 +1,23 @@
 package com.msk.simpletodo.presentation.view.todo
 
-import android.os.Build
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.annotation.RequiresApi
 import androidx.core.content.ContextCompat
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.DividerItemDecoration
 import com.msk.simpletodo.R
-import com.msk.simpletodo.data.model.todo.TodoEntity
+import com.msk.simpletodo.data.model.task.TaskEntity
 import com.msk.simpletodo.databinding.FragmentTodoListBinding
 import com.msk.simpletodo.presentation.view.base.BaseFragment
 import com.msk.simpletodo.presentation.viewModel.todo.TodoListAdapter
-import com.msk.simpletodo.presentation.viewModel.todo.TodoViewModel
+import com.msk.simpletodo.presentation.viewModel.todo.TaskViewModel
 
 class TodoListFragment : BaseFragment<FragmentTodoListBinding>(R.layout.fragment_todo_list) {
 
-    private val todoViewModel: TodoViewModel by lazy { ViewModelProvider(requireActivity())[TodoViewModel::class.java] }
+    private val taskViewModel: TaskViewModel by lazy { ViewModelProvider(requireActivity())[TaskViewModel::class.java] }
     private val todoListAdapter: TodoListAdapter by lazy { TodoListAdapter() }
 
     override fun onCreateView(
@@ -34,7 +32,7 @@ class TodoListFragment : BaseFragment<FragmentTodoListBinding>(R.layout.fragment
 
         lifecycleScope.launchWhenStarted {
             // call categoryWithId function with args position
-            todoViewModel.getTodoByCategoryId((position!!.toLong() + 1L))
+            taskViewModel.getTodoByCategoryId((position!!.toLong() + 1L))
 //            todoViewModel.todoWithCategoryById.collectLatest { data ->
 //                data?.let {
 //                    val id = // set drawableIcon, adapter, result
@@ -76,12 +74,12 @@ class TodoListFragment : BaseFragment<FragmentTodoListBinding>(R.layout.fragment
     /**
      * method from viewModel
      */
-    fun deleteTodo(todo: TodoEntity) {
-        todoViewModel.deleteTodo(todo)
+    fun deleteTodo(todo: TaskEntity) {
+        taskViewModel.deleteTodo(todo)
     }
 
-    fun checkTodo(todo: TodoEntity) {
-        todoViewModel.checkTodo(todo)
+    fun checkTodo(todo: TaskEntity) {
+        taskViewModel.checkTodo(todo)
     }
 }
 

@@ -2,7 +2,6 @@ package com.msk.simpletodo.presentation.view.todo
 
 import android.app.TimePickerDialog
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -22,7 +21,7 @@ import com.msk.simpletodo.domain.util.getTimeByString
 import com.msk.simpletodo.presentation.util.KeyboardAction
 import com.msk.simpletodo.presentation.util.PopUpAction
 import com.msk.simpletodo.presentation.util.dateTimeTrim
-import com.msk.simpletodo.presentation.viewModel.todo.TodoViewModel
+import com.msk.simpletodo.presentation.viewModel.todo.TaskViewModel
 import com.msk.simpletodo.service.NotificationFunction
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.delay
@@ -41,7 +40,7 @@ class TaskCreateFragment : Fragment() {
     private lateinit var keyBoardAction: KeyboardAction
     private val popUpAction: PopUpAction by lazy { PopUpAction() }
 
-    private val todoViewModel by lazy { ViewModelProvider(requireActivity())[TodoViewModel::class.java] }
+    private val taskViewModel by lazy { ViewModelProvider(requireActivity())[TaskViewModel::class.java] }
     private val cal by lazy { Calendar.getInstance() }
     private val taskDate by lazy { TaskDate() }
     private val notificationFunction by lazy { NotificationFunction(requireContext()) }
@@ -138,7 +137,7 @@ class TaskCreateFragment : Fragment() {
                 val category = taskCategorySpinner.selectedItemPosition
                 val description = taskDescription.text.toString()
                 val notify = switch1.isChecked
-                todoViewModel.createTodo(
+                taskViewModel.createTodo(
                     title,
                     description,
                     date,

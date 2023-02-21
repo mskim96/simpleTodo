@@ -3,7 +3,8 @@ package com.msk.simpletodo.presentation.viewModel.todo
 import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.msk.simpletodo.data.model.todo.TodoEntity
+import com.msk.simpletodo.data.model.task.TaskEntity
+import com.msk.simpletodo.domain.repository.TaskRepository
 import com.msk.simpletodo.domain.usecase.todo.*
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
@@ -12,33 +13,35 @@ import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
+import java.time.LocalDateTime
 import javax.inject.Inject
 
 @HiltViewModel
-class TodoViewModel @Inject constructor(
+class TaskViewModel @Inject constructor(
     private val todoCreateUseCase: TodoCreateUseCase,
     private val todoEditUseCase: TodoEditUseCase,
     private val todoDeleteUseCase: TodoDeleteUseCase,
     private val todoCheckUseCase: TodoCheckUseCase,
     private val taskByDateUseCase: TaskByDateUseCase,
     private val taskUseCase: TaskUseCase,
+    private val taskRepository: TaskRepository
 ) :
     ViewModel() {
 
 
-    private val _taskState: MutableStateFlow<List<TodoEntity>> =
+    private val _taskState: MutableStateFlow<List<TaskEntity>> =
         MutableStateFlow(listOf())
     val taskState = _taskState.asStateFlow()
 
-    private val _taskRecentState: MutableStateFlow<List<TodoEntity>> =
+    private val _taskRecentState: MutableStateFlow<List<TaskEntity>> =
         MutableStateFlow(listOf())
     val taskRecentState = _taskRecentState.asStateFlow()
 
-    private val _taskDetail: MutableStateFlow<TodoEntity> =
-        MutableStateFlow(TodoEntity(0, "", "", 0, 0, "", "", ""))
-    val taskDetail = _taskDetail.asStateFlow()
+//    private val _taskDetail: MutableStateFlow<TaskEntity> =
+//        MutableStateFlow(TaskEntity(0, "", "", 0, 0, "", LocalDateTime.now(), false))
+//    val taskDetail = _taskDetail.asStateFlow()
 
-    private val _taskSearchState: MutableStateFlow<List<TodoEntity>> =
+    private val _taskSearchState: MutableStateFlow<List<TaskEntity>> =
         MutableStateFlow(listOf())
     val taskSearchState = _taskSearchState.asStateFlow()
 
@@ -93,25 +96,23 @@ class TodoViewModel @Inject constructor(
             todoCreateUseCase.execute(content, description, date, time, category, notification)
         }
 
-    fun deleteTodo(todo: TodoEntity) = viewModelScope.launch(Dispatchers.IO) {
+    fun deleteTodo(todo: TaskEntity) = viewModelScope.launch(Dispatchers.IO) {
         val delete = todoDeleteUseCase(todo)
         _taskState.update { it - todo }
     }
 
-    fun editTodo(todo: TodoEntity) = viewModelScope.launch(Dispatchers.IO) {
+    fun editTodo(todo: TaskEntity) = viewModelScope.launch(Dispatchers.IO) {
         val edit = todoEditUseCase(todo)
         Log.d("TAG", "editTodo: $edit")
         _taskState.update { it }
     }
 
-    fun checkTodo(todo: TodoEntity) = viewModelScope.launch(Dispatchers.IO) {
+    fun checkTodo(todo: TaskEntity) = viewModelScope.launch(Dispatchers.IO) {
         todoCheckUseCase(todo)
         _taskState.update { it }
     }
 
-    fun emitTask(todo: TodoEntity) = viewModelScope.launch(Dispatchers.IO) {
-        _taskDetail.emit(todo)
+    fun emitTask(todo: TaskEntity) = viewModelScope.launch(Dispatchers.IO) {
+//        _taskDetail.emit(todo)
     }
-
-
 }

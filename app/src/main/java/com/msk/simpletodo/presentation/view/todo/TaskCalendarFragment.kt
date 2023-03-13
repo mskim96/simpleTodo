@@ -17,13 +17,13 @@ import androidx.recyclerview.widget.ItemTouchHelper
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.ktx.Firebase
 import com.msk.simpletodo.R
-import com.msk.simpletodo.data.model.todo.TodoEntity
+import com.msk.simpletodo.data.model.task.TaskEntity
 import com.msk.simpletodo.databinding.FragmentTaskCalendarBinding
 import com.msk.simpletodo.presentation.util.PopUpAction
 import com.msk.simpletodo.presentation.viewModel.todo.SwipeHelperCallback
 import com.msk.simpletodo.presentation.viewModel.todo.TaskRecentAdapter
 import com.msk.simpletodo.presentation.viewModel.todo.TodoListAdapter
-import com.msk.simpletodo.presentation.viewModel.todo.TodoViewModel
+import com.msk.simpletodo.presentation.viewModel.todo.TaskViewModel
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 
@@ -34,7 +34,7 @@ class TaskCalendarFragment : Fragment() {
 
     private val popUpAction: PopUpAction by lazy { PopUpAction() }
 
-    private val todoViewModel by lazy { ViewModelProvider(requireActivity())[TodoViewModel::class.java] }
+    private val taskViewModel by lazy { ViewModelProvider(requireActivity())[TaskViewModel::class.java] }
     private val todoMainAdapter by lazy { TodoListAdapter() }
     private val taskRecentAdapter by lazy {
         TaskRecentAdapter(
@@ -74,7 +74,7 @@ class TaskCalendarFragment : Fragment() {
                 binding.constraintLayout3.visibility = View.VISIBLE
             } else {
                 lifecycleScope.launch {
-                    todoViewModel.getTaskByQuery(it.toString())
+                    taskViewModel.getTaskByQuery(it.toString())
                 }
                 binding.textClearButton.visibility = View.VISIBLE
                 binding.constraintLayout3.visibility = View.GONE
@@ -86,10 +86,10 @@ class TaskCalendarFragment : Fragment() {
          * and set Recyclerview when launch start
          */
         lifecycleScope.launchWhenStarted {
-            todoViewModel.getTaskByRecent()
+            taskViewModel.getTaskByRecent()
 
             launch {
-                todoViewModel.taskRecentState.collectLatest {
+                taskViewModel.taskRecentState.collectLatest {
                     if (it.isNotEmpty()) {
                         binding.constraintLayout3.isVisible = true
                         taskRecentAdapter.setItem(it)
@@ -99,7 +99,7 @@ class TaskCalendarFragment : Fragment() {
             }
 
             launch {
-                todoViewModel.taskSearchState.collectLatest {
+                taskViewModel.taskSearchState.collectLatest {
                     todoMainAdapter.setItem(it)
                 }
             }
@@ -111,21 +111,21 @@ class TaskCalendarFragment : Fragment() {
          * with interface method (listener)
          */
         todoMainAdapter.setDeleteClickListener(object : TodoListAdapter.OnDeleteClickListener {
-            override fun onClick(todoItem: TodoEntity) {
-                todoViewModel.deleteTodo(todoItem)
+            override fun onClick(todoItem: TaskEntity) {
+                taskViewModel.deleteTodo(todoItem)
                 popUpAction.emptySnackBar(binding.textView20, "Delete Complete")
             }
         })
 
         todoMainAdapter.setEditClickListener(object : TodoListAdapter.OnEditClickListener {
-            override fun onClick(todoItem: TodoEntity) {
+            override fun onClick(todoItem: TaskEntity) {
                 popUpAction.emptySnackBar(binding.textView20, "Can't edit task on Calendar page")
             }
         })
 
         todoMainAdapter.setCheckClickListener(object : TodoListAdapter.OnCheckClickListener {
-            override fun onClick(todoItem: TodoEntity) {
-                todoViewModel.checkTodo(todoItem)
+            override fun onClick(todoItem: TaskEntity) {
+                taskViewModel.checkTodo(todoItem)
             }
         })
 
@@ -148,14 +148,14 @@ class TaskCalendarFragment : Fragment() {
         _binding = null
     }
 
-    private fun editTask(task: TodoEntity) {
-        todoViewModel.emitTask(task)
+    private fun editTask(task: TaskEntity) {
+        taskViewModel.emitTask(task)
         val action =
             TaskCalendarFragmentDirections.actionTaskCalendarFragmentToTaskEditFragment()
         this@TaskCalendarFragment.findNavController().navigate(action)
     }
 
-    private fun deleteTask(task: TodoEntity) {
-        todoViewModel.deleteTodo(task)
+    private fun deleteTask(task: TaskEntity) {
+        taskViewModel.deleteTodo(task)
     }
 }

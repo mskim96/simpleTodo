@@ -1,9 +1,9 @@
 package com.msk.simpletodo.domain.usecase.todo
 
-import com.msk.simpletodo.data.model.todo.TodoEntity
-import com.msk.simpletodo.domain.repository.TodoRepository
+import com.msk.simpletodo.data.model.task.TaskEntity
+import com.msk.simpletodo.domain.repository.TaskRepository
 import javax.inject.Inject
 
-class TodoCheckUseCase @Inject constructor(private val repository: TodoRepository) {
-    suspend operator fun invoke(todo: TodoEntity) = repository.checkTodo(todo)
+class TodoCheckUseCase @Inject constructor(private val repository: TaskRepository) {
+    suspend operator fun invoke(todo: TaskEntity) = repository.checkTodo(todo)
 }

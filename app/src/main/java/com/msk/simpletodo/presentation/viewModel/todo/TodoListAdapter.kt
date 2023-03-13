@@ -1,35 +1,32 @@
 package com.msk.simpletodo.presentation.viewModel.todo
 
-import android.graphics.Color
-import android.graphics.drawable.Drawable
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.RecyclerView.ViewHolder
 import com.msk.simpletodo.R
-import com.msk.simpletodo.data.model.todo.TodoEntity
+import com.msk.simpletodo.data.model.task.TaskEntity
 import com.msk.simpletodo.databinding.TodoListItemBinding
 
 class TodoListAdapter :
     RecyclerView.Adapter<TodoListAdapter.TodoListViewHolder>() {
 
-    private var todoList = listOf<TodoEntity>()
+    private var todoList = listOf<TaskEntity>()
     private lateinit var editClickListener: OnEditClickListener
     private lateinit var deleteClickListener: OnDeleteClickListener
     private lateinit var checkClickListener: OnCheckClickListener
 
 
     interface OnDeleteClickListener {
-        fun onClick(todoItem: TodoEntity)
+        fun onClick(todoItem: TaskEntity)
     }
 
     interface OnCheckClickListener {
-        fun onClick(todoItem: TodoEntity)
+        fun onClick(todoItem: TaskEntity)
     }
 
     interface OnEditClickListener {
-        fun onClick(todoItem: TodoEntity)
+        fun onClick(todoItem: TaskEntity)
     }
 
     fun setDeleteClickListener(itemClickListener: OnDeleteClickListener) {
@@ -46,7 +43,7 @@ class TodoListAdapter :
 
     inner class TodoListViewHolder(val binding: TodoListItemBinding) :
         ViewHolder(binding.root) {
-        fun bind(todoItem: TodoEntity) {
+        fun bind(todoItem: TaskEntity) {
             binding.apply {
                 todoItemTitle.text = todoItem.title
 //                todoItemDescription.text = todoItem.description
@@ -55,7 +52,7 @@ class TodoListAdapter :
                 taskDeleteButton.setOnClickListener {
                     deleteClickListener.onClick(todoItem)
                 }
-                todoItemTime.text = todoItem.time
+//                todoItemTime.text = todoItem.time
                 description.text = todoItem.description
                 taskEditButton.setOnClickListener {
                     editClickListener.onClick(todoItem)
@@ -106,7 +103,7 @@ class TodoListAdapter :
         return position
     }
 
-    fun setItem(data: List<TodoEntity>) {
+    fun setItem(data: List<TaskEntity>) {
         todoList = data
         notifyDataSetChanged()
     }

@@ -9,7 +9,7 @@
 
         <variable
             name="vm"
-            type="com.msk.simpletodo.presentation.viewModel.todo.TodoViewModel" />
+            type="com.msk.simpletodo.presentation.viewModel.todo.TaskViewModel" />
     </data>
 
     <androidx.drawerlayout.widget.DrawerLayout

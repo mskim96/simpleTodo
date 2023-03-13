@@ -289,14 +289,13 @@ class EditProfileFragment :
      * Create cursor.
      */
     private fun createCursor(fileType: FileType, uri: Uri): Cursor? {
-        val id = DocumentsContract.getDocumentId(uri).split(":".toRegex())
-            .dropLastWhile { it.isEmpty() }
-            .toTypedArray()[1]
-        val columns = arrayOf(MediaStore.Files.FileColumns.DATA)
-        val selection = MediaStore.Files.FileColumns._ID + " = " + id
-
         return when (fileType) {
             FileType.GET_PICTURE -> {
+                val id = DocumentsContract.getDocumentId(uri).split(":".toRegex())
+                    .dropLastWhile { it.isEmpty() }
+                    .toTypedArray()[1]
+                val columns = arrayOf(MediaStore.Files.FileColumns.DATA)
+                val selection = MediaStore.Files.FileColumns._ID + " = " + id
                 requireActivity()
                     .contentResolver
                     .query(

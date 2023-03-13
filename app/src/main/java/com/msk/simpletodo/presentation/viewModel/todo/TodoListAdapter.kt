@@ -48,7 +48,7 @@ class TodoListAdapter :
                 todoItemTitle.text = todoItem.title
 //                todoItemDescription.text = todoItem.description
                 todoItemCategory.text = todoItem.category
-                checkBox.isChecked = todoItem.done
+                checkBox.isChecked = todoItem.isComplete
                 taskDeleteButton.setOnClickListener {
                     deleteClickListener.onClick(todoItem)
                 }
@@ -74,8 +74,8 @@ class TodoListAdapter :
                 }
 
                 checkBox.setOnClickListener {
-                    if (!checkBox.isChecked) checkClickListener.onClick(todoItem.copy(done = false))
-                    else checkClickListener.onClick(todoItem.copy(done = true))
+                    if (!checkBox.isChecked) checkClickListener.onClick(todoItem.copy(isComplete = false))
+                    else checkClickListener.onClick(todoItem.copy(isComplete = true))
                 }
             }
         }

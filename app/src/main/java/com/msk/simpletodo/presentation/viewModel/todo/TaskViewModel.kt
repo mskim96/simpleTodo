@@ -38,9 +38,21 @@ class TaskViewModel @Inject constructor(
         MutableStateFlow(listOf())
     val taskRecentState = _taskRecentState.asStateFlow()
 
-//    private val _taskDetail: MutableStateFlow<TaskEntity> =
-//        MutableStateFlow(TaskEntity(0, "", "", 0, 0, "", LocalDateTime.now(), false))
-//    val taskDetail = _taskDetail.asStateFlow()
+    private val _taskDetail: MutableStateFlow<TaskEntity> =
+        MutableStateFlow(
+            TaskEntity(
+                0,
+                "",
+                "",
+                "",
+                LocalDateTime.now(),
+                false,
+                0L,
+                0L,
+                false
+            )
+        )
+    val taskDetail = _taskDetail.asStateFlow()
 
     private val _taskSearchState: MutableStateFlow<List<TaskEntity>> =
         MutableStateFlow(listOf())
@@ -119,7 +131,6 @@ class TaskViewModel @Inject constructor(
     fun emitTask(todo: TaskEntity) = viewModelScope.launch(Dispatchers.IO) {
 //        _taskDetail.emit(todo)
     }
-<<<<<<< HEAD:app/src/main/java/com/msk/simpletodo/presentation/viewModel/todo/TodoViewModel.kt
 
     fun startTimer() = viewModelScope.launch {
         while (_recordTimeLimit.value != 30) {
@@ -132,6 +143,4 @@ class TaskViewModel @Inject constructor(
     fun initTimer() = viewModelScope.launch {
         _recordTimeLimit.value = 0
     }
-=======
->>>>>>> origin/main:app/src/main/java/com/msk/simpletodo/presentation/viewModel/todo/TaskViewModel.kt
 }

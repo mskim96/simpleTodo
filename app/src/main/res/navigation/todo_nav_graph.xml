@@ -67,9 +67,6 @@
         android:name="com.msk.simpletodo.presentation.view.todo.TaskCalendarFragment"
         android:label="Search Task"
         tools:layout="@layout/fragment_task_calendar">
-        <argument
-            android:name="todoItem"
-            app:argType="com.msk.simpletodo.data.model.task.TaskEntity" />
         <action
             android:id="@+id/action_taskCalendarFragment_to_taskMainFragment"
             app:destination="@id/taskMainFragment" />

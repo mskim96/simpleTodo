@@ -33,7 +33,7 @@ interface TaskDao {
     @Query("SELECT * FROM tasks WHERE tid = :taskId")
     suspend fun getTaskById(taskId: Long): TaskEntity?
 
-    @Query("SELECT * FROM todo_table WHERE task_date_time Like :date")
+    @Query("SELECT * FROM tasks WHERE date Like :date")
     suspend fun getTaskByDate(date: LocalDateTime): List<TaskEntity>
 
     @Query("SELECT * FROM tasks WHERE title LIKE :query")

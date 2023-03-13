@@ -7,6 +7,7 @@ import com.msk.simpletodo.data.model.todo.TodoEntity
 import com.msk.simpletodo.domain.usecase.todo.*
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.collectLatest
@@ -41,6 +42,9 @@ class TodoViewModel @Inject constructor(
     private val _taskSearchState: MutableStateFlow<List<TodoEntity>> =
         MutableStateFlow(listOf())
     val taskSearchState = _taskSearchState.asStateFlow()
+
+    private val _recordTimeLimit: MutableStateFlow<Int> = MutableStateFlow(0)
+    val recordTimeLimit = _recordTimeLimit.asStateFlow()
 
     /**
      * Get Data from local Database
@@ -113,5 +117,15 @@ class TodoViewModel @Inject constructor(
         _taskDetail.emit(todo)
     }
 
+    fun startTimer() = viewModelScope.launch {
+        while (_recordTimeLimit.value != 30) {
+            delay(1000L)
+            _recordTimeLimit.value += 1
+            Log.d("TAG", "startTimer: ${_recordTimeLimit.value}")
+        }
+    }
 
+    fun initTimer() = viewModelScope.launch {
+        _recordTimeLimit.value = 0
+    }
 }

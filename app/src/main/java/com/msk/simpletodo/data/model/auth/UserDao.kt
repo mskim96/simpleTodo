@@ -1,18 +1,16 @@
 package com.msk.simpletodo.data.model.auth
 
-import androidx.room.Dao
-import androidx.room.Insert
-import androidx.room.OnConflictStrategy
-import androidx.room.Query
+import androidx.room.*
+import kotlinx.coroutines.flow.Flow
 
 @Dao
 interface UserDao {
-    @Query("SELECT * FROM user_information_table")
-    fun getAllUser(): List<UserEntity>
-
-    @Query("SELECT * FROM user_information_table WHERE user_email =:email")
-    fun getUserByEmail(email: String): UserEntity
+    @Query("SELECT * FROM User WHERE uid =:id")
+    suspend fun getUserById(id: String): UserLocal?
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    fun createAccount(user: UserEntity): Long
+    suspend fun createAccount(user: UserLocal)
+
+    @Update
+    suspend fun updateUser(user: UserLocal)
 }

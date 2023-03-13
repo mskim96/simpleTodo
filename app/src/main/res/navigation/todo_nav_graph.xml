@@ -32,8 +32,8 @@
             android:id="@+id/action_taskMainFragment_to_taskAuthFragment"
             app:destination="@id/taskAuthFragment" />
         <action
-            android:id="@+id/action_taskMainFragment_to_taskSettingFragment2"
-            app:destination="@id/taskSettingFragment2" />
+            android:id="@+id/action_taskMainFragment_to_taskSettingFragment"
+            app:destination="@id/taskSettingFragment" />
 
     </fragment>
     <fragment
@@ -96,10 +96,28 @@
         android:label="MovieActivity"
         tools:layout="@layout/fragment_movie_main" />
     <fragment
-        android:id="@+id/taskSettingFragment2"
+        android:id="@+id/taskSettingFragment"
         android:name="com.msk.simpletodo.presentation.view.todo.TaskSettingFragment"
         android:label="Setting"
-        tools:layout="@layout/fragment_task_setting" />
+        tools:layout="@layout/fragment_task_setting">
+        <argument
+            android:name="userMessage"
+            app:argType="string" />
+        <action
+            android:id="@+id/action_taskSettingFragment_to_editProfileFragment"
+            app:destination="@id/editProfileFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/editProfileFragment"
+        android:name="com.msk.simpletodo.presentation.view.todo.EditProfileFragment"
+        android:label="EditProfileFragment">
+        <argument
+            android:name="userId"
+            app:argType="string" />
+        <action
+            android:id="@+id/action_editProfileFragment_to_taskSettingFragment"
+            app:destination="@id/taskSettingFragment" />
+    </fragment>
 </navigation>
 
 

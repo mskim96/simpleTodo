@@ -39,15 +39,20 @@ class TaskSettingFragment : Fragment() {
             setOf(
                 R.id.taskMainFragment,
                 R.id.taskCalendarFragment,
-                R.id.taskSettingFragment2
+                R.id.taskSettingFragment
             ), drawerLayout
         )
         binding.toolbar.setupWithNavController(navController, appBarConfiguration)
         navigationView.setupWithNavController(navController)
 
         binding.settingRecycler1.adapter = settingAdapter
-        binding.textView17.text = auth.currentUser?.email
-
+        binding.profileInfo.text = auth.currentUser?.email
+        binding.profileInfo.setOnClickListener {
+            val userId = auth.currentUser?.uid
+            val action =
+                TaskSettingFragmentDirections.actionTaskSettingFragmentToEditProfileFragment(userId!!)
+            this.findNavController().navigate(action)
+        }
         return binding.root
     }
 

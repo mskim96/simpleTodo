@@ -7,7 +7,7 @@ import androidx.room.RoomDatabase
 import androidx.room.TypeConverters
 import com.msk.simpletodo.data.converter.TypeConverter
 import com.msk.simpletodo.data.model.auth.UserDao
-import com.msk.simpletodo.data.model.auth.UserEntity
+import com.msk.simpletodo.data.model.auth.UserLocal
 import com.msk.simpletodo.data.model.movie.MovieDao
 import com.msk.simpletodo.data.model.movie.MovieEntity
 import com.msk.simpletodo.data.model.todo.TodoCategory
@@ -16,7 +16,7 @@ import com.msk.simpletodo.data.model.todo.TodoEntity
 
 
 @Database(
-    entities = [UserEntity::class, TodoEntity::class, TodoCategory::class, MovieEntity::class],
+    entities = [UserLocal::class, TodoEntity::class, TodoCategory::class, MovieEntity::class],
     version = 1,
     exportSchema = false
 )

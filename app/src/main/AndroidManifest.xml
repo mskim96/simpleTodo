@@ -8,6 +8,9 @@
     <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
     <uses-permission android:name="android.permission.SCHEDULE_EXACT_ALARM" />
     <uses-permission android:name="android.permission.POST_NOTIFICATIONS" />
+    <uses-permission android:name="android.permission.RECORD_AUDIO" />
+    <uses-permission android:name="android.permission.READ_MEDIA_IMAGES" />
+    <uses-permission android:name="android.permission.READ_MEDIA_AUDIO" />
 
     <application
         android:name=".presentation.di.MainApplication"
@@ -71,13 +74,6 @@
             android:name=".presentation.view.todo.TodoActivity"
             android:exported="true"
             android:windowSoftInputMode="adjustResize">
-
-            <!-- <meta-data -->
-            <!-- android:name="firebase_messaging_auto_init_enabled" -->
-            <!-- android:value="false" /> -->
-            <!-- <meta-data -->
-            <!-- android:name="firebase_analytics_collection_enabled" -->
-            <!-- android:value="false" /> -->
             <meta-data
                 android:name="android.app.lib_name"
                 android:value="" />

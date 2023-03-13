@@ -19,4 +19,7 @@
 
     <string name="notify_token" translatable="false">%s</string>
     <string name="notify_message">$s</string>
+
+
+    <string name="profile_edit_saved">Complete edit your profile.</string>
 </resources>

@@ -1,10 +1,13 @@
 package com.msk.simpletodo.data.datasource.auth
 
-import com.msk.simpletodo.data.model.auth.UserEntity
+import com.msk.simpletodo.data.model.auth.UserLocal
 
 interface AuthDatasource {
     // crud method
-    suspend fun createAccount(user: UserEntity)
+    suspend fun createAccount(user: UserLocal)
 
-    suspend fun getUserByEmail(email: String): UserEntity
+    suspend fun updateUser(user: UserLocal)
+
+    suspend fun getUserByEmail(id: String): UserLocal?
+
 }

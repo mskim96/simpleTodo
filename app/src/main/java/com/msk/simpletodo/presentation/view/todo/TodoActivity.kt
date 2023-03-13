@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.setupWithNavController
 import com.google.firebase.auth.ktx.auth
@@ -14,7 +15,7 @@ import com.msk.simpletodo.presentation.viewModel.auth.AuthViewModel
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
-class TodoActivity() : AppCompatActivity() {
+class TodoActivity : AppCompatActivity() {
 
     private var _binding: ActivityTodoBinding? = null
     private val binding get() = _binding!!
@@ -33,6 +34,12 @@ class TodoActivity() : AppCompatActivity() {
             supportFragmentManager.findFragmentById(R.id.nav_host_fragment) as NavHostFragment
         val navController = navHostFragment.navController
         bottomNavigation.setupWithNavController(navController)
+        lifecycleScope.launchWhenCreated {
+            authViewModel.createAccountLocal(
+                auth.currentUser?.uid.toString(),
+                auth.currentUser?.email.toString()
+            )
+        }
     }
 
 

@@ -20,12 +20,22 @@
         android:layout_height="match_parent"
         tools:context=".presentation.view.todo.EditProfileFragment">
 
+        <androidx.appcompat.widget.Toolbar
+            android:id="@+id/toolbar"
+            android:layout_width="0dp"
+            android:layout_height="?attr/actionBarSize"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
         <androidx.cardview.widget.CardView
             android:id="@+id/profile_layout"
-            android:layout_width="300dp"
-            android:layout_height="300dp"
+            android:layout_width="200dp"
+            android:layout_height="200dp"
+            android:layout_marginTop="32dp"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent">
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/toolbar">
 
             <androidx.appcompat.widget.AppCompatImageView
                 android:id="@+id/profile_image"
@@ -54,7 +64,7 @@
             android:layout_marginStart="16dp"
             android:layout_marginTop="16dp"
             android:text="Email"
-            android:textSize="20sp"
+            android:textSize="18sp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/profile_layout" />
 
@@ -69,35 +79,64 @@
             app:layout_constraintTop_toBottomOf="@+id/emailLayout"
             tools:text="123@test.com" />
 
-        <ProgressBar
-            android:id="@+id/record_progress"
-            style="@style/Widget.AppCompat.ProgressBar.Horizontal"
-            android:layout_width="match_parent"
+        <TextView
+            android:id="@+id/textView17"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginHorizontal="24dp"
-            android:layout_marginBottom="24dp"
+            android:layout_marginTop="24dp"
+            android:text="bio"
+            android:textSize="18sp"
+            app:layout_constraintStart_toStartOf="@+id/email"
+            app:layout_constraintTop_toBottomOf="@+id/email" />
+
+        <androidx.appcompat.widget.AppCompatSeekBar
+            android:id="@+id/record_seekbar"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="8dp"
+            android:layout_marginTop="8dp"
             android:max="30"
             android:min="0"
-            app:layout_constraintBottom_toTopOf="@+id/record_start_button"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent" />
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/textView17" />
 
-        <androidx.appcompat.widget.AppCompatButton
+        <TextView
+            android:id="@+id/record_start"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="8dp"
+            app:layout_constraintStart_toStartOf="@id/record_seekbar"
+            app:layout_constraintTop_toBottomOf="@id/record_seekbar"
+            tools:text="00:00" />
+
+        <TextView
+            android:id="@+id/record_end"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:layout_marginRight="16dp"
+            android:text="00:30"
+            app:layout_constraintEnd_toEndOf="@id/record_seekbar"
+            app:layout_constraintTop_toBottomOf="@id/record_seekbar" />
+
+        <androidx.appcompat.widget.AppCompatImageButton
             android:id="@+id/record_start_button"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="24dp"
-            android:layout_marginBottom="24dp"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:layout_marginTop="16dp"
+            android:src="@drawable/ic_record"
             android:text="Record start"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintStart_toStartOf="parent" />
+            app:layout_constraintStart_toStartOf="@+id/record_start"
+            app:layout_constraintTop_toBottomOf="@+id/record_start" />
 
-        <Button
+        <androidx.appcompat.widget.AppCompatImageButton
             android:id="@+id/record_stop_button"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
             android:layout_marginStart="16dp"
-            android:text="stop"
+            android:src="@drawable/ic_stop"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toStartOf="@+id/editprofile_button"
             app:layout_constraintHorizontal_bias="0.0"

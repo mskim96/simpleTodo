@@ -23,7 +23,7 @@
                                 <PersistentState>
                                   <option name="values">
                                     <map>
-                                      <entry key="url" value="file:$USER_HOME$/Library/Android/sdk/icons/material/materialicons/play_arrow/baseline_play_arrow_24.xml" />
+                                      <entry key="url" value="file:$USER_HOME$/Library/Android/sdk/icons/material/materialicons/square/baseline_square_24.xml" />
                                     </map>
                                   </option>
                                 </PersistentState>
@@ -33,9 +33,7 @@
                         </option>
                         <option name="values">
                           <map>
-                            <entry key="assetSourceType" value="FILE" />
-                            <entry key="color" value="ffffff" />
-                            <entry key="outputName" value="task_nav_today" />
+                            <entry key="outputName" value="ic_stop" />
                             <entry key="sourceFile" value="$PROJECT_DIR$/app/src/main/res/drawable/navigation.svg" />
                           </map>
                         </option>

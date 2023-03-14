@@ -11,6 +11,7 @@ import android.os.Bundle
 import android.os.Environment
 import android.provider.DocumentsContract
 import android.provider.MediaStore
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -23,6 +24,8 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
+import androidx.navigation.ui.AppBarConfiguration
+import androidx.navigation.ui.setupWithNavController
 import com.bumptech.glide.Glide
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.google.firebase.auth.ktx.auth
@@ -35,6 +38,7 @@ import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 import java.io.IOException
+import java.text.DecimalFormat
 
 @AndroidEntryPoint
 class EditProfileFragment :
@@ -77,6 +81,9 @@ class EditProfileFragment :
         inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
     ): View? {
         val view = super.onCreateView(inflater, container, savedInstanceState)
+        val navController = findNavController()
+        val appBarConfiguration = AppBarConfiguration(navController.graph)
+        binding.toolbar.setupWithNavController(navController, appBarConfiguration)
 
         bind {
             fragment = this@EditProfileFragment
@@ -89,29 +96,25 @@ class EditProfileFragment :
         }
 
         binding.recordStartButton.setOnClickListener {
-            if (ContextCompat.checkSelfPermission(
-                    requireContext(),
-                    Manifest.permission.RECORD_AUDIO
-                ) != PackageManager.PERMISSION_GRANTED && ContextCompat.checkSelfPermission(
-                    requireContext(),
-                    Manifest.permission.WRITE_EXTERNAL_STORAGE
-                ) != PackageManager.PERMISSION_GRANTED
-            ) {
-                //Permission is not granted
-                val permissions = arrayOf(
-                    Manifest.permission.RECORD_AUDIO,
-                    Manifest.permission.WRITE_EXTERNAL_STORAGE,
-                    Manifest.permission.READ_EXTERNAL_STORAGE
-                )
-                ActivityCompat.requestPermissions(requireActivity(), permissions, 0)
-            } else {
-                startRecording()
-            }
+            checkRecordPermission()
         }
 
         binding.recordStopButton.setOnClickListener {
             stopRecording()
         }
+
+        val format = DecimalFormat("00")
+
+        lifecycleScope.launch {
+            viewModel.recordTime.collectLatest {
+                binding.recordSeekbar.progress = it
+                binding.recordStart.text = "00:${format.format(it)}"
+                if (it >= 30) {
+                    stopRecording()
+                }
+            }
+        }
+
 
         return view
     }
@@ -120,10 +123,12 @@ class EditProfileFragment :
         super.onViewCreated(view, savedInstanceState)
         getUserProfile()
         setNavigation()
-        lifecycleScope.launch { setProfileImage() }
+        lifecycleScope.launch {
+            setProfileImage()
+        }
     }
 
-    private fun startRecording() {
+    private fun startRecording() = lifecycleScope.launch {
         val fileName: String = auth.currentUser?.uid + ".mp3"
         output =
             Environment.getExternalStorageDirectory().absolutePath + "/Download/" + fileName
@@ -132,15 +137,18 @@ class EditProfileFragment :
         } else {
             MediaRecorder()
         }
-        mediaRecorder?.setAudioSource((MediaRecorder.AudioSource.MIC))
-        mediaRecorder?.setOutputFormat((MediaRecorder.OutputFormat.MPEG_4))
-        mediaRecorder?.setAudioEncoder(MediaRecorder.AudioEncoder.AAC)
-        mediaRecorder?.setOutputFile(output)
+        mediaRecorder?.apply {
+            setAudioSource((MediaRecorder.AudioSource.MIC))
+            setOutputFormat((MediaRecorder.OutputFormat.MPEG_4))
+            setAudioEncoder(MediaRecorder.AudioEncoder.AAC)
+            setOutputFile(output)
+        }
 
         try {
             mediaRecorder?.prepare()
             mediaRecorder?.start()
             state = true
+            viewModel.startRecord()
             Toast.makeText(requireContext(), "Start Recording", Toast.LENGTH_SHORT).show()
         } catch (e: IllegalStateException) {
             e.printStackTrace()
@@ -155,9 +163,10 @@ class EditProfileFragment :
             mediaRecorder?.reset()
             mediaRecorder?.release()
             state = false
+            viewModel.resetRecord()
             Toast.makeText(requireContext(), "Stop Recording.", Toast.LENGTH_SHORT).show()
         } else {
-            Toast.makeText(requireContext(), "레코딩 상태가 아닙니다.", Toast.LENGTH_SHORT).show()
+            Toast.makeText(requireContext(), "You are not recording.", Toast.LENGTH_SHORT).show()
         }
     }
 
@@ -175,6 +184,28 @@ class EditProfileFragment :
                 }
             }.show()
     }
+
+    private fun checkRecordPermission() {
+        if (ContextCompat.checkSelfPermission(
+                requireContext(),
+                Manifest.permission.RECORD_AUDIO
+            ) != PackageManager.PERMISSION_GRANTED && ContextCompat.checkSelfPermission(
+                requireContext(),
+                Manifest.permission.WRITE_EXTERNAL_STORAGE
+            ) != PackageManager.PERMISSION_GRANTED
+        ) {
+            //Permission is not granted
+            val permissions = arrayOf(
+                Manifest.permission.RECORD_AUDIO,
+                Manifest.permission.WRITE_EXTERNAL_STORAGE,
+                Manifest.permission.READ_EXTERNAL_STORAGE
+            )
+            ActivityCompat.requestPermissions(requireActivity(), permissions, 0)
+        } else {
+            startRecording()
+        }
+    }
+
 
     /**
      * Launch registerActivityResult for get Image by Camera app.

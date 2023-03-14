@@ -107,7 +107,7 @@
     <fragment
         android:id="@+id/editProfileFragment"
         android:name="com.msk.simpletodo.presentation.view.todo.EditProfileFragment"
-        android:label="EditProfileFragment">
+        android:label="My Profile">
         <argument
             android:name="userId"
             app:argType="string" />

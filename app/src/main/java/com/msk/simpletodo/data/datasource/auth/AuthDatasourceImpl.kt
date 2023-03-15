@@ -6,12 +6,26 @@ import kotlinx.coroutines.flow.Flow
 import javax.inject.Inject
 
 class AuthDatasourceImpl @Inject constructor(private val userDao: UserDao) : AuthDatasource {
-    override suspend fun createAccount(user: UserLocal) {
-        userDao.createAccount(user)
+
+    override fun observeUserById(userId: String): Flow<UserLocal> {
+        return userDao.observeUserById(userId)
     }
 
-    override suspend fun updateUser(user: UserLocal) {
-        userDao.updateUser(user)
+    override suspend fun getUserById(userId: String): UserLocal? {
+        return userDao.getUserById(userId)
+    }
+
+    override suspend fun createUser(user: UserLocal) {
+        return userDao.createUser(user)
+    }
+
+    override suspend fun updateUser(user: UserLocal): Int {
+        return userDao.updateUser(user)
+    }
+
+    // TODO Delete below
+    override suspend fun createAccount(user: UserLocal) {
+        userDao.createAccount(user)
     }
 
     override suspend fun getUserByEmail(id: String): UserLocal? =

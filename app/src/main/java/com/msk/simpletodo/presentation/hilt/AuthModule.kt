@@ -51,9 +51,9 @@ object AuthModule {
     @Singleton
     @Provides
     fun provideAuthRepository(
-        firebaseAuth: FirebaseAuth,
-        authDatasource: AuthDatasource
+        authRemoteDatasource: FirebaseAuth,
+        authLocalDatasource: AuthDatasource
     ): AuthRepository {
-        return AuthRepositoryImpl(firebaseAuth, authDatasource)
+        return AuthRepositoryImpl(authRemoteDatasource, authLocalDatasource)
     }
 }

@@ -101,19 +101,46 @@
             android:name="userMessage"
             app:argType="string" />
         <action
-            android:id="@+id/action_taskSettingFragment_to_editProfileFragment"
-            app:destination="@id/editProfileFragment" />
+            android:id="@+id/action_taskSettingFragment_to_profileDetailFragment"
+            app:destination="@id/profileDetailFragment"
+            app:enterAnim="@anim/fade_in"
+            app:exitAnim="@anim/fade_out"
+            app:popEnterAnim="@anim/fade_in"
+            app:popExitAnim="@anim/fade_out" />
     </fragment>
     <fragment
         android:id="@+id/editProfileFragment"
-        android:name="com.msk.simpletodo.presentation.view.todo.EditProfileFragment"
-        android:label="My Profile">
+        android:name="com.msk.simpletodo.presentation.view.auth.profile.EditProfileFragment"
+        android:label="Edit Profile">
         <argument
             android:name="userId"
             app:argType="string" />
         <action
-            android:id="@+id/action_editProfileFragment_to_taskSettingFragment"
-            app:destination="@id/taskSettingFragment" />
+            android:id="@+id/action_editProfileFragment_to_profileDetailFragment"
+            app:destination="@id/profileDetailFragment"
+            app:enterAnim="@anim/fade_in"
+            app:exitAnim="@anim/fade_out"
+            app:popEnterAnim="@anim/fade_in"
+            app:popExitAnim="@anim/fade_out" />
+    </fragment>
+    <fragment
+        android:id="@+id/profileDetailFragment"
+        android:name="com.msk.simpletodo.presentation.view.auth.profile.ProfileDetailFragment"
+        android:label="My Profile"
+        tools:layout="@layout/profile_detail_fragment">
+        <argument
+            android:name="userMessage"
+            app:argType="string" />
+        <argument
+            android:name="userId"
+            app:argType="string" />
+        <action
+            android:id="@+id/action_profileDetailFragment_to_editProfileFragment"
+            app:destination="@id/editProfileFragment"
+            app:enterAnim="@anim/fade_in"
+            app:exitAnim="@anim/fade_out"
+            app:popEnterAnim="@anim/fade_in"
+            app:popExitAnim="@anim/fade_out" />
     </fragment>
 </navigation>
 

@@ -50,7 +50,9 @@ class TaskSettingFragment : Fragment() {
         binding.profileInfo.setOnClickListener {
             val userId = auth.currentUser?.uid
             val action =
-                TaskSettingFragmentDirections.actionTaskSettingFragmentToEditProfileFragment(userId!!)
+                TaskSettingFragmentDirections.actionTaskSettingFragmentToProfileDetailFragment(
+                    "", userId!!
+                )
             this.findNavController().navigate(action)
         }
         return binding.root

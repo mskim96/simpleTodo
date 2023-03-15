@@ -37,8 +37,17 @@ class TodoActivity : AppCompatActivity() {
         lifecycleScope.launchWhenCreated {
             authViewModel.createAccountLocal(
                 auth.currentUser?.uid.toString(),
-                auth.currentUser?.email.toString()
+                auth.currentUser?.email.toString(),
+                auth.currentUser?.displayName.toString()
             )
+        }
+
+        navController.addOnDestinationChangedListener { _, destination, _ ->
+            when (destination.id) {
+                R.id.editProfileFragment -> hideBottomNavigation()
+                R.id.profileDetailFragment -> hideBottomNavigation()
+                else -> setBottomNavigation()
+            }
         }
     }
 

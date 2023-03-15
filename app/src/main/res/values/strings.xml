@@ -24,4 +24,5 @@
     <string name="profile_edit_saved">Complete edit your profile.</string>
 
     <string name="empty_task_message">Task cannot be empty.</string>
+    <string name="empty_user_bio">You can introduce yourself this space.</string>
 </resources>

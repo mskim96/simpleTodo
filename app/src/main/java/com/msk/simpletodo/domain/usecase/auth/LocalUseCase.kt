@@ -1,5 +1,6 @@
 package com.msk.simpletodo.domain.usecase.auth
 
+import com.msk.simpletodo.data.mapper.toLocalModel
 import com.msk.simpletodo.data.model.auth.UserLocal
 import com.msk.simpletodo.domain.repository.AuthRepository
 import kotlinx.coroutines.flow.Flow
@@ -16,6 +17,6 @@ class LocalUseCase @Inject constructor(private val authRepository: AuthRepositor
     }
 
     suspend fun getUserById(id: String): UserLocal? {
-        return authRepository.getUserById(id)
+        return authRepository.getUserById(id)?.toLocalModel()
     }
 }

@@ -1,13 +1,14 @@
 package com.msk.simpletodo.presentation.view.auth.profile
 
-import android.util.Log
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.msk.simpletodo.data.model.auth.User
 import com.msk.simpletodo.domain.repository.AuthRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.flow.*
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -15,7 +16,7 @@ data class ProfileDetailUi(
     val user: User? = null,
     val isEdit: Boolean = false,
     val isLoading: Boolean = false,
-    val userMessage: Int? = null
+    val userMessage: String? = null
 )
 
 @HiltViewModel

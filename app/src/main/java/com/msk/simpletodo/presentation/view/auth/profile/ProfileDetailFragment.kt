@@ -68,8 +68,8 @@ class ProfileDetailFragment :
     private suspend fun setupNavigation() = repeatOnLifecycle(Lifecycle.State.CREATED) {
         viewModel.uiState.collectLatest {
             if (it.isEdit) {
-                navigateToEditProfile()
                 viewModel.navEditProfileComplete()
+                navigateToEditProfile()
             }
         }
     }

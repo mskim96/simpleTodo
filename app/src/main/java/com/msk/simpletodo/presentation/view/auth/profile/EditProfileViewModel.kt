@@ -25,7 +25,8 @@ data class EditProfileUiState(
     val bio: String = "",
     val voiceBio: String = "",
     val isLoading: Boolean = true,
-    val userMessage: Int? = null,
+    val userMessage: String = "",
+    val isRecorded: RecordState = RecordState.INIT,
     val isUserSaved: Boolean = false
 )
 
@@ -56,7 +57,7 @@ class EditProfileViewModel @Inject constructor(
                 voiceBio = uiState.value.voiceBio
             )
         )
-        _uiState.update { it.copy(isUserSaved = true) }
+        _uiState.update { it.copy(isUserSaved = true, userMessage = "Complete edit profile.") }
     }
 
     fun updateProfileImage(uri: Uri?) {
@@ -73,6 +74,22 @@ class EditProfileViewModel @Inject constructor(
 
     fun deleteProfileImage() {
         _uiState.update { it.copy(profileImage = "") }
+    }
+
+    fun deleteRecordBio() {
+        _uiState.update { it.copy(bio = "") }
+    }
+
+    fun startRecording() {
+        _uiState.update { it.copy(isRecorded = RecordState.START) }
+    }
+
+    fun stopRecording() {
+        _uiState.update { it.copy(isRecorded = RecordState.STOP) }
+    }
+
+    fun resetRecording() {
+        _uiState.update { it.copy(isRecorded = RecordState.INIT) }
     }
 
     private fun loadUser(userId: String) {
@@ -98,4 +115,8 @@ class EditProfileViewModel @Inject constructor(
             }
         }
     }
+}
+
+enum class RecordState {
+    INIT, START, STOP;
 }

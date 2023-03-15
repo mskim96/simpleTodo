@@ -7,7 +7,6 @@ import android.media.MediaRecorder
 import android.net.Uri
 import android.os.Build
 import android.os.Bundle
-import android.os.Environment
 import android.provider.MediaStore
 import android.util.Log
 import android.view.LayoutInflater
@@ -15,7 +14,6 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
-import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.core.net.toUri
 import androidx.fragment.app.viewModels
@@ -28,13 +26,13 @@ import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.setupWithNavController
 import com.bumptech.glide.Glide
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
+import com.google.android.material.snackbar.Snackbar
 import com.msk.simpletodo.R
 import com.msk.simpletodo.databinding.FragmentEditProfileBinding
 import com.msk.simpletodo.presentation.view.base.BaseFragment
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
-import java.io.IOException
 import java.time.LocalDateTime
 
 @AndroidEntryPoint
@@ -44,19 +42,23 @@ class EditProfileFragment :
     private val viewModel: EditProfileViewModel by viewModels()
     private val args: EditProfileFragmentArgs by navArgs()
 
-    private var output: String? = null
     private var mediaRecorder: MediaRecorder? = null
-    private var state: Boolean = false
 
     private var photoUri: Uri? = null
     private var recordUri: Uri? = null
+
+    private val requestPermissionLauncher =
+        registerForActivityResult(ActivityResultContracts.RequestPermission()) { isGranted: Boolean ->
+            if (isGranted) {
+                viewModel.startRecording()
+            }
+        }
 
     private val imageByAlbum =
         registerForActivityResult(ActivityResultContracts.GetContent()) { uri ->
             uri.let {
                 viewModel.updateProfileImage(uri)
             }
-//            viewModel.updateProfileImage(uri?.convertRealPath(FileType.GET_PICTURE))
         }
 
     private val imageByCamera =
@@ -72,7 +74,7 @@ class EditProfileFragment :
         super.onCreate(savedInstanceState)
         val userId = args.userId
         photoUri = createImageUri(userId) // create uri for image with user id.
-//        recordUri = createRecordUri(userId) // create uri for record with user id.
+        recordUri = createRecordUri(userId) // create uri for record with user id.
     }
 
     override fun onCreateView(
@@ -93,49 +95,49 @@ class EditProfileFragment :
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        setNavigation()
         viewLifecycleOwner.lifecycleScope.launch {
-            setProfileImage()
+            launch { setProfileImage() }
+            launch { setNavigation() }
+            launch { setUserMessage() }
+            launch { setRecorder() }
         }
     }
 
-    private fun startRecording() = lifecycleScope.launch {
-        val fileName: String = args.userId + ".mp3"
-        output =
-            Environment.getExternalStorageDirectory().absolutePath + "/Download/" + fileName
-        mediaRecorder = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
-            MediaRecorder(requireContext())
-        } else {
-            MediaRecorder()
-        }
-        mediaRecorder?.apply {
-            setAudioSource((MediaRecorder.AudioSource.MIC))
-            setOutputFormat((MediaRecorder.OutputFormat.MPEG_4))
-            setAudioEncoder(MediaRecorder.AudioEncoder.AAC)
-            setOutputFile(output)
+    private fun startRecording() = viewLifecycleOwner.lifecycleScope.launch {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
+            mediaRecorder = MediaRecorder(requireContext()).apply {
+                setAudioSource((MediaRecorder.AudioSource.MIC))
+                setOutputFormat((MediaRecorder.OutputFormat.MPEG_4))
+                setAudioEncoder(MediaRecorder.AudioEncoder.AAC)
+                setOutputFile(
+                    requireActivity().contentResolver.openFileDescriptor(
+                        recordUri!!,
+                        "w"
+                    )?.fileDescriptor
+                )
+            }
         }
 
-        try {
+        runCatching {
             mediaRecorder?.prepare()
+        }.onSuccess {
             mediaRecorder?.start()
-            state = true
             Toast.makeText(requireContext(), "Start Recording", Toast.LENGTH_SHORT).show()
-        } catch (e: IllegalStateException) {
-            e.printStackTrace()
-        } catch (e: IOException) {
-            e.printStackTrace()
+        }.onFailure { throwable ->
+            Toast.makeText(requireContext(), "${throwable.message}", Toast.LENGTH_SHORT).show()
         }
     }
 
     private fun stopRecording() {
-        if (state) {
-            mediaRecorder?.stop()
-            mediaRecorder?.reset()
-            mediaRecorder?.release()
-            state = false
+        if (mediaRecorder != null) {
+            mediaRecorder?.apply {
+                stop()
+                reset()
+                release()
+            }
+            viewModel.stopRecording()
+            viewModel.resetRecording()
             Toast.makeText(requireContext(), "Stop Recording.", Toast.LENGTH_SHORT).show()
-        } else {
-            Toast.makeText(requireContext(), "You are not recording.", Toast.LENGTH_SHORT).show()
         }
     }
 
@@ -155,27 +157,51 @@ class EditProfileFragment :
             }.show()
     }
 
-    private fun checkRecordPermission() {
-        if (ContextCompat.checkSelfPermission(
-                requireContext(),
-                Manifest.permission.RECORD_AUDIO
-            ) != PackageManager.PERMISSION_GRANTED && ContextCompat.checkSelfPermission(
-                requireContext(),
-                Manifest.permission.WRITE_EXTERNAL_STORAGE
-            ) != PackageManager.PERMISSION_GRANTED
-        ) {
-            //Permission is not granted
-            val permissions = arrayOf(
-                Manifest.permission.RECORD_AUDIO,
-                Manifest.permission.WRITE_EXTERNAL_STORAGE,
-                Manifest.permission.READ_EXTERNAL_STORAGE
-            )
-            ActivityCompat.requestPermissions(requireActivity(), permissions, 0)
-        } else {
-            startRecording()
+    fun openRecordDialog() {
+        when (viewModel.uiState.value.isRecorded) {
+            RecordState.START -> {
+                viewModel.stopRecording()
+            }
+            else -> {
+                val items = arrayOf("Record bio", "Delete record bio")
+                MaterialAlertDialogBuilder(requireContext())
+                    .setTitle("Edit Record bio")
+                    .setItems(items) { _, which ->
+                        when (which) { // invoke startRecording function if permission granted
+                            0 -> checkRecordPermission()
+                            1 -> deleteRecordBio()
+                        }
+                    }.show()
+            }
         }
     }
 
+
+    /**
+     * Check permission and start recording if granted it.
+     */
+    private fun checkRecordPermission() {
+        when {
+            ContextCompat.checkSelfPermission(
+                requireContext(),
+                Manifest.permission.RECORD_AUDIO
+            ) == PackageManager.PERMISSION_GRANTED -> {
+                viewModel.startRecording()
+            }
+
+            shouldShowRequestPermissionRationale(Manifest.permission.RECORD_AUDIO) -> {
+                Snackbar.make(requireView(), "Can't use voice bio.", Snackbar.LENGTH_SHORT).show()
+            }
+
+            else -> {
+                requestPermissionLauncher.launch(Manifest.permission.RECORD_AUDIO)
+            }
+        }
+    }
+
+    /**
+     * Save User profile.
+     */
     fun saveUserProfile() {
         val username = binding.username.text.toString()
         val bio = binding.bioContent.text.toString()
@@ -183,6 +209,26 @@ class EditProfileFragment :
         viewModel.updateBio(bio)
         viewModel.saveUserProfile()
     }
+
+    private suspend fun setRecorder() =
+        viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.CREATED) {
+            viewModel.uiState.collectLatest {
+                when (it.isRecorded) {
+                    RecordState.INIT -> {
+                        binding.recordButton.setImageResource(R.drawable.ic_mic)
+                        RecordState.INIT
+                    }
+                    RecordState.START -> {
+                        binding.recordButton.setImageResource(R.drawable.ic_pause)
+                        startRecording()
+                    }
+                    RecordState.STOP -> {
+                        binding.recordButton.setImageResource(R.drawable.ic_mic)
+                        stopRecording()
+                    }
+                }
+            }
+        }
 
     /**
      * Launch registerActivityResult for get Image by Camera app.
@@ -198,8 +244,18 @@ class EditProfileFragment :
         photoUri?.let { imageByAlbum.launch(IMAGE_MIME_TYPE) }
     }
 
+    /**
+     * Delete profile image.
+     */
     private fun deleteProfileImage() {
         viewModel.deleteProfileImage()
+    }
+
+    /**
+     * Delete Record bio.
+     */
+    private fun deleteRecordBio() {
+        viewModel.deleteRecordBio()
     }
 
     /**
@@ -222,17 +278,29 @@ class EditProfileFragment :
     }
 
     /**
+     * Show message for user.
+     */
+    private suspend fun setUserMessage() = repeatOnLifecycle(Lifecycle.State.CREATED) {
+        viewModel.uiState.collectLatest {
+            if (it.userMessage.isNotEmpty()) {
+                Snackbar.make(requireView(), it.userMessage, Snackbar.LENGTH_SHORT).show()
+            }
+        }
+    }
+
+    /**
      * observing uiState in viewModels.
      *
      * if profileSaved is true, navigate setting fragment.
      */
-    private fun setNavigation() = viewLifecycleOwner.lifecycleScope.launch {
-        viewModel.uiState.collectLatest {
-            if (it.isUserSaved) {
-                navigateToDetail()
+    private suspend fun setNavigation() =
+        viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
+            viewModel.uiState.collectLatest {
+                if (it.isUserSaved) {
+                    navigateToDetail()
+                }
             }
         }
-    }
 
     /**
      * Navigate setting fragment with message.
@@ -273,6 +341,7 @@ class EditProfileFragment :
     private fun createRecordUri(userId: String): Uri? {
         val filename = "$userId.mp3"
         val content = ContentValues().apply {
+            put(MediaStore.Audio.Media._ID, userId)
             put(MediaStore.Audio.Media.DISPLAY_NAME, filename)
             put(MediaStore.Audio.Media.MIME_TYPE, RECORD_MIME_TYPE)
         }

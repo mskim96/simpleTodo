@@ -272,7 +272,7 @@
                         <option name="myPosition">
                           <Point>
                             <option name="x" value="442" />
-                            <option name="y" value="368" />
+                            <option name="y" value="1436" />
                           </Point>
                         </option>
                         <option name="myPositions">
@@ -292,13 +292,13 @@
                       <LayoutPositions>
                         <option name="myPosition">
                           <Point>
-                            <option name="x" value="882" />
-                            <option name="y" value="720" />
+                            <option name="x" value="872" />
+                            <option name="y" value="724" />
                           </Point>
                         </option>
                         <option name="myPositions">
                           <map>
-                            <entry key="action_editProfileFragment_to_taskSettingFragment">
+                            <entry key="action_editProfileFragment_to_profileDetailFragment">
                               <value>
                                 <LayoutPositions />
                               </value>
@@ -314,7 +314,7 @@
                         <option name="myPosition">
                           <Point>
                             <option name="x" value="442" />
-                            <option name="y" value="12" />
+                            <option name="y" value="1080" />
                           </Point>
                         </option>
                       </LayoutPositions>
@@ -325,9 +325,18 @@
                       <LayoutPositions>
                         <option name="myPosition">
                           <Point>
-                            <option name="x" value="625" />
-                            <option name="y" value="578" />
+                            <option name="x" value="657" />
+                            <option name="y" value="724" />
                           </Point>
+                        </option>
+                        <option name="myPositions">
+                          <map>
+                            <entry key="action_profileDetailFragment_to_editProfileFragment">
+                              <value>
+                                <LayoutPositions />
+                              </value>
+                            </entry>
+                          </map>
                         </option>
                       </LayoutPositions>
                     </value>
@@ -338,7 +347,7 @@
                         <option name="myPosition">
                           <Point>
                             <option name="x" value="442" />
-                            <option name="y" value="1436" />
+                            <option name="y" value="368" />
                           </Point>
                         </option>
                         <option name="myPositions">
@@ -359,7 +368,7 @@
                         <option name="myPosition">
                           <Point>
                             <option name="x" value="12" />
-                            <option name="y" value="132" />
+                            <option name="y" value="1279" />
                           </Point>
                         </option>
                         <option name="myPositions">
@@ -385,7 +394,7 @@
                         <option name="myPosition">
                           <Point>
                             <option name="x" value="442" />
-                            <option name="y" value="1080" />
+                            <option name="y" value="12" />
                           </Point>
                         </option>
                         <option name="myPositions">
@@ -406,7 +415,7 @@
                         <option name="myPosition">
                           <Point>
                             <option name="x" value="227" />
-                            <option name="y" value="111" />
+                            <option name="y" value="1322" />
                           </Point>
                         </option>
                         <option name="myPositions">
@@ -457,7 +466,7 @@
                         </option>
                         <option name="myPositions">
                           <map>
-                            <entry key="action_taskSettingFragment_to_editProfileFragment">
+                            <entry key="action_taskSettingFragment_to_profileDetailFragment">
                               <value>
                                 <LayoutPositions />
                               </value>
